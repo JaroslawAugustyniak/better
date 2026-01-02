@@ -1,0 +1,201 @@
+# Copyright (c) 1993-2009 Microsoft Corp.
+# Copyright (c) 1993-2009 Microsoft Corp.
+# Copyright (c) 1993-2009 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+# 102.54.94.97 rhino.acme.com # source server
+# 38.25.63.10 x.acme.com # x client host
+
+127.0.0.1 localhost
+
+127.0.0.1 langfilm.localhost
+127.0.0.1 hospittal.localhost
+127.0.0.1 tkn-connect.localhost
+127.0.0.1 pendolino.localhost
+127.0.0.1 elecgreen.localhost
+127.0.0.1 grupa22.localhost
+127.0.0.1 poborowo.localhost
+127.0.0.1 madeofsteel.localhost
+127.0.0.1 michal.localhost
+127.0.0.1 smieci.localhost
+127.0.0.1 adam.localhost
+127.0.0.1 adamsas.localhost
+127.0.0.1 adamsaslp.localhost
+127.0.0.1 velzon.localhost
+127.0.0.1 butchers.localhost
+127.0.0.1 ted.localhost
+127.0.0.1 ted2.localhost
+127.0.0.1 alkmie.localhost
+127.0.0.1 b2balkmie.localhost
+127.0.0.1 platform.wondershare.com
+127.0.0.1 becomms.localhost
+127.0.0.1 c4e.localhost
+127.0.0.1 cmsbb.localhost
+127.0.0.1 amrop.localhost
+127.0.0.1 amroptr.localhost
+127.0.0.1 pzu-student.localhost
+127.0.0.1 amropold.localhost
+127.0.0.1 lion.localhost
+127.0.0.1 lp.localhost
+127.0.0.1 awx.localhost
+127.0.0.1 dobradruzyna.localhost
+127.0.0.1 danonkicz.localhost
+127.0.0.1 danonkisl.localhost
+127.0.0.1 danonkihu.localhost
+127.0.0.1 activia.localhost
+127.0.0.1 pizzahut.localhost
+127.0.0.1 loreal.localhost
+127.0.0.1 lorealprof.localhost
+127.0.0.1 lorealmatte.localhost
+127.0.0.1 portfolio.localhost
+127.0.0.1 atrium.localhost
+127.0.0.1 matrix.localhost
+127.0.0.1 matrixold.localhost
+127.0.0.1 intermarche.localhost
+127.0.0.1 lemon.localhost
+127.0.0.1 rockstar.localhost
+127.0.0.1 poruszmiasto.localhost
+127.0.0.1 konferencjasim.localhost
+
+127.0.0.1 mycovibes.localhost
+
+127.0.0.1 tcn-connect.localhost
+
+127.0.0.1 kamienica5.localhost
+
+127.0.0.1 timesheets.localhost
+127.0.0.1 tymbark.localhost
+
+127.0.0.1 timesheets3.localhost
+
+127.0.0.1 blueberry.localhost
+127.0.0.1 pedigree.localhost
+
+127.0.0.1 envelo.localhost
+127.0.0.1 salonexpert.localhost
+127.0.0.1 salonexpresja.localhost
+127.0.0.1 oskroba.localhost
+127.0.0.1 chleb.localhost
+127.0.0.1 chlebtozdrowie.localhost
+
+127.0.0.1 tmobile.localhost
+127.0.0.1 greenup.localhost
+
+127.0.0.1 drupal.localhost
+127.0.0.1 crf.localhost
+127.0.0.1 jagoda.localhost
+127.0.0.1 lorenc.localhost
+127.0.0.1 bio.localhost
+127.0.0.1 tmbb2b.localhost
+127.0.0.1 mapa.localhost
+127.0.0.1 interaktywny.localhost
+
+127.0.0.1 cake2.localhost
+127.0.0.1 cake3.localhost
+
+127.0.0.1 vichy.localhost
+127.0.0.1 obserwator.localhost
+127.0.0.1 mlp.localhost
+127.0.0.1 transformers.localhost
+127.0.0.1 adcraft.localhost
+127.0.0.1 czystaskora.localhost
+127.0.0.1 panel.localhost
+127.0.0.1 citroen.localhost
+127.0.0.1 citroen2.localhost
+127.0.0.1 kaviarnia.localhost
+127.0.0.1 wordpress.localhost
+
+127.0.0.1 nerf-camp.localhost
+127.0.0.1 brodzik.localhost
+127.0.0.1 palmal.localhost
+127.0.0.1 palmalpanel.localhost
+127.0.0.1 dove.localhost
+127.0.0.1 mms.localhost
+
+127.0.0.1 dotplant.localhost
+127.0.0.1 ecommerce.localhost
+
+127.0.0.1 sknerus.localhost
+127.0.0.1 hyzio.localhost
+127.0.0.1 dyzio.localhost
+127.0.0.1 zyzio.localhost
+127.0.0.1 tasia.localhost
+127.0.0.1 robokwak.localhost
+
+127.0.0.1 sknerbeta.localhost
+127.0.0.1 yii.localhost
+127.0.0.1 scrooge.localhost
+127.0.0.1 scrooge2.localhost
+
+127.0.0.1 crawler.localhost
+127.0.0.1 sady.localhost
+127.0.0.1 dextrin.localhost
+127.0.0.1 takecare.localhost
+127.0.0.1 takecareapp.localhost
+127.0.0.1 takecareintegrator.localhost
+127.0.0.1 takecarechat.localhost
+127.0.0.1 my.takecareapp.localhost
+127.0.0.1 takecaredemo.takecareapp.localhost
+127.0.0.1 mail.takecareapp.localhost
+
+127.0.0.1 innogy.localhost
+
+127.0.0.1 takecareblog.localhost
+127.0.0.1 tclp.localhost
+127.0.0.1 hicash.localhost
+127.0.0.1 cctt.localhost
+127.0.0.1 cctt2018.localhost
+
+127.0.0.1 grycan.localhost
+
+127.0.0.1 ranozebrano.localhost
+127.0.0.1 ranozebrano_yii.localhost
+127.0.0.1 opencar3.localhost
+127.0.0.1 kinesport.localhost
+127.0.0.1 opencart.localhost
+
+127.0.0.1 react.localhost
+127.0.0.1 ucommerce.localhost
+
+127.0.0.1 hagy.localhost
+127.0.0.1 hagi.localhost
+127.0.0.1 hagicosmetics.localhost
+127.0.0.1 hagicosmetics2.localhost
+
+127.0.0.1 bolt.localhost
+127.0.0.1 ibuprom.localhost
+127.0.0.1 kozerski.localhost
+
+127.0.0.1 db-backuper.localhost
+127.0.0.1 uczniak.localhost
+127.0.0.1 splat.localhost
+
+127.0.0.1 wellprogram.localhost
+127.0.0.1 well.localhost
+
+127.0.0.1 stowarzyszenie.localhost
+127.0.0.1 marygo.localhost
+
+127.0.0.1 worktrips.localhost
+127.0.0.1 zydzi.localhost
+127.0.0.1 prawicowiec.localhost
+127.0.0.1 inwenta.localhost
+127.0.0.1 cmo.localhost
+127.0.0.1 bannery.localhost
+
+127.0.0.1 localhost::1 localhost
+::1 localhost
+
+127.0.0.1 localhost

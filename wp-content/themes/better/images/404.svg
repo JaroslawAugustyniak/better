@@ -1,0 +1,7 @@
+<svg width="586" height="218" viewBox="0 0 586 218" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 0V218" style="transform: translateX(22%); " stroke="#000"/>
+<path d="M0.5 0V218" stroke="#01010D" style="transform: translateX(92%); "/>
+<path style="transform: translate(38%,7%); " d="M123.5 27.9997C103.5 -8.49999 37.4996 -8.00055 17.5 27.9997C-2.49963 63.9999 -5.50023 126 17.5 162C40.5002 198 103.5 199 123.5 162C143.5 125 143.5 64.4993 123.5 27.9997Z" stroke="#01010D"/>
+<path d="M94 0.5L1 175H177.5" stroke="#01010D"  style="transform: translateX(70%); "/>
+<path d="M94.5 0.5L1.5 175H178" stroke="#01010D"/>
+</svg>

@@ -1,0 +1,417 @@
+/**
+ * Featured News Carousel Styles
+ * Style dla karuzeli promowanych aktualności
+ */
+
+// ============================================================================
+// Variables
+// ============================================================================
+
+$news-card-bg: #13333a;
+$news-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+$news-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
+$news-primary-color: #8bacad;
+$news-text-color: #13333a;
+$news-meta-color: #8bacad;
+$news-border-radius: 1rem;
+$news-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+// ============================================================================
+// News Section
+// ============================================================================
+
+
+.news-section {
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+    
+    @media (max-width: 768px) {
+        padding: 60px 0;
+    }
+    
+    .section-header {
+        margin-bottom: 50px;
+        
+        @media (max-width: 768px) {
+            margin-bottom: 40px;
+        }
+    }
+    
+    .section-title {
+        color: $news-text-color;
+    }
+    
+    p.section-subtitle {
+        color: $news-text-color;
+    }
+    
+    .section-footer {
+        margin-top: 50px;
+        
+        @media (max-width: 768px) {
+            margin-top: 40px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: $news-transition;
+            
+            i {
+                margin-left: 8px;
+                transition: transform 0.3s ease;
+            }
+            
+            &:hover i {
+                transform: translateX(5px);
+            }
+        }
+    }
+}
+
+// ============================================================================
+// News Carousel Container
+// ============================================================================
+
+.news-carousel-container {
+    position: relative;
+    padding:1rem; 
+}
+
+
+
+// ============================================================================
+// News Carousel (Slick)
+// ============================================================================
+
+.news-carousel {
+    margin: 0 -15px;
+    
+    &.slick-initialized-news {
+        .news-slide {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    // Slick track
+    .slick-track {
+        display: flex !important;
+        gap: 1rem;
+    }
+    
+    // Slick slide
+    .slick-slide {
+        height: inherit !important;
+        display: flex !important;
+        padding: 0 15px;
+        > div {
+            height: 100%;
+            
+        }
+    }
+    
+    // Animacje wejścia
+    .news-slide {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        
+        @for $i from 1 through 6 {
+            &:nth-child(#{$i}) {
+                transition-delay: #{$i * 0.1}s;
+            }
+        }
+    }
+}
+
+// ============================================================================
+// News Slide
+// ============================================================================
+
+
+.news-slide, .news-element {
+    outline: none;
+    height: 100%;
+    
+    .news-card {
+        height: 100%;
+        display: block;
+        background: $news-card-bg;
+        border-radius: $news-border-radius;
+        overflow: hidden;
+        box-shadow: $news-card-shadow;
+        transition: $news-transition;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+        
+        &:hover {
+            .news-image-container img {
+                transform: scale(1.1);
+            }
+            
+
+        }
+        
+        &:focus {
+            outline: 2px solid $news-primary-color;
+            outline-offset: 2px;
+        }
+    }
+}
+.grid-item{
+    padding-bottom:2rem;
+}
+.news-element {
+    .news-card {
+        background: #29464c;
+    }
+    margin-bottom:1rem;
+}
+
+// ============================================================================
+// News Image Container
+// ============================================================================
+
+.news-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 60%; // Aspect ratio 5:3
+    overflow: hidden;
+    
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .news-placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        
+        i {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+}
+
+// ============================================================================
+// News Date Badge
+// ============================================================================
+
+.news-date-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+    
+    .date-day {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 600;
+        line-height: 1;
+        color: $news-primary-color;
+    }
+    
+    .date-month {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: $news-meta-color;
+        margin-top: 2px;
+    }
+}
+
+// ============================================================================
+// News Content
+// ============================================================================
+
+.news-content {
+    padding: 25px;
+    
+    @media (max-width: 768px) {
+        padding: 20px;
+    }
+}
+
+.news-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0 0 12px;
+    color: $news-primary-color;
+    transition: color 0.3s ease;
+    
+    // Ellipsis dla długich tytułów (2 linie)
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    @media (max-width: 768px) {
+        font-size: 1.125rem;
+    }
+}
+
+.news-excerpt {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: $news-meta-color;
+    margin: 0 0 15px;
+    
+    // Ellipsis dla długich opisów (3 linie)
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.news-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 0.875rem;
+    padding-top: 15px;
+    border-top: 1px solid $news-primary-color;
+    
+    .news-date {
+        display: flex;
+        align-items: center;
+        color: $news-meta-color;
+        
+        i {
+            margin-right: 6px;
+            font-size: 0.875rem;
+        }
+    }
+    
+
+.button {
+    display: inline-block;
+    padding: 5px 0;
+    font-weight: 400;
+    font-size: .875rem;
+    position: relative;
+    background: transparent;
+    border: solid 1px $news-primary-color;
+    color: $news-primary-color;
+    border-radius: 25px;
+    padding: 7px 20px;
+    transition: All .5s ease;
+    &:hover{
+        background: $news-primary-color;
+        color: $news-text-color;
+    }
+    &:after{
+        content:none;
+    }
+}   
+}
+
+// ============================================================================
+// Carousel Counter
+// ============================================================================
+
+.news-carousel-container .carousel-counter {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1rem;
+    color: $news-meta-color;
+    font-weight: 600;
+    
+    @media (max-width: 768px) {
+        margin-top: 25px;
+        font-size: 0.9375rem;
+    }
+    
+    .current-slide {
+        color: $news-primary-color;
+        font-size: 1.125rem;
+        font-weight: 700;
+    }
+    
+    .separator {
+        margin: 0 8px;
+        color: #ccc;
+    }
+    
+    .total-slides {
+        color: $news-meta-color;
+    }
+}
+
+// ============================================================================
+// Responsive Adjustments
+// ============================================================================
+
+@media (max-width: 576px) {
+
+    
+    .news-image-container {
+        padding-top: 65%; // Wyższy aspect ratio na mobile
+    }
+    
+    .news-date-badge {
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        
+        .date-day {
+            font-size: 1.25rem;
+        }
+        
+        .date-month {
+            font-size: 0.75rem;
+        }
+    }
+}
+
+// ============================================================================
+// Loading State
+// ============================================================================
+
+.news-carousel:not(.slick-initialized-news) {
+    .news-slide {
+        opacity: 0.3;
+    }
+}
+
+// ============================================================================
+// Print Styles
+// ============================================================================
+
+@media print {
+    .news-carousel-container .carousel-arrow,
+    .news-carousel-container .carousel-counter {
+        display: none;
+    }
+    
+    .news-slide {
+        break-inside: avoid;
+    }
+}   

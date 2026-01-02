@@ -1,0 +1,84 @@
+// Variables
+$primary-color: #000000;
+$secondary-color: #000000;
+$dark-color: #2c3e50;
+$gray-color: #6c757d;
+$light-gray: #f8f9fa;
+$border-gray: #e9ecef;
+$medium-gray: #dee2e6;
+
+$gradient-primary: linear-gradient(90deg, $primary-color, $secondary-color);
+$gradient-background: linear-gradient(135deg, $light-gray 0%, $border-gray 100%);
+$gradient-overlay: linear-gradient(45deg, rgba(0, 0, 0, 0.7) 0%, rgba(255, 107, 53, 0.8) 50%, rgba(247, 147, 30, 0.9) 100%);
+
+$border-radius: 15px;
+$border-radius-small: 8px;
+$border-radius-medium: 12px;
+$border-radius-large: 20px;
+
+$transition-smooth: 0.3s ease;
+$transition-bounce: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$transition-elastic: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+$shadow-light: 0 5px 15px rgba(0, 0, 0, 0.08);
+$shadow-medium: 0 15px 35px rgba(0, 0, 0, 0.15);
+$shadow-heavy: 0 25px 50px rgba(0, 0, 0, 0.3);
+
+// Mixins
+@mixin center-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin button-hover($scale: 1.1) {
+  transition: all $transition-smooth;
+  
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+@mixin modal-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 55px;
+  height: 55px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  @include center-flex;
+  font-size: 22px;
+  color: white;
+  transition: all $transition-smooth;
+  z-index: 10;
+}
+
+@mixin slider-nav-button {
+  position: absolute;
+  top: -110px;
+  width: 55px;
+  height: 55px;
+  border: none;
+  cursor: pointer;
+  @include center-flex;
+  font-size: 20px;
+  z-index: 10;
+  opacity: 0.9;
+  background: none;
+
+  border: 0 !important;
+
+  &:focus {
+    outline: none;
+    border:none;
+  }
+}
+
+@mixin text-ellipsis($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
