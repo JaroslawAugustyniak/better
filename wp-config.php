@@ -22,16 +22,16 @@
 
 // ** Ustawienia MySQL-a - możesz uzyskać je od administratora Twojego serwera ** //
 /** Nazwa bazy danych, której używać ma WordPress */
-define('DB_NAME', 'better_wordpress');
+define('DB_NAME', 'better');
 
 /** Nazwa użytkownika bazy danych MySQL */
-define('DB_USER', 'root');
+define('DB_USER', 'wp');
 
 /** Hasło użytkownika bazy danych MySQL */
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'wp');
 
 /** Nazwa hosta serwera MySQL */
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'mysql');
 
 /** Kodowanie bazy danych używane do stworzenia tabel w bazie danych. */
 define('DB_CHARSET', 'utf8');

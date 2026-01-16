@@ -7,7 +7,7 @@ module.exports = merge(common, {
     devServer: {
         contentBase: '../../assets',
         // disableHostCheck: true,
-        host: "new.better.localhost",
+        host: "better.localhost",
         hot: true,
         headers: {
           'Access-Control-Allow-Origin': '*'

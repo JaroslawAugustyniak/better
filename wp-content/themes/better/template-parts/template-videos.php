@@ -30,6 +30,18 @@
                             $video_id = get_field('identyfikator_filmy_z_youtube', $video->ID);
                             ?>
                         <div class="youtube-slide" data-index="<?=$index?>" data-video-id="<?=$video_id?>" data-title="<?= $video->post_title ?>">
+                            <?php $transcrypt = get_field('transcrypt', $video->ID); if ($transcrypt) : ?>
+                            <script type="application/ld+json">
+                            {
+                                "@context": "https://schema.org",
+                                "@type": "VideoObject",
+                                "name": <?= json_encode($video->post_title) ?>,
+                                "thumbnailUrl": "<?= $zdjecie ? esc_url($zdjecie['url']) : 'https://img.youtube.com/vi/'.$video_id.'/hqdefault.jpg' ?>",
+                                "embedUrl": "https://www.youtube.com/embed/<?= esc_attr($video_id) ?>",
+                                "transcript": <?= json_encode($transcrypt) ?>
+                            }
+                            </script>
+                            <?php else: ?><div class="no-transcript"></div><?php endif; ?>
                             <div class="slide-image-container">
                                 <img src="<?=$zdjecie?$zdjecie['url']:''?>" 
                                      alt="<?= $video->post_title ?>" 
