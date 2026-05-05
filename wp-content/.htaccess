@@ -38,6 +38,11 @@
   RewriteCond %{REQUEST_FILENAME} -f
   RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/$1.jpeg.webp -f
   RewriteRule (.+)\.jpeg$ /wp-content/uploads-webpc/$1.jpeg.webp [NC,T=image/webp,L]
+
+  # Redirect polityka-prywatnosci to canonical URL
+  RewriteCond %{REQUEST_URI} polityka-prywatnosci
+  RewriteCond %{REQUEST_URI} !^/polityka-prywatnosci/?$
+  RewriteRule ^(.*)$ /polityka-prywatnosci/ [R=301,L]
 </IfModule>
 <IfModule mod_headers.c>
   <FilesMatch "(?i)\.(jpg|png|webp|jpeg)(\.(webp|avif))?$">

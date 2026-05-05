@@ -117,15 +117,11 @@
 
         </div>
     </div>
-<!--
+
     <div class="menu-module__footer d-lg-none d-block">
         <div class="menu-module__lang">
-            <ul>
-               
-                    <li><a href="#"></a></li>
-                
-            </ul>
+         
         </div>
     </div>
-                            -->
+
 </div>

@@ -7,6 +7,7 @@ custom-post-type-ui\
 intuitive-custom-post-order\
 litespeed-cache\
 seo-by-rank-math\
+site-map-generator\
 svg-support\
 update-urls\
 webp-converter-for-media\

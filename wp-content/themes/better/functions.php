@@ -9,7 +9,7 @@
 add_filter('show_admin_bar', '__return_false');
 if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.2' );
+	define( '_S_VERSION', '1.1.5' );
 }
 
 add_action( 'acf/input/admin_enqueue_scripts', function() {
@@ -24,7 +24,7 @@ add_action( 'admin_menu', function() {
     add_menu_page(
         'Better.clinic',         // Tytuł strony
         'Better.clinic',         // Nazwa w menu
-        'manage_options',    // Uprawnienia
+        'edit_posts',    // Uprawnienia
         'better_main',    // Slug menu
         '',                  // Funkcja (niepotrzebna – tylko kontener)
         'dashicons-portfolio', // Ikona
@@ -72,7 +72,7 @@ function get_header_color($bg_color){
 		case 'colorset--color-7':
 			return 'page-header--color-1';
 		case 'colorset--color-8':
-			return 'page-header--color-2';
+			return 'page-header--color-2';			
 	}
 }
 
@@ -355,12 +355,10 @@ function better_scripts() {
 	
 	// wp_enqueue_style('better-style-style', get_template_directory_uri() . '/assets2/css/style.min.css', array(), _S_VERSION);
 	// wp_enqueue_style('better-app-style', get_template_directory_uri() . '/assets2/css/app.min.css', array(), _S_VERSION);
-	
-	if($_SERVER['HTTP_HOST'] == 'better.localhost'){
-		wp_enqueue_script('better-main-js', 'http://better.localhost:8080/js/main.min.js', array(), _S_VERSION, true);
-		// wp_enqueue_script('better-test-js', get_template_directory_uri() . '/assets/js/test.js', array(), _S_VERSION, true);
+
+	if($_SERVER['HTTP_HOST'] == 'new.better.localhost'){
+		wp_enqueue_script('better-main-js', 'http://new.better.localhost:8080/js/main.min.js', array(), _S_VERSION, true);
 	}else{
-		
 		wp_enqueue_style('better-main-style', get_template_directory_uri() . '/assets/styles/main.min.css', array(), _S_VERSION);
 		wp_enqueue_script('better-main-js', get_template_directory_uri() . '/assets/js/main.min.js', array(), _S_VERSION, true);
 	}

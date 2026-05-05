@@ -124,17 +124,7 @@ $posts = get_child_posts_of_current( $current_page );
         </article>
     </section>
 
-	<?php
-		set_query_var( 'service_id', $current_page->ID );
-		get_template_part( 'template-parts/template', 'opinions');
-		wp_reset_postdata();
-	?>
-
-	<?php
-		set_query_var( 'service_id', $current_page->ID );
-		get_template_part( 'template-parts/template', 'faq');
-		wp_reset_postdata();
-	?>
+	<?php get_template_part( 'template-parts/template', 'opinions'); ?>
 
 
 				
