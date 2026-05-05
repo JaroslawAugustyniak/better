@@ -1,7 +1,4 @@
 <?php
-
-
-
 /**
  * Podstawowa konfiguracja WordPressa.
  *
@@ -31,7 +28,7 @@ define('DB_USER', 'wp');
 define('DB_PASSWORD', 'wp');
 
 /** Nazwa hosta serwera MySQL */
-define('DB_HOST', 'mysql');
+define('DB_HOST', 'mysql:3309');
 
 /** Kodowanie bazy danych używane do stworzenia tabel w bazie danych. */
 define('DB_CHARSET', 'utf8');

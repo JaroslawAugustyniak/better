@@ -358,6 +358,7 @@ function better_scripts() {
 	
 	if($_SERVER['HTTP_HOST'] == 'better.localhost'){
 		wp_enqueue_script('better-main-js', 'http://better.localhost:8080/js/main.min.js', array(), _S_VERSION, true);
+		// wp_enqueue_script('better-test-js', get_template_directory_uri() . '/assets/js/test.js', array(), _S_VERSION, true);
 	}else{
 		
 		wp_enqueue_style('better-main-style', get_template_directory_uri() . '/assets/styles/main.min.css', array(), _S_VERSION);

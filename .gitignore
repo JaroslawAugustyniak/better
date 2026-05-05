@@ -9,11 +9,13 @@ yarn-error.log*
 
 # --- WordPress ---
 wp-admin/
+wp-content/languages/
 wp-includes/
 # wp-config.php
 wp-content/uploads/
 wp-content/cache/
 wp-content/upgrade/
+wp-content/themes/better/assets2/
 wp-content/uploads/
 wp-content/uploads-backups/
 wp-content/uploads-webpc/
@@ -27,6 +29,7 @@ wp-content/plugins/*
 !wp-content/plugins/.keep
 !wp-content/plugins/plugins-list.txt
 !wp-content/plugins/my_shortcodes/
+!wp-content/plugins/site-map-generator/
 
 # --- PHP ---
 vendor/

@@ -3,7 +3,6 @@
     global $post;
 
     if($args):
-
         $bg = 'colorset--color-1';
 
         $mainpage_item = $args; 
@@ -20,26 +19,33 @@
 
         $bg = 'colorset--color-8';
 
-        global $post;
-
         $mainpage_item = get_post_by_slug_and_type('opinie-naszych-pacjentow', 'mainpage');
         $opis = get_field('opis', $mainpage_item->ID);
 
-                $args_list = array(
-                    'post_type'      => 'comment',
-                    'post_status'    => 'publish',
-                    'posts_per_page' => -1,
-                    'meta_query'     => array(
-                        array(
-                            'key'     => 'dotyczy_uslugi',
-                            'value'   => '"' . $post->ID . '"',  // szukaj ID w cudzysłowie
-                            'compare' => 'LIKE',
-                        ),
-                    ),
-                );
+        // Pobierz ID usługi z query var (przekazane z content-service.php)
+        $service_id = get_query_var( 'service_id' );
 
-        $comments = new WP_Query( $args_list );        
- 
+        // Fallback na globalny $post jeśli query_var nie jest ustawiony
+        if ( ! $service_id ) {
+            global $post;
+            $service_id = $post->ID;
+        }
+
+        $args_list = array(
+            'post_type'      => 'comment',
+            'post_status'    => 'publish',
+            'posts_per_page' => -1,
+            'meta_query'     => array(
+                array(
+                    'key'     => 'dotyczy_uslugi',
+                    'value'   => '"' . $service_id . '"',
+                    'compare' => 'LIKE',
+                ),
+            ),
+        );
+
+        $comments = new WP_Query( $args_list );
+
     endif;
 ?>
 <?php if ($comments->have_posts()) : ?>

@@ -90,3 +90,6 @@ require('./include/validations.js');
 require('./include/infoCookie.js');
 //require('./include/parallax.js');
 require('./include/functions.js');
+
+// ---- FAQ Accordion
+require('../faq-accordion.js');
