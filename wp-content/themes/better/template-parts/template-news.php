@@ -20,9 +20,9 @@
             <div class="row">
                 <div class="col-lg-3 col-12">
                     <div data-waypoint-animate="true">
-                        <h1 class="homepage-section__header">
+                        <h2 class="homepage-section__header">
                             <a href="<?=get_permalink($page->ID)?>"><?=$mainpage_item->post_title?></a>
-                        </h1>
+                        </h2>
                     </div>
                 </div>
                 <div class="col-lg-2">

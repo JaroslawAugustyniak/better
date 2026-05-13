@@ -34,6 +34,36 @@
   }
 }
 
+section.homepage-section{
+  min-height: inherit;
+  padding-top:10.375rem;
+  padding-bottom:10.375rem;
+}
+
+h2.homepage-section__header{
+  @include h2();
+}
+
+h3.head-class{
+  @include h3();
+}
+
+.page-header{
+
+  .menu-button .hamburger span:nth-child(3) {
+      transition-delay: .625s;
+      top: 10px;
+  }
+
+  &.page-header--color-9{
+    .page-header__logo{
+        #ph-logo-path{
+          fill: #FFF;
+        }
+      }
+  }
+  
+}
 
 .content-header__dsc{
   p{

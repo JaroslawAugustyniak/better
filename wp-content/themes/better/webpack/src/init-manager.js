@@ -466,7 +466,7 @@ class InitializationManager {
                         this.setHeaderClass(headerClass);
                     }
                 },
-                offset: '20%'
+                // offset: '20%'
             });
             
             const waypointBottom = new Waypoint({
@@ -482,7 +482,7 @@ class InitializationManager {
                         }
                     }
                 },
-                offset: '20%'
+                // offset: '20%'
             });
             
             this.headerWaypointInstances.push(waypointTop, waypointBottom);

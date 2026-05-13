@@ -55,6 +55,7 @@
         <div class="hamburger">
             <span></span>
             <span></span>
+            <span></span>
         </div>
         <div class="cross">
             <span></span>
