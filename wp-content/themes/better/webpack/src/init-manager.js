@@ -17,12 +17,12 @@ class InitializationManager {
     }
     
     init() {
-        console.log('InitManager: Starting...');
+        // console.log('InitManager: Starting...');
         
         // Pobierz header
         this.header = document.querySelector('.page-header');
         if (!this.header) {
-            console.warn('InitManager: Header .page-header not found');
+            // console.warn('InitManager: Header .page-header not found');
         }
         
         // Inicjalizuj od razu (nie zależą od sliderów)
@@ -49,7 +49,7 @@ class InitializationManager {
             
             if (allReady) {
                 clearInterval(this.checkInterval);
-                console.log('InitManager: All sliders ready, waiting 800ms for layout...');
+                // console.log('InitManager: All sliders ready, waiting 800ms for layout...');
                 
                 setTimeout(() => {
                     this.initializeWaypoints();
@@ -79,7 +79,7 @@ class InitializationManager {
             return;
         }
         
-        console.log('InitManager: Initializing scroll handling...');
+        // console.log('InitManager: Initializing scroll handling...');
         
         // 1. Obsługa hashchange
         window.addEventListener('hashchange', (event) => {
@@ -130,7 +130,7 @@ class InitializationManager {
         }
         
         this.scrollInitialized = true;
-        console.log('InitManager: Scroll handling initialized');
+        // console.log('InitManager: Scroll handling initialized');
     }
     
     /**
@@ -173,7 +173,7 @@ class InitializationManager {
         const headerOffset = 80; // Offset dla fixed header
         const scrollPosition = Math.max(0, elementTop - headerOffset);
         
-        console.log('InitManager: Scrolling to:', elementId, 'at position:', scrollPosition);
+        // console.log('InitManager: Scrolling to:', elementId, 'at position:', scrollPosition);
         
         // Scrolluj
         window.scrollTo({
@@ -218,7 +218,7 @@ class InitializationManager {
             return;
         }
         
-        console.log(`InitManager: Found ${$selects.length} Select2 elements`);
+        // console.log(`InitManager: Found ${$selects.length} Select2 elements`);
         
         $selects.each((index, select) => {
             const $select = $(select);
@@ -244,7 +244,7 @@ class InitializationManager {
         });
         
         this.select2Initialized = true;
-        console.log('InitManager: Select2 initialization complete');
+        // console.log('InitManager: Select2 initialization complete');
     }
     
     getSelect2Options($select) {
@@ -296,7 +296,7 @@ class InitializationManager {
      * Inicjalizacja lazy loadingu obrazków
      */
     initializeLazyLoad() {
-        console.log('InitManager: Initializing lazy load...');
+        // console.log('InitManager: Initializing lazy load...');
         
         if (!('IntersectionObserver' in window)) {
             console.warn('InitManager: IntersectionObserver not supported');
@@ -327,7 +327,7 @@ class InitializationManager {
             return;
         }
         
-        console.log(`InitManager: Found ${lazyImages.length} lazy load images`);
+        // console.log(`InitManager: Found ${lazyImages.length} lazy load images`);
         
         lazyImages.forEach(img => {
             this.lazyLoadObserver.observe(img);
@@ -379,13 +379,13 @@ class InitializationManager {
             }
         });
         
-        console.log(`InitManager: Loaded ${lazyImages.length} images immediately`);
+        // console.log(`InitManager: Loaded ${lazyImages.length} images immediately`);
     }
     
     initializeWaypoints() {
         if (this.waypointsInitialized) return;
         
-        console.log('InitManager: Initializing animation waypoints...');
+        // console.log('InitManager: Initializing animation waypoints...');
         
         if (typeof Waypoint === 'undefined') {
             console.error('InitManager: Waypoint library not loaded!');
@@ -402,7 +402,7 @@ class InitializationManager {
             return;
         }
         
-        console.log(`InitManager: Found ${elements.length} animation waypoint elements`);
+        // console.log(`InitManager: Found ${elements.length} animation waypoint elements`);
         
         this.animateVisibleElements(elements);
         
@@ -427,7 +427,7 @@ class InitializationManager {
         });
         
         this.waypointsInitialized = true;
-        console.log(`InitManager: Created ${this.waypointInstances.length} waypoint instances`);
+        // console.log(`InitManager: Created ${this.waypointInstances.length} waypoint instances`);
     }
     
     initializeHeaderWaypoints() {
@@ -436,16 +436,16 @@ class InitializationManager {
             return;
         }
         
-        console.log('InitManager: Initializing header waypoints...');
+        // console.log('InitManager: Initializing header waypoints...');
         
         const sections = document.querySelectorAll('[data-waypoint-header]');
         
         if (sections.length === 0) {
-            console.log('InitManager: No sections with data-waypoint-header found');
+            // console.log('InitManager: No sections with data-waypoint-header found');
             return;
         }
         
-        console.log(`InitManager: Found ${sections.length} sections with header waypoints`);
+        // console.log(`InitManager: Found ${sections.length} sections with header waypoints`);
         
         this.checkInitialHeaderState(sections);
         
@@ -488,7 +488,7 @@ class InitializationManager {
             this.headerWaypointInstances.push(waypointTop, waypointBottom);
         });
         
-        console.log(`InitManager: Created ${this.headerWaypointInstances.length} header waypoint instances`);
+        // console.log(`InitManager: Created ${this.headerWaypointInstances.length} header waypoint instances`);
     }
     
     findPreviousSection(currentSection, allSections) {

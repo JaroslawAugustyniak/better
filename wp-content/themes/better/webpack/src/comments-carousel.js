@@ -139,7 +139,7 @@ class CommentsCarousel {
             throw new Error('No comment data found');
         }
 
-        console.log(`Found ${this.comments.length} comments for carousel`);
+        // console.log(`Found ${this.comments.length} comments for carousel`);
     }
 
     /**
@@ -148,7 +148,7 @@ class CommentsCarousel {
     async initSlickCarousel() {
         return new Promise((resolve, reject) => {
             try {
-                console.log('Initializing Slick Carousel for comments...');
+                // console.log('Initializing Slick Carousel for comments...');
                 
                 // Sprawdź czy Slick jest dostępny
                 if (!$.fn.slick) {
@@ -210,13 +210,13 @@ class CommentsCarousel {
                     ]
                 };
 
-                console.log('Slick config for comments:', slickConfig);
+                // console.log('Slick config for comments:', slickConfig);
 
                 // Initialize Slick
                 this.$carousel.slick(slickConfig);
                 this.slickInitialized = true;
 
-                console.log('✓ Slick Carousel initialized for comments');
+                // console.log('✓ Slick Carousel initialized for comments');
 
                 // Setup additional features
                 this.onSlickInit();
@@ -235,7 +235,7 @@ class CommentsCarousel {
      * Callback po inicjalizacji Slick
      */
     onSlickInit() {
-        console.log('Setting up post-Slick features for comments...');
+        // console.log('Setting up post-Slick features for comments...');
         
         this.$carousel.addClass('slick-initialized-comments');
 
@@ -248,14 +248,14 @@ class CommentsCarousel {
             this.onBeforeSlideChange(currentSlide, nextSlide);
         });
 
-        console.log('✓ Post-Slick setup complete for comments');
+        // console.log('✓ Post-Slick setup complete for comments');
     }
 
     /**
      * Bindowanie event handlerów
      */
     bindEvents() {
-        console.log('Binding events for comments carousel...');
+        // console.log('Binding events for comments carousel...');
         
         // Custom navigation buttons
         if (this.prevBtn) {
@@ -299,7 +299,7 @@ class CommentsCarousel {
             }
         });
 
-        console.log('✅ All events bound successfully for comments');
+        // console.log('✅ All events bound successfully for comments');
     }
 
     /**
@@ -362,7 +362,7 @@ class CommentsCarousel {
      * Callback dla zmiany slajdu
      */
     onSlideChange(currentSlide) {
-        console.log('Comments slide changed to:', currentSlide);
+        // console.log('Comments slide changed to:', currentSlide);
         this.currentSlide = currentSlide;
         
         if (this.config.showIndicators) {
@@ -381,7 +381,7 @@ class CommentsCarousel {
      * Callback przed zmianą slajdu
      */
     onBeforeSlideChange(currentSlide, nextSlide) {
-        console.log('Comments slide changing from', currentSlide, 'to', nextSlide);
+        // console.log('Comments slide changing from', currentSlide, 'to', nextSlide);
     }
 
     /**
@@ -576,7 +576,7 @@ class CommentsCarousel {
         $(document).off('keydown.commentsCarousel');
         
         this.isInitialized = false;
-        console.log('Comments Carousel destroyed');
+        // console.log('Comments Carousel destroyed');
     }
 }
 
@@ -584,17 +584,17 @@ class CommentsCarousel {
  * Auto-initialize when DOM is ready
  */
 $(document).ready(function() {
-    console.log('🚀 Comments Carousel module loaded');
-    console.log('📊 jQuery version:', $.fn.jquery);
-    console.log('🎠 Slick available:', typeof $.fn.slick);
+    // console.log('🚀 Comments Carousel module loaded');
+    // console.log('📊 jQuery version:', $.fn.jquery);
+    // console.log('🎠 Slick available:', typeof $.fn.slick);
     
     const carouselElement = document.getElementById('commentsCarousel');
     
     if (carouselElement) {
-        console.log('🎯 Comments carousel element found:', carouselElement);
+        // console.log('🎯 Comments carousel element found:', carouselElement);
         
         const slides = carouselElement.querySelectorAll('.comment-slide');
-        console.log('📝 Comment slides found:', slides.length);
+        // console.log('📝 Comment slides found:', slides.length);
         
         if (slides.length > 0) {
             try {
@@ -608,8 +608,8 @@ $(document).ready(function() {
                     expandComments: true
                 });
                 
-                console.log('🎉 Comments Carousel initialized successfully');
-                console.log('📋 Instance available at: window.commentsCarousel');
+                // console.log('🎉 Comments Carousel initialized successfully');
+                // console.log('📋 Instance available at: window.commentsCarousel');
             } catch (error) {
                 console.error('💥 Failed to initialize Comments Carousel:', error);
                 console.log('🔧 Debug info:');
@@ -617,11 +617,11 @@ $(document).ready(function() {
                 console.log('- Slides found:', slides.length);
             }
         } else {
-            console.log('ℹ️ No comment slides found in carousel');
+            // console.log('ℹ️ No comment slides found in carousel');
         }
     } else {
-        console.log('ℹ️ Comments Carousel element not found on this page');
-        console.log('🔍 Looking for element with ID: commentsCarousel');
+        // console.log('ℹ️ Comments Carousel element not found on this page');
+        // console.log('🔍 Looking for element with ID: commentsCarousel');
     }
 });
 

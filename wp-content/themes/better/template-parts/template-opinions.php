@@ -4,9 +4,11 @@
 
     if($args):
 
-        $bg = 'colorset--color-1';
-
         $mainpage_item = $args; 
+
+        $bg = get_field('kolor_tla', $mainpage_item->ID);
+        $description = get_field('opis', $mainpage_item->ID);
+
         $opis = get_field('opis', $mainpage_item->ID);
 
         $args_list = array(
@@ -44,12 +46,22 @@
 ?>
 <?php if ($comments->have_posts()) : ?>
 
-<section class="homepage-section comments-section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
+<section class="homepage-section opinions section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
         <div class="container">
-            <div class="section-header text-center" data-waypoint-animate="true">
-                <h2 class="section-title"><?= $mainpage_item->post_title ?></h2>
-                <p class="section-subtitle"><?= $opis ?></p>
+            <div class="homepage-section__top">
+            <div class="row">
+                <div class="col-lg-4 col-12">
+                    <div data-waypoint-animate="true">
+                        <h2 class="homepage-section__header">
+                            <?=$mainpage_item->post_title?>
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="homepage-section__description" data-waypoint-animate="true"><?=$description?></div>
+                </div>
             </div>
+        </div>
             
             <div class="comments-carousel-container" data-waypoint-animate="true">
                 <div class="comments-carousel" id="commentsCarousel">
@@ -76,14 +88,22 @@
                         ?>
                         <div class="comment-slide" data-index="<?=$index?>" data-comment-id="<?=$comment->ID?>" data-author="<?= $comment->post_title ?>">
                             <div class="comment-card">
-                                <div class="comment-header">
-                                    <div class="comment-avatar">
-                                        <?php
-                                            displayImageACF($zdjecie, $comment->post_title);
-                                        ?>
-                                    </div>
-                                    
+                                
+                                <div class="comment-avatar">
+                                    <?php
+                                        displayImageACF($zdjecie, $comment->post_title);
+                                    ?>
                                 </div>
+                                <div class="rateholder">
+                                    <div class="stars" data-rate="4">
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                    </div>
+                                    <div class="rate">4/5 Google</div>
+                                </div>                                    
                                 
                                 <div class="comment-content">
                                     <div class="comment-text">

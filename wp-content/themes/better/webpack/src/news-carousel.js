@@ -62,28 +62,28 @@ class NewsCarousel {
      */
     async init() {
         try {
-            console.log('Starting News Carousel initialization...');
+            //console.log('Starting News Carousel initialization...');
             
             this.getElements();
-            console.log('✓ Elements found');
+            //console.log('✓ Elements found');
             
             this.extractNewsData();
-            console.log('✓ News data extracted:', this.news.length, 'items');
+            //console.log('✓ News data extracted:', this.news.length, 'items');
             
             this.setupAccessibility();
-            console.log('✓ Accessibility setup');
+            //console.log('✓ Accessibility setup');
             
             await this.initSlickCarousel();
-            console.log('✓ Slick initialized');
+            //console.log('✓ Slick initialized');
             
             this.bindEvents();
-            console.log('✓ Events bound');
+            //console.log('✓ Events bound');
             
             this.setupCustomNavigation();
-            console.log('✓ Custom navigation setup');
+            //console.log('✓ Custom navigation setup');
             
             this.isInitialized = true;
-            console.log('✅ News Carousel initialized successfully');
+            //console.log('✅ News Carousel initialized successfully');
 
             window.dispatchEvent(new CustomEvent('sliderInitialized', {
                 detail: { type: 'news', instance: this }
@@ -134,7 +134,7 @@ class NewsCarousel {
             throw new Error('No news data found');
         }
 
-        console.log(`Found ${this.news.length} news items for carousel`);
+        //console.log(`Found ${this.news.length} news items for carousel`);
     }
 
     /**
@@ -143,7 +143,7 @@ class NewsCarousel {
     async initSlickCarousel() {
         return new Promise((resolve, reject) => {
             try {
-                console.log('Initializing Slick Carousel for news...');
+                //console.log('Initializing Slick Carousel for news...');
                 
                 // Sprawdź czy Slick jest dostępny
                 if (!$.fn.slick) {
@@ -205,13 +205,13 @@ class NewsCarousel {
                     ]
                 };
 
-                console.log('Slick config for news:', slickConfig);
+                //console.log('Slick config for news:', slickConfig);
 
                 // Initialize Slick
                 this.$carousel.slick(slickConfig);
                 this.slickInitialized = true;
 
-                console.log('✓ Slick Carousel initialized for news');
+                //console.log('✓ Slick Carousel initialized for news');
 
                 // Setup additional features
                 this.onSlickInit();
@@ -230,7 +230,7 @@ class NewsCarousel {
      * Callback po inicjalizacji Slick
      */
     onSlickInit() {
-        console.log('Setting up post-Slick features for news...');
+        //console.log('Setting up post-Slick features for news...');
         
         this.$carousel.addClass('slick-initialized-news');
 
@@ -243,14 +243,14 @@ class NewsCarousel {
             this.onBeforeSlideChange(currentSlide, nextSlide);
         });
 
-        console.log('✓ Post-Slick setup complete for news');
+        //console.log('✓ Post-Slick setup complete for news');
     }
 
     /**
      * Bindowanie event handlerów
      */
     bindEvents() {
-        console.log('Binding events for news carousel...');
+        //console.log('Binding events for news carousel...');
         
         // Custom navigation buttons
         if (this.prevBtn) {
@@ -302,7 +302,7 @@ class NewsCarousel {
             this.trackNewsClick(newsId, newsTitle);
         });
 
-        console.log('✅ All events bound successfully for news');
+        //console.log('✅ All events bound successfully for news');
     }
 
     /**
@@ -324,7 +324,7 @@ class NewsCarousel {
      * Callback dla zmiany slajdu
      */
     onSlideChange(currentSlide) {
-        console.log('News slide changed to:', currentSlide);
+        //console.log('News slide changed to:', currentSlide);
         this.currentSlide = currentSlide;
         
         if (this.config.showIndicators) {
@@ -343,7 +343,7 @@ class NewsCarousel {
      * Callback przed zmianą slajdu
      */
     onBeforeSlideChange(currentSlide, nextSlide) {
-        console.log('News slide changing from', currentSlide, 'to', nextSlide);
+        //console.log('News slide changing from', currentSlide, 'to', nextSlide);
     }
 
     /**
@@ -547,7 +547,7 @@ class NewsCarousel {
         $(document).off('keydown.newsCarousel');
         
         this.isInitialized = false;
-        console.log('News Carousel destroyed');
+        //console.log('News Carousel destroyed');
     }
 }
 
@@ -555,17 +555,17 @@ class NewsCarousel {
  * Auto-initialize when DOM is ready
  */
 $(document).ready(function() {
-    console.log('🚀 News Carousel module loaded');
-    console.log('📊 jQuery version:', $.fn.jquery);
-    console.log('🎠 Slick available:', typeof $.fn.slick);
+    //console.log('🚀 News Carousel module loaded');
+    //console.log('📊 jQuery version:', $.fn.jquery);
+    //console.log('🎠 Slick available:', typeof $.fn.slick);
     
     const carouselElement = document.getElementById('newsCarousel');
     
     if (carouselElement) {
-        console.log('🎯 News carousel element found:', carouselElement);
+        //console.log('🎯 News carousel element found:', carouselElement);
         
         const slides = carouselElement.querySelectorAll('.news-slide');
-        console.log('🔍 News slides found:', slides.length);
+        //console.log('🔍 News slides found:', slides.length);
         
         if (slides.length > 0) {
             try {
@@ -578,20 +578,20 @@ $(document).ready(function() {
                     showIndicators: true
                 });
                 
-                console.log('🎉 News Carousel initialized successfully');
-                console.log('📋 Instance available at: window.newsCarousel');
+                //console.log('🎉 News Carousel initialized successfully');
+                //console.log('📋 Instance available at: window.newsCarousel');
             } catch (error) {
                 console.error('💥 Failed to initialize News Carousel:', error);
-                console.log('🔧 Debug info:');
-                console.log('- Carousel element:', carouselElement);
-                console.log('- Slides found:', slides.length);
+                //console.log('🔧 Debug info:');
+                //console.log('- Carousel element:', carouselElement);
+                //console.log('- Slides found:', slides.length);
             }
         } else {
-            console.log('ℹ️ No news slides found in carousel');
+            //console.log('ℹ️ No news slides found in carousel');
         }
     } else {
-        console.log('ℹ️ News Carousel element not found on this page');
-        console.log('🔍 Looking for element with ID: newsCarousel');
+        //console.log('ℹ️ News Carousel element not found on this page');
+        //console.log('🔍 Looking for element with ID: newsCarousel');
     }
 });
 

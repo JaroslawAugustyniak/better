@@ -1,0 +1,66 @@
+.homepage-section{
+    
+    .homepage-section__top{
+        margin-bottom: 5rem;
+    }
+
+    .homepage-sercions__bottom{
+        margin-top:.5rem;
+    }
+}
+
+#services{
+    .service-item{
+        margin-right: 1.75rem;
+        border: 1px solid $light-brown-color;
+        border-radius: 1rem;
+        padding: 1.25rem;
+        text-align: left;
+        transition: all $transition-smooth;
+
+        &:hover{
+            background: $light-hover;
+            border-color: $light-hover;
+        }
+
+        figure{
+            width:10rem;
+            height: 10rem;
+            margin-left:-1.25rem;
+            margin-bottom:1.875rem;
+
+            &.fill-box{
+                a{
+                    &:hover{
+                        &:after{
+                            content:none;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        h3{
+            font-size: 1.375rem;
+            margin-bottom:1.5rem;
+        }
+
+        .homepage-section__dsc{
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+        }
+
+        .homepage-section__buttons{
+           display: flex;
+           align-items: center;
+           
+           a{
+            margin-right:1.375rem;
+           }
+        }
+    }
+}
