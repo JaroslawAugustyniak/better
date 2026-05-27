@@ -17,18 +17,18 @@ class InitializationManager {
     }
     
     init() {
-        // console.log('InitManager: Starting...');
+        console.log('InitManager: Starting...');
         
         // Pobierz header
         this.header = document.querySelector('.page-header');
         if (!this.header) {
-            // console.warn('InitManager: Header .page-header not found');
+            console.warn('InitManager: Header .page-header not found');
         }
         
         // Inicjalizuj od razu (nie zależą od sliderów)
         this.initializeLazyLoad();
         this.initializeSelect2();
-        // this.initializeScrollHandling();
+        this.initializeScrollHandling();
         
         this.waitForSlidersAndInit();
     }
@@ -75,6 +75,7 @@ class InitializationManager {
      * Inicjalizacja obsługi scrollowania
      */
     initializeScrollHandling() {
+
         if (this.scrollInitialized) {
             console.log('InitManager: Scroll handling already initialized');
             return;
@@ -92,7 +93,11 @@ class InitializationManager {
         // 2. Obsługa kliknięć w linki z hash
         document.addEventListener('click', (event) => {
             const target = event.target.closest('a[href*="#"]');
+
+
             if (target && !target.hasAttribute('data-no-scroll')) {
+
+
                 event.preventDefault();
                 event.stopPropagation();
                 
@@ -154,13 +159,13 @@ class InitializationManager {
         if (!hash || hash.length <= 1) {
             return;
         }
-
         // Usuń # z początku
         const elementId = hash.startsWith('#') ? hash.substring(1) : hash;
 
         // Specjalna obsługa dla hashów zaczynających się od 'kontakt'
         if (elementId.startsWith('kontakt')) {
             this.handleContactHash(elementId);
+            return;
         }
 
         // Znajdź element

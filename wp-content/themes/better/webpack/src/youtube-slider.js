@@ -314,19 +314,33 @@ class YouTubeCarousel {
         // console.log('Binding events...');
 
         // Slide clicks
-        // console.log('Binding slide clicks for', this.slides.length, 'slides');
+        console.log('Binding slide clicks for', this.slides.length, 'slides');
         this.slides.forEach((slide, index) => {
+            // Bind click to play-button inside the slide
+            const playButton = slide.querySelector('.play-button');
+            if (playButton) {
+                $(playButton).on('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // console.log('Play button clicked:', index);
+                    this.openModal(index);
+
+                    var hash = '#'+movieHandler.createSlug(slide.dataset.title);
+                    window.history.replaceState(null, null, hash);
+                });
+            }
+
+            // Also bind to the entire slide for backwards compatibility
             $(slide).on('click', (e) => {  // ✅ Arrow function
-                e.preventDefault();
-                // console.log('Slide clicked:', index);
-                this.openModal(index);  // ✅ Teraz 'this' odnosi się do klasy
+                // Only if not clicking a play button
+                if (!$(e.target).closest('.play-button').length) {
+                    e.preventDefault();
+                    // console.log('Slide clicked:', index);
+                    this.openModal(index);  // ✅ Teraz 'this' odnosi się do klasy
 
-
-                var hash = '#'+movieHandler.createSlug(slide.dataset.title);
-
-
-
-                window.history.replaceState(null, null, hash);
+                    var hash = '#'+movieHandler.createSlug(slide.dataset.title);
+                    window.history.replaceState(null, null, hash);
+                }
             });
 
             // Keyboard events dla slajdów
@@ -778,6 +792,227 @@ class YouTubeCarousel {
 }
 
 /**
+ * Initialize play buttons for opinions carousel
+ */
+function initializeOpinionsMixPlayButtons(carousel, modal) {
+    const playButtons = carousel.querySelectorAll('.play-button');
+    const modalVideo = document.getElementById('modalVideo');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalClose = document.getElementById('modalClose');
+    const modalPrev = document.getElementById('modalPrev');
+    const modalNext = document.getElementById('modalNext');
+    const thumbnailsContainer = document.getElementById('thumbnailsContainer');
+
+    // Collect all video slides from the carousel
+    const videoSlides = Array.from(carousel.querySelectorAll('.youtube-slide'));
+
+    if (videoSlides.length === 0) return;
+
+    // Create videos array from slides
+    const videos = videoSlides.map((slide, index) => ({
+        id: slide.dataset.index || index,
+        title: slide.dataset.title || `Video ${index + 1}`,
+        youtube_id: slide.dataset.videoId,
+        thumbnail: `https://img.youtube.com/vi/${slide.dataset.videoId}/hqdefault.jpg`,
+        thumbnailHQ: `https://img.youtube.com/vi/${slide.dataset.videoId}/maxresdefault.jpg`
+    }));
+
+    let currentVideo = 0;
+
+    // Bind play button clicks
+    playButtons.forEach((button) => {
+        $(button).on('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Find the parent slide and get its index
+            const slide = button.closest('.youtube-slide');
+            if (slide) {
+                const index = videoSlides.indexOf(slide);
+                if (index !== -1) {
+                    openOpinionVideoModal(index);
+                }
+            }
+        });
+    });
+
+    function openOpinionVideoModal(index) {
+        if (index < 0 || index >= videos.length) return;
+
+        currentVideo = index;
+        const video = videos[index];
+
+        // Set modal title
+        if (modalTitle) {
+            modalTitle.textContent = video.title;
+        }
+
+        // Set video source with YouTube parameters
+        if (modalVideo) {
+            const params = new URLSearchParams({
+                rel: '0',
+                modestbranding: '1',
+                showinfo: '0',
+                controls: '1',
+                fs: '1'
+            });
+            modalVideo.src = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
+        }
+
+        // Show modal
+        $(modal).addClass('active');
+        $('body').css('overflow', 'hidden');
+
+        // Update navigation buttons
+        updateNavigation();
+
+        // Update thumbnails
+        updateThumbnails();
+
+        // Focus close button
+        if (modalClose) {
+            setTimeout(() => {
+                modalClose.focus();
+            }, 100);
+        }
+
+        // Track video view
+        trackVideoView(video);
+    }
+
+    function updateNavigation() {
+        if (modalPrev) {
+            modalPrev.disabled = currentVideo <= 0;
+            $(modalPrev).css('opacity', currentVideo <= 0 ? '0.3' : '1');
+        }
+
+        if (modalNext) {
+            modalNext.disabled = currentVideo >= videos.length - 1;
+            $(modalNext).css('opacity', currentVideo >= videos.length - 1 ? '0.3' : '1');
+        }
+    }
+
+    function updateThumbnails() {
+        if (!thumbnailsContainer) return;
+
+        const thumbnails = thumbnailsContainer.querySelectorAll('.thumbnail-item');
+        thumbnails.forEach((thumb, index) => {
+            $(thumb).toggleClass('active', index === currentVideo);
+        });
+
+        const activeThumb = thumbnails[currentVideo];
+        if (activeThumb) {
+            activeThumb.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            });
+        }
+    }
+
+    function trackVideoView(video) {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'video_play', {
+                video_title: video.title,
+                video_id: video.youtube_id,
+                video_provider: 'youtube'
+            });
+        }
+
+        if (typeof ga !== 'undefined') {
+            ga('send', 'event', 'Video', 'Play', video.title);
+        }
+
+        if (typeof fbq !== 'undefined') {
+            fbq('trackCustom', 'MovieView', {
+                content_category: 'YouTube_Video',
+                content_type: 'youtube_video',
+                content_name: video.title,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+
+    // Modal control handlers
+    if (modalClose) {
+        $(modalClose).on('click', (e) => {
+            e.preventDefault();
+            closeOpinionVideoModal();
+        });
+    }
+
+    if (modalPrev) {
+        $(modalPrev).on('click', (e) => {
+            e.preventDefault();
+            if (currentVideo > 0) {
+                switchOpinionVideo(currentVideo - 1);
+            }
+        });
+    }
+
+    if (modalNext) {
+        $(modalNext).on('click', (e) => {
+            e.preventDefault();
+            if (currentVideo < videos.length - 1) {
+                switchOpinionVideo(currentVideo + 1);
+            }
+        });
+    }
+
+    // Thumbnail clicks
+    if (thumbnailsContainer) {
+        $(thumbnailsContainer).on('click', '.thumbnail-item', (e) => {
+            e.preventDefault();
+            const index = parseInt(e.currentTarget.dataset.index);
+            switchOpinionVideo(index);
+        });
+    }
+
+    // Modal backdrop click
+    $(modal).on('click', (e) => {
+        if (e.target === modal || $(e.target).hasClass('modal-backdrop')) {
+            closeOpinionVideoModal();
+        }
+    });
+
+    function switchOpinionVideo(index) {
+        if (index < 0 || index >= videos.length) return;
+
+        currentVideo = index;
+        const video = videos[index];
+
+        if (modalTitle) {
+            modalTitle.textContent = video.title;
+        }
+
+        if (modalVideo) {
+            const params = new URLSearchParams({
+                autoplay: '1',
+                rel: '0',
+                modestbranding: '1',
+                iv_load_policy: '3'
+            });
+
+            modalVideo.src = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
+        }
+
+        updateThumbnails();
+        updateNavigation();
+        trackVideoView(video);
+    }
+
+    function closeOpinionVideoModal() {
+        $(modal).removeClass('active');
+
+        if (modalVideo) {
+            modalVideo.src = '';
+        }
+
+        $('body').css('overflow', 'auto');
+    }
+}
+
+/**
  * Auto-initialize when DOM is ready
  */
 $(document).ready(function() {
@@ -785,7 +1020,18 @@ $(document).ready(function() {
     // console.log('📊 jQuery version:', $.fn.jquery);
     // console.log('🎠 Slick available:', typeof $.fn.slick);
 
-    const carouselElement = document.getElementById('youtubeCarousel');
+    // Try to find YouTube carousel - check both IDs
+    let carouselId = null;
+    let carouselElement = document.getElementById('youtubeCarousel');
+
+    if (!carouselElement) {
+        carouselElement = document.getElementById('videos');
+        if (carouselElement) {
+            carouselId = 'videos';
+        }
+    } else {
+        carouselId = 'youtubeCarousel';
+    }
 
     if (carouselElement) {
         // console.log('🎯 Carousel element found:', carouselElement);
@@ -796,7 +1042,7 @@ $(document).ready(function() {
 
         try {
             window.youtubeCarousel = new YouTubeCarousel({
-                carouselId: 'youtubeCarousel',
+                carouselId: carouselId,
                 modalId: 'youtubeModal',
                 autoplay: true,
                 showRelated: false,
@@ -815,6 +1061,23 @@ $(document).ready(function() {
     } else {
         // console.log('ℹ️ YouTube Carousel element not found on this page');
         // console.log('🔍 Looking for element with ID: youtubeCarousel');
+    }
+
+    // Initialize opinions carousel with play button handlers
+    const opinionsMixCarousel = document.getElementById('opinionsmixCarousel');
+    if (opinionsMixCarousel) {
+        const youtubeModal = document.getElementById('youtubeModal');
+        if (youtubeModal) {
+            initializeOpinionsMixPlayButtons(opinionsMixCarousel, youtubeModal);
+        }
+    }
+
+    const videoCarousel = document.getElementById('videos');
+    if (videoCarousel) {
+        const youtubeModal = document.getElementById('youtubeModal');
+        if (youtubeModal) {
+            initializeOpinionsMixPlayButtons(videoCarousel, youtubeModal);
+        }
     }
 });
 
