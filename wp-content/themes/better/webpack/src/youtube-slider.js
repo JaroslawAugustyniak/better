@@ -89,34 +89,18 @@ class YouTubeCarousel {
      */
     async init() {
         try {
-            // console.log('Starting YouTube Carousel initialization...');
-
             this.getElements();
-            // console.log('✓ Elements found');
-
             this.extractVideoData();
-            // console.log('✓ Video data extracted:', this.videos.length, 'videos');
-
-            // Bind events BEFORE Slick initialization
-
-
             this.setupAccessibility();
-            // console.log('✓ Accessibility setup');
-
             await this.initSlickCarousel();
-            // console.log('✓ Slick initialized');
-
             this.isInitialized = true;
-            // console.log('✅ YouTube Carousel initialized successfully');
 
             window.dispatchEvent(new CustomEvent('sliderInitialized', {
                 detail: { type: 'youtube', instance: this }
             }));
 
              this.bindEvents();
-            // console.log('✓ Events bound');
         } catch (error) {
-            // console.error('❌ YouTube Carousel initialization failed:', error);
             throw error;
         }
     }
@@ -162,8 +146,6 @@ class YouTubeCarousel {
         if (this.videos.length === 0) {
             throw new Error('No video data found');
         }
-
-        // console.log(`Found ${this.videos.length} videos for carousel`);
     }
 
     /**
@@ -172,14 +154,9 @@ class YouTubeCarousel {
     async initSlickCarousel() {
         return new Promise((resolve, reject) => {
             try {
-                // console.log('Initializing Slick Carousel...');
-
-                // Sprawdź czy Slick jest dostępny
                 if (!$.fn.slick) {
                     throw new Error('Slick Carousel not found. Make sure it\'s imported.');
                 }
-
-                // Konfiguracja Slick Carousel
                 const slickConfig = {
                     slidesToShow: 2, // Desktop: 2 pełne + kawałek trzeciego
                     slidesToScroll: 1,
@@ -239,22 +216,13 @@ class YouTubeCarousel {
                     ]
                 };
 
-                // console.log('Slick config:', slickConfig);
-
-                // Initialize Slick
                 this.$carousel.slick(slickConfig);
                 this.slickInitialized = true;
 
-                // console.log('✓ Slick Carousel initialized');
-
-                // Setup additional features
                 this.onSlickInit();
-
-                // Resolve immediately after initialization
                 resolve();
 
             } catch (error) {
-                // console.error('❌ Failed to initialize Slick Carousel:', error);
                 reject(error);
             }
         });
@@ -264,21 +232,8 @@ class YouTubeCarousel {
      * Callback po inicjalizacji Slick
      */
     onSlickInit() {
-        // console.log('Setting up post-Slick features...');
-
         this.$carousel.addClass('slick-initialized-custom');
         this.setupLazyLoading();
-
-        // Bind Slick-specific events
-        this.$carousel.on('afterChange', (event, slick, currentSlide) => {
-            this.onSlideChange(currentSlide);
-        });
-
-        this.$carousel.on('beforeChange', (event, slick, currentSlide, nextSlide) => {
-            this.onBeforeSlideChange(currentSlide, nextSlide);
-        });
-
-        // console.log('✓ Post-Slick setup complete');
     }
 
     /**
@@ -311,18 +266,12 @@ class YouTubeCarousel {
      * Bindowanie event handlerów
      */
     bindEvents() {
-        // console.log('Binding events...');
-
-        // Slide clicks
-        console.log('Binding slide clicks for', this.slides.length, 'slides');
         this.slides.forEach((slide, index) => {
-            // Bind click to play-button inside the slide
             const playButton = slide.querySelector('.play-button');
             if (playButton) {
                 $(playButton).on('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    // console.log('Play button clicked:', index);
                     this.openModal(index);
 
                     var hash = '#'+movieHandler.createSlug(slide.dataset.title);
@@ -330,13 +279,10 @@ class YouTubeCarousel {
                 });
             }
 
-            // Also bind to the entire slide for backwards compatibility
-            $(slide).on('click', (e) => {  // ✅ Arrow function
-                // Only if not clicking a play button
+            $(slide).on('click', (e) => {
                 if (!$(e.target).closest('.play-button').length) {
                     e.preventDefault();
-                    // console.log('Slide clicked:', index);
-                    this.openModal(index);  // ✅ Teraz 'this' odnosi się do klasy
+                    this.openModal(index);
 
                     var hash = '#'+movieHandler.createSlug(slide.dataset.title);
                     window.history.replaceState(null, null, hash);
@@ -347,102 +293,59 @@ class YouTubeCarousel {
             $(slide).on('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    // console.log('Slide activated via keyboard:', index);
                     this.openModal(index);
                 }
             });
         });
 
-        // Modal events
-        // console.log('Modal elements check:');
-        // console.log('- modalClose:', !!this.modalClose);
-        // console.log('- modalPrev:', !!this.modalPrev);
-        // console.log('- modalNext:', !!this.modalNext);
-        // console.log('- modal:', !!this.modal);
-        // console.log('- thumbnailsContainer:', !!this.thumbnailsContainer);
-
         if (this.modalClose) {
             $(this.modalClose).on('click', (e) => {
                 e.preventDefault();
-                // console.log('Modal close clicked');
                 this.closeModal();
             });
-            // console.log('✓ Modal close event bound');
-        } else {
-            // console.warn('⚠️ Modal close element not found');
         }
 
         if (this.modalPrev) {
             $(this.modalPrev).on('click', (e) => {
                 e.preventDefault();
-                // console.log('Modal prev clicked');
                 this.prevVideo();
             });
-            // console.log('✓ Modal prev event bound');
         }
 
         if (this.modalNext) {
             $(this.modalNext).on('click', (e) => {
                 e.preventDefault();
-                // console.log('Modal next clicked');
                 this.nextVideo();
             });
-            // console.log('✓ Modal next event bound');
         }
 
-        // Thumbnail clicks
         if (this.thumbnailsContainer) {
             $(this.thumbnailsContainer).on('click', '.thumbnail-item', (e) => {
                 e.preventDefault();
                 const index = parseInt(e.currentTarget.dataset.index);
-                // console.log('Thumbnail clicked:', index);
                 this.switchVideo(index);
             });
-            // console.log('✓ Thumbnail events bound');
         }
 
-        // Modal backdrop click
         if (this.modal) {
             $(this.modal).on('click', (e) => {
                 if (e.target === this.modal || $(e.target).hasClass('modal-backdrop')) {
-                    // console.log('Modal backdrop clicked');
                     this.closeModal();
                 }
             });
-            // console.log('✓ Modal backdrop event bound');
         }
 
-        // Keyboard navigation
         if (this.config.keyboardNavigation) {
             $(document).on('keydown.youtubeCarousel', (e) => this.handleKeyboard(e));
-            // console.log('✓ Keyboard navigation bound');
         }
 
         if (this.modal) {
             $(this.modal).on('keydown', (e) => this.handleModalKeyboard(e));
-            // console.log('✓ Modal keyboard events bound');
         }
-
-        // console.log('✅ All events bound successfully');
     }
 
     /**
-     * Callback dla zmiany slajdu
-     */
-    onSlideChange(currentSlide) {
-        // console.log('Slide changed to:', currentSlide);
-        this.trackSlideChange(currentSlide);
-    }
-
-    /**
-     * Callback przed zmianą slajdu
-     */
-    onBeforeSlideChange(currentSlide, nextSlide) {
-        // console.log('Slide changing from', currentSlide, 'to', nextSlide);
-    }
-
-    /**
-     * Obsługa klawiatury
+     * Obsługa klawiatury w modal
      */
     handleKeyboard(e) {
         if (this.modal && $(this.modal).hasClass('active')) {
@@ -460,27 +363,7 @@ class YouTubeCarousel {
                     this.nextVideo();
                     break;
             }
-        } else {
-            switch (e.key) {
-                case 'ArrowLeft':
-                    if (this.isCarouselFocused()) {
-                        e.preventDefault();
-                        this.prevSlide();
-                    }
-                    break;
-                case 'ArrowRight':
-                    if (this.isCarouselFocused()) {
-                        e.preventDefault();
-                        this.nextSlide();
-                    }
-                    break;
-            }
         }
-    }
-
-    isCarouselFocused() {
-        return document.activeElement === this.carousel ||
-               this.carousel.contains(document.activeElement);
     }
 
     handleModalKeyboard(e) {
@@ -505,11 +388,6 @@ class YouTubeCarousel {
         }
     }
 
-    handleResize() {
-        if (this.slickInitialized) {
-            // console.log('Handling carousel resize');
-        }
-    }
 
     setupAccessibility() {
         if (this.carousel) {
@@ -558,8 +436,6 @@ class YouTubeCarousel {
 
     // Modal methods
     openModal(index) {
-        // console.log('🎬 Opening modal for video index:', index);
-
         if (!this.modal) {
             console.error('❌ Modal element not found!');
             return;
@@ -578,13 +454,8 @@ class YouTubeCarousel {
         this.currentVideo = index;
         const video = this.videos[index];
 
-        // console.log('📹 Video data:', video);
-
         if (this.modalTitle) {
             this.modalTitle.textContent = video.title;
-            // console.log('✓ Modal title set:', video.title);
-        } else {
-            // console.warn('⚠️ Modal title element not found');
         }
 
         const params = new URLSearchParams({
@@ -598,16 +469,9 @@ class YouTubeCarousel {
 
 
         const videoUrl = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
-        // console.log('🔗 Video URL:', videoUrl);
-
         this.modalVideo.src = videoUrl;
-
-        // Show modal
-        // console.log('👁️ Showing modal...');
         $(this.modal).addClass('active');
         $('body').css('overflow', 'hidden');
-
-        // console.log('📱 Modal classes after show:', this.modal.className);
 
         this.updateThumbnails();
         this.updateModalNavigation();
@@ -615,40 +479,29 @@ class YouTubeCarousel {
         if (this.modalClose) {
             setTimeout(() => {
                 this.modalClose.focus();
-                // console.log('🎯 Focus set to modal close button');
             }, 100);
         }
 
         this.trackVideoView(video);
-        // console.log('✅ Modal opened successfully');
     }
 
     closeModal() {
-        // console.log('❌ Closing modal...');
-
         if (!this.modal) {
-            // console.error('❌ Modal element not found during close!');
             return;
         }
 
         $(this.modal).removeClass('active');
-        // console.log('👁️ Modal hidden');
 
         if (this.modalVideo) {
             this.modalVideo.src = '';
-            // console.log('📹 Video source cleared');
         }
 
         $('body').css('overflow', 'auto');
-        // console.log('📄 Body overflow restored');
 
         const clickedSlide = this.slides[this.currentVideo];
         if (clickedSlide) {
             clickedSlide.focus();
-            // console.log('🎯 Focus returned to slide:', this.currentVideo);
         }
-
-        // console.log('✅ Modal closed successfully');
     }
 
     prevVideo() {
@@ -733,25 +586,14 @@ class YouTubeCarousel {
             ga('send', 'event', 'Video', 'Play', video.title);
         }
 
-          if (typeof fbq !== 'undefined') {
+        if (typeof fbq !== 'undefined') {
             fbq('trackCustom', 'MovieView', {
-            content_category: 'YouTube_Video',
-            content_type: 'youtube_video',
-            content_name: video.title,
-            timestamp: new Date().toISOString()
+                content_category: 'YouTube_Video',
+                content_type: 'youtube_video',
+                content_name: video.title,
+                timestamp: new Date().toISOString()
             });
         }
-
-        // console.log('Video played:', video.title, video.youtube_id);
-    }
-
-    trackSlideChange(slideIndex) {
-        // if (typeof gtag !== 'undefined') {
-        //     gtag('event', 'carousel_slide_change', {
-        //         slide_index: slideIndex,
-        //         total_slides: this.videos.length
-        //     });
-        // }
     }
 
     // Public API
@@ -787,7 +629,6 @@ class YouTubeCarousel {
         $(window).off('resize');
 
         this.isInitialized = false;
-        // console.log('YouTube Carousel destroyed');
     }
 }
 
@@ -1016,11 +857,6 @@ function initializeOpinionsMixPlayButtons(carousel, modal) {
  * Auto-initialize when DOM is ready
  */
 $(document).ready(function() {
-    // console.log('🚀 YouTube Carousel module gtag');
-    // console.log('📊 jQuery version:', $.fn.jquery);
-    // console.log('🎠 Slick available:', typeof $.fn.slick);
-
-    // Try to find YouTube carousel - check both IDs
     let carouselId = null;
     let carouselElement = document.getElementById('youtubeCarousel');
 
@@ -1034,11 +870,7 @@ $(document).ready(function() {
     }
 
     if (carouselElement) {
-        // console.log('🎯 Carousel element found:', carouselElement);
-
-        // Check if modal exists
         const modalElement = document.getElementById('youtubeModal');
-        // console.log('🔍 Modal element found:', !!modalElement);
 
         try {
             window.youtubeCarousel = new YouTubeCarousel({
@@ -1048,19 +880,9 @@ $(document).ready(function() {
                 showRelated: false,
                 keyboardNavigation: true
             });
-
-            // console.log('🎉 YouTube Carousel initialized successfully');
-            // console.log('📋 Instance available at: window.youtubeCarousel');
         } catch (error) {
-            // console.error('💥 Failed to initialize YouTube Carousel:', error);
-            // console.log('🔧 Debug info:');
-            // console.log('- Carousel element:', carouselElement);
-            // console.log('- Modal element:', modalElement);
-            // console.log('- Slides found:', carouselElement.querySelectorAll('.youtube-slide').length);
+            console.error('Failed to initialize YouTube Carousel:', error);
         }
-    } else {
-        // console.log('ℹ️ YouTube Carousel element not found on this page');
-        // console.log('🔍 Looking for element with ID: youtubeCarousel');
     }
 
     // Initialize opinions carousel with play button handlers
@@ -1081,114 +903,8 @@ $(document).ready(function() {
     }
 });
 
-/**
- * Handle page resize with debounce
- */
-let resizeTimer;
-$(window).on('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-        if (window.youtubeCarousel && window.youtubeCarousel.isInitialized) {
-            window.youtubeCarousel.handleResize();
-        }
-    }, 150);
-});
-
-
-
 // Make class available globally
 window.YouTubeCarousel = YouTubeCarousel;
 
 // Export for module systems
 export default YouTubeCarousel;
-
-$(document).ready(function(){
-
-    // Najpierw załaduj wszystkie obrazki przed inicjalizacją slidera
-    loadAllImages();
-
-    $('.homepage-section__baners').slick({
-        // Podstawowe ustawienia
-        dots: false,
-        infinite: true,
-        speed: 800,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        arrows: true,
-
-        // Animacja fade
-        fade: true,
-        cssEase: 'linear',
-
-        // Wyłącz lazy loading - wszystko ładujemy od razu
-        lazyLoad: 'ondemand', // Można pozostawić ale nie będzie używane
-
-        // Responsywne ustawienia
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    arrows: true,
-                    dots: false
-                }
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    arrows: true,
-                    dots: false,
-                    adaptiveHeight: true
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    arrows: true,
-                    dots: false,
-                    adaptiveHeight: true
-                }
-            }
-        ],
-
-        // Callback functions
-        beforeChange: function(event, slick, currentSlide, nextSlide) {
-            console.log('Changing from slide ' + currentSlide + ' to slide ' + nextSlide);
-        },
-
-        afterChange: function(event, slick, currentSlide) {
-            console.log('Changed to slide ' + currentSlide);
-        }
-    });
-});
-
-// Funkcja do załadowania wszystkich obrazków od razu
-function loadAllImages() {
-    console.log('Loading all images...');
-
-    $('.homepage-section__baners img[data-src]').each(function() {
-        var $img = $(this);
-        var dataSrc = $img.data('src');
-
-        if (dataSrc && !$img.attr('src')) {
-            console.log('Loading image:', dataSrc);
-            $img.attr('src', dataSrc);
-            $img.removeClass('lazyload');
-
-            // Opcjonalnie: dodaj klasę loaded po załadowaniu
-            $img.on('load', function() {
-                $(this).addClass('loaded');
-                console.log('Image loaded:', dataSrc);
-            }).on('error', function() {
-                console.error('Failed to load image:', dataSrc);
-            });
-        }
-    });
-}
