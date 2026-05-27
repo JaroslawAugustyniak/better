@@ -463,7 +463,7 @@ window.addEventListener("load",function(event) {
         percentPosition: true
     });
     $gallery.imagesLoaded().progress(function () {
-        $gallery.masonry('layout');
+        $gallery.masonry('layout'); 
         Waypoint.refreshAll();
     });
     $gallery.on('layoutComplete', function () {

@@ -1,0 +1,104 @@
+.news-section{
+    position: relative;
+    z-index: 1;
+    padding: 80px 0;
+
+    .section-header{
+        h2.section-title{
+            color: inherit;
+        }
+
+        h3{
+            color: inherit;
+        }
+    }
+
+    .wp-block-gallery{
+        display: flex;
+        gap: 1.75rem;
+        margin: 0;
+
+        &.columns-4{
+            .wp-block-image{
+                width: calc(25% - 1.3125rem);
+            }
+        }
+    }
+
+    .slick-list{
+      margin-left: -0.875rem;
+      margin-right: -0.875rem;
+    }
+    .slick-track{
+      display: flex !important;
+      gap: 1.75rem;
+    }
+
+    &.slick-slider{
+      .slick-next{
+        right:.5rem !important;
+        top:-2.25rem;
+      }
+      .slick-prev{
+        left:calc(100% - 5.5rem) !important;
+        top:-2.25rem;
+      }
+    }
+
+    .slick-slide{
+      height: inherit !important;
+      display: flex !important;
+      flex-direction: column;
+      overflow: hidden;
+
+      & > div{
+        height: 100%;
+        .news-slide{
+          height: 100%;
+          padding: 0;
+          
+          .news-image-container{
+            border-radius:0.3125rem;
+            height:21.875rem;
+            overflow:hidden;
+          }
+          
+          a{
+            &:after{
+                content: none;
+            }
+          }
+          .news-content{
+            padding: 1.25rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            color: $main-color;
+
+            .news-title{
+                @include h3();
+                font-size:1.375rem;
+                line-height:1.2;
+                margin-bottom:0rem;
+            }
+
+            .news-excerpt{
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+            }
+
+            .news-meta{
+                .button{
+                    @include button_dark();
+                }
+            }
+          }
+            
+          
+        }
+      }
+    }
+  }

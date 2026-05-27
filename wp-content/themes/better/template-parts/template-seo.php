@@ -8,20 +8,14 @@
     // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
     // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
     $args_list = array(
-        'post_type' => 'faqs',
+        'post_type' => 'seo',
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'meta_query' => array(
-            'relation' => 'OR',
             array(
                 'key' => 'strona',
                 'value' => $page->ID,
                 'compare' => '='
-            ),
-            array(
-                'key' => 'strona',
-                'value' => '"' . $page->ID . '"',
-                'compare' => 'LIKE'
             )
         )
     );
@@ -38,18 +32,15 @@
 ?>
 <?php if ($faq->have_posts()) : ?>
 
-<section class="homepage-section faq-section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
+<section class="homepage-section seo-section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
+        
                 <div class="section-header" data-waypoint-animate="true">
-                    <h2 class="section-title"><?= $mainpage_item->post_title ?></h2>
-                    <?= $description ?>
+                    <span class="section-title"><?= $mainpage_item->post_title ?></span>
                 </div>
-            </div>
-            <div class="col-lg-6">
+            
           
-                <div class="faq-container" data-waypoint-animate="true">
+                <div class="seo-container" data-waypoint-animate="true">
                     <?php
                         $faq_index = 0;
                         while ($faq->have_posts()) :
@@ -68,8 +59,14 @@
                     $faq_index++;
                     endwhile;
                 ?>
-            </div>
-        </div>
+                </div>
+                <div class="text-center" data-waypoint-animate="true">
+                    <a href="javascript:void(0)" class="link toggle_button" >
+                        <span class="closed"><?php esc_html_e( 'Czytaj więcej', 'better' ); ?></span>
+                        <span class="opened"><?php esc_html_e( 'Zamknij', 'better' ); ?></span>
+                        
+                    </a>
+                </div>
     </div>
 </section>
 

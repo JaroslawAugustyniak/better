@@ -1,13 +1,27 @@
+console.log('main.js loaded');
+
+import $ from 'jquery';
+
+// Import Slick Carousel
+import 'slick-carousel';
+
+// Import Slick CSS
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 // main.js
 import YouTubeSlider from './youtube-slider.js';
 import SliderCarousel from './slider-carousel.js';
-import CommentsCarousel from './comments-carousel.js';
-import NewsCarousel from './news-carousel.js';
+import Comments from './comments.js';
+import FaqAccordeon from './faq-accordion.js';
+import SeoAccordeon from './seo-accordion.js';
+// import NewsCarousel from './news-carousel.js';
 import InitializationManager from './init-manager.js';
 import App from './main-app.js';
 
 import 'jquery.cookie';
+
+// console.log('All imports loaded, Comments is:', Comments);
 
 // Utwórz InitManager globalnie NA POCZĄTKU
 window.initManager = new InitializationManager();
@@ -21,7 +35,18 @@ jQuery(document).ready(function($){
   cookiesPolicyBar();
 
   initSliders($('body'));
+
+  initContact();
+
+  // Initialize Comments Module
+  new Comments();
 });
+
+function initContact(){
+  $('#kontakt .menu-button').on('click', function(){
+    $('#kontakt').removeClass('active');
+  });
+}
 
 function cookiesPolicyBar(){
   // Check cookie 
@@ -36,6 +61,8 @@ function cookiesPolicyBar(){
       $('#cookieAcceptBar').fadeOut();
   });
 }
+
+
 
 
 function trackEvents() {
@@ -201,7 +228,7 @@ function initSliders(parent){
 
       
 
-      var resp_1 = circumference(resp[0] ? resp[0] : 4);
+      var resp_1 = circumference(resp[0] ? resp[0] : 4); 
       var resp_2 = circumference(resp[1] ? resp[1] : 3);
       var resp_3 = circumference(resp[2] ? resp[2] : 1);
       var resp_4 = circumference(resp[3] ? resp[3] : 1);

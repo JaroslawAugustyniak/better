@@ -13,7 +13,8 @@
     <div id="parallax-inner">
     <div class="slider-container">
         <?php if ($slider->have_posts()) : ?>
-        <div class="main-slider" id="mainSlider">
+        
+            <div id="mainSlider" auto_play="1" class="main-slider slickSlider display_dots slick_nav nav_inside" slick_per_page="1_1_1_1" slick_show_dots="0" slick_hide_arrows="0" fade="1">   
             <?php $index = 0; while ($slider->have_posts()) : $slider->the_post(); $slide = $post;
             $button = get_field('button');
             
@@ -60,15 +61,7 @@
             <?php endif; ?>
         </div>
         
-        <!-- Slider Navigation -->
-        <div class="slider-navigation">
-            <button class="slider-nav prev" id="sliderPrev" type="button" aria-label="Poprzedni slajd">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="slider-nav next" id="sliderNext" type="button" aria-label="Następny slajd">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
+       
         
     </div>
     </div>

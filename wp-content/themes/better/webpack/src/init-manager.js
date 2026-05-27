@@ -7,7 +7,7 @@ class InitializationManager {
         this.waypointInstances = [];
         this.headerWaypointInstances = [];
         this.checkInterval = null;
-        this.maxAttempts = 50;
+        this.maxAttempts = 10;
         this.attempts = 0;
         this.currentHeaderClass = '';
         this.header = null;
@@ -35,10 +35,11 @@ class InitializationManager {
     
     waitForSlidersAndInit() {
         this.checkInterval = setInterval(() => {
+            console.log(`InitManager: Checking sliders (attempt ${this.attempts + 1}/${this.maxAttempts})...`);
             this.attempts++;
             
             const mainSliderExists = document.getElementById('mainSlider');
-            const youtubeSliderExists = document.getElementById('youtubeCarousel');
+            const youtubeSliderExists = document.getElementById('videos');
             const commentsSliderExists = document.getElementById('commentsCarousel');
             
             const mainReady = !mainSliderExists || (window.sliderCarousel?.isInitialized === true);
@@ -49,7 +50,7 @@ class InitializationManager {
             
             if (allReady) {
                 clearInterval(this.checkInterval);
-                // console.log('InitManager: All sliders ready, waiting 800ms for layout...');
+                console.log('InitManager: All sliders ready, waiting 800ms for layout...');
                 
                 setTimeout(() => {
                     this.initializeWaypoints();
@@ -153,35 +154,93 @@ class InitializationManager {
         if (!hash || hash.length <= 1) {
             return;
         }
-        
+
         // Usuń # z początku
         const elementId = hash.startsWith('#') ? hash.substring(1) : hash;
-        
+
+        // Specjalna obsługa dla hashów zaczynających się od 'kontakt'
+        if (elementId.startsWith('kontakt')) {
+            this.handleContactHash(elementId);
+        }
+
         // Znajdź element
         let targetElement = document.getElementById(elementId);
         if (!targetElement) {
             targetElement = document.querySelector(`[name="${elementId}"]`);
         }
-        
+
+        // Jeśli element nie istnieje, ale hash zawiera 'kontakt', scrolluj do sekcji kontaktu
+        if (!targetElement && elementId.startsWith('kontakt')) {
+            targetElement = document.getElementById('kontakt');
+        }
+
         if (!targetElement) {
             console.warn('InitManager: Target element not found:', elementId);
             return;
         }
-        
+
         // Oblicz pozycję
         const elementTop = this.getElementTopPosition(targetElement);
         const headerOffset = 80; // Offset dla fixed header
         const scrollPosition = Math.max(0, elementTop - headerOffset);
-        
+
         // console.log('InitManager: Scrolling to:', elementId, 'at position:', scrollPosition);
-        
+
         // Scrolluj
         window.scrollTo({
             top: scrollPosition,
             behavior: 'smooth'
         });
     }
-    
+
+    /**
+     * Obsłuż hash dla sekcji kontaktu
+     * Obsługuje: #kontakt, #kontakt_znany_lekarz, #kontakt_phone_call, #kontakt_message
+     */
+    handleContactHash(elementId) {
+        const contactSection = document.getElementById('kontakt');
+        if (!contactSection) {
+            return;
+        }
+
+        // Dodaj active do sekcji kontaktu
+        contactSection.classList.add('active');
+
+        // Usuń active ze wszystkich formularzy i linków
+        const allForms = contactSection.querySelectorAll('.contact-section__form');
+        const allLinks = contactSection.querySelectorAll('a[href*="#kontakt"]');
+
+        allForms.forEach(form => form.classList.remove('active'));
+        allLinks.forEach(link => link.classList.remove('active'));
+
+        // Wyciągnij część po 'kontakt_'
+        const subTab = elementId.substring(8); // Długość "kontakt_" = 7
+        console.log(subTab);
+
+        if (!subTab) {
+            // Przypadek: #kontakt - ustaw active na pierwszym elemencie
+            if (allForms.length > 0) {
+                allForms[0].classList.add('active');
+            }
+            if (allLinks.length > 0) {
+                allLinks[0].classList.add('active');
+            }
+        } else {
+            // Przypadki: #kontakt_znany_lekarz, #kontakt_phone_call, #kontakt_message
+            // Znajdź formularz o id = subTab (np. 'znany_lekarz')
+            const targetForm = contactSection.querySelector(`#${subTab}`);
+            if (targetForm && targetForm.classList.contains('contact-section__form')) {
+                targetForm.classList.add('active');
+            }
+
+            // Znajdź link z href="#kontakt_XXX"
+            const targetLink = contactSection.querySelector(`a[href="#${elementId}"]`);
+            if (targetLink) {
+                targetLink.classList.add('active');
+            }
+        }
+    }
+
     /**
      * Oblicz pozycję elementu względem dokumentu
      */

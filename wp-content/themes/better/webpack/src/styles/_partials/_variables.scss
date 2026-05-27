@@ -8,10 +8,19 @@ $border-gray: #e9ecef;
 $medium-gray: #dee2e6;
 
 $main-color: #13333a;
-$white-color: #ffffff;
+$white-color: #f2eeea;
+
 $brown-color: #c8a496;
 $light-brown-color: #E0CDC5;
 $light-hover: #F8F6F4;
+
+$coffe-color: #987873;
+
+$color-seledine: #DAF0F0;
+$color-seledine-2: #8bacad;
+
+$color-bg-sedeine: #A0C2C3;
+
 
 $gradient-primary: linear-gradient(90deg, $primary-color, $secondary-color);
 $gradient-background: linear-gradient(135deg, $light-gray 0%, $border-gray 100%);
@@ -107,6 +116,33 @@ $shadow-heavy: 0 25px 50px rgba(0, 0, 0, 0.3);
     border:none;
   }
 }
+$container_width: 1280px;
+@media (min-width: 1420px) {
+    $container_width: 1280px;
+}
+
+@media (min-width: 1260px) {
+    $container_width: 1140px;
+}
+@media (min-width: 1080px) {
+    $container_width: 960px;
+}
+@media (min-width: 860px) {
+    $container_width: 720px;
+}
+@media (min-width: 670px) {
+    $container_width: 540px;
+}
+@media (min-width: 340px) {
+    $container_width: 334px;
+}
+
+
+
+.container-full{
+  max-width:100%;
+  padding:0;
+}
 
 @mixin text-ellipsis($lines: 2) {
   display: -webkit-box;
@@ -118,3 +154,82 @@ $shadow-heavy: 0 25px 50px rgba(0, 0, 0, 0.3);
 body{
   @include p();
 }
+
+html{
+    font-size: 3.75vw;
+      
+      @media(min-width:768px) and (max-width:1919px){
+          font-size: 0.8vw;
+      }
+      @media(min-width:1920px){
+          font-size: 16px;
+      }
+  
+  
+  
+      body{
+        @include p();
+
+        .container{
+          padding-left:1.875rem;
+          padding-right:1.875rem;
+        }
+      }
+}
+
+@mixin link {
+  position: relative;
+  padding-bottom:3px;
+  &:after{
+    border-bottom: 1px solid $main-color;
+    content: '';
+    display: inline-block;
+    width: 100%;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: right;
+  }
+
+  &:hover{
+    &:after{
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+}
+
+@mixin button {
+    display: inline-block;
+    padding: 5px 0;
+    font-weight: 400;
+    font-size: .875rem;
+    position: relative;
+    background: transparent;
+    border: solid 1px $light-hover;
+    cursor: pointer;
+    color: $light-hover;
+    border-radius: 25px;
+    padding: 7px 20px;
+    transition: All .5s ease;
+    &:hover{
+        background: $light-hover;
+        color: $main-color;
+    }
+    &:after{
+        content:none;
+    }
+}
+
+@mixin button_dark {
+  @include button();
+  border: solid 1px $main-color;
+  color: $main-color;
+  &:hover{
+        background: $main-color;
+        color: $light-hover;
+  }
+}
+
+.button {
+    @include button();
+}  

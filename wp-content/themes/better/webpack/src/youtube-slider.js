@@ -27,13 +27,13 @@ class MovieHandler {
       if (!title || typeof title !== 'string') {
         return '';
       }
-      
+
       return title
         .toLowerCase() // zamień na małe litery
         .trim() // usuń spacje z początku i końca
         .replace(/[ąćęłńóśźż]/g, function(match) { // zamień polskie znaki
           const polishChars = {
-            'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 
+            'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l',
             'ń': 'n', 'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z'
           };
           return polishChars[match] || match;
@@ -67,13 +67,13 @@ class YouTubeCarousel {
         // Stan carousel
         this.currentVideo = 0;
         this.videos = [];
-        
+
         // Elementy DOM
         this.carousel = null;
         this.$carousel = null;
         this.modal = null;
         this.modalVideo = null;
-        
+
         // Flagi
         this.isInitialized = false;
         this.slickInitialized = false;
@@ -90,22 +90,22 @@ class YouTubeCarousel {
     async init() {
         try {
             // console.log('Starting YouTube Carousel initialization...');
-            
+
             this.getElements();
             // console.log('✓ Elements found');
-            
+
             this.extractVideoData();
             // console.log('✓ Video data extracted:', this.videos.length, 'videos');
-            
+
             // Bind events BEFORE Slick initialization
-           
-            
+
+
             this.setupAccessibility();
             // console.log('✓ Accessibility setup');
-            
+
             await this.initSlickCarousel();
             // console.log('✓ Slick initialized');
-            
+
             this.isInitialized = true;
             // console.log('✅ YouTube Carousel initialized successfully');
 
@@ -173,7 +173,7 @@ class YouTubeCarousel {
         return new Promise((resolve, reject) => {
             try {
                 // console.log('Initializing Slick Carousel...');
-                
+
                 // Sprawdź czy Slick jest dostępny
                 if (!$.fn.slick) {
                     throw new Error('Slick Carousel not found. Make sure it\'s imported.');
@@ -249,10 +249,10 @@ class YouTubeCarousel {
 
                 // Setup additional features
                 this.onSlickInit();
-                
+
                 // Resolve immediately after initialization
                 resolve();
-                
+
             } catch (error) {
                 // console.error('❌ Failed to initialize Slick Carousel:', error);
                 reject(error);
@@ -265,7 +265,7 @@ class YouTubeCarousel {
      */
     onSlickInit() {
         // console.log('Setting up post-Slick features...');
-        
+
         this.$carousel.addClass('slick-initialized-custom');
         this.setupLazyLoading();
 
@@ -305,14 +305,14 @@ class YouTubeCarousel {
         }
     }
 
-    
+
 
     /**
      * Bindowanie event handlerów
      */
     bindEvents() {
         // console.log('Binding events...');
-        
+
         // Slide clicks
         // console.log('Binding slide clicks for', this.slides.length, 'slides');
         this.slides.forEach((slide, index) => {
@@ -321,10 +321,10 @@ class YouTubeCarousel {
                 // console.log('Slide clicked:', index);
                 this.openModal(index);  // ✅ Teraz 'this' odnosi się do klasy
 
-                
+
                 var hash = '#'+movieHandler.createSlug(slide.dataset.title);
-         
-                
+
+
 
                 window.history.replaceState(null, null, hash);
             });
@@ -465,7 +465,7 @@ class YouTubeCarousel {
     }
 
     isCarouselFocused() {
-        return document.activeElement === this.carousel || 
+        return document.activeElement === this.carousel ||
                this.carousel.contains(document.activeElement);
     }
 
@@ -545,12 +545,12 @@ class YouTubeCarousel {
     // Modal methods
     openModal(index) {
         // console.log('🎬 Opening modal for video index:', index);
-        
+
         if (!this.modal) {
             console.error('❌ Modal element not found!');
             return;
         }
-        
+
         if (!this.modalVideo) {
             console.error('❌ Modal video element not found!');
             return;
@@ -563,16 +563,16 @@ class YouTubeCarousel {
 
         this.currentVideo = index;
         const video = this.videos[index];
-        
+
         // console.log('📹 Video data:', video);
-        
+
         if (this.modalTitle) {
             this.modalTitle.textContent = video.title;
             // console.log('✓ Modal title set:', video.title);
         } else {
             // console.warn('⚠️ Modal title element not found');
         }
-        
+
         const params = new URLSearchParams({
             rel: '0',           // Tylko powiązane z tego kanału
             modestbranding: '1', // Bez logo YouTube
@@ -582,36 +582,36 @@ class YouTubeCarousel {
         });
 
 
-        
+
         const videoUrl = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
         // console.log('🔗 Video URL:', videoUrl);
-        
+
         this.modalVideo.src = videoUrl;
-        
+
         // Show modal
         // console.log('👁️ Showing modal...');
         $(this.modal).addClass('active');
         $('body').css('overflow', 'hidden');
-        
+
         // console.log('📱 Modal classes after show:', this.modal.className);
-        
+
         this.updateThumbnails();
         this.updateModalNavigation();
-        
+
         if (this.modalClose) {
             setTimeout(() => {
                 this.modalClose.focus();
                 // console.log('🎯 Focus set to modal close button');
             }, 100);
         }
-        
+
         this.trackVideoView(video);
         // console.log('✅ Modal opened successfully');
     }
 
     closeModal() {
         // console.log('❌ Closing modal...');
-        
+
         if (!this.modal) {
             // console.error('❌ Modal element not found during close!');
             return;
@@ -619,21 +619,21 @@ class YouTubeCarousel {
 
         $(this.modal).removeClass('active');
         // console.log('👁️ Modal hidden');
-        
+
         if (this.modalVideo) {
             this.modalVideo.src = '';
             // console.log('📹 Video source cleared');
         }
-        
+
         $('body').css('overflow', 'auto');
         // console.log('📄 Body overflow restored');
-        
+
         const clickedSlide = this.slides[this.currentVideo];
         if (clickedSlide) {
             clickedSlide.focus();
             // console.log('🎯 Focus returned to slide:', this.currentVideo);
         }
-        
+
         // console.log('✅ Modal closed successfully');
     }
 
@@ -654,11 +654,11 @@ class YouTubeCarousel {
 
         this.currentVideo = index;
         const video = this.videos[index];
-        
+
         if (this.modalTitle) {
             this.modalTitle.textContent = video.title;
         }
-        
+
         if (this.modalVideo) {
             const params = new URLSearchParams({
                 autoplay: this.config.autoplay ? '1' : '0',
@@ -666,10 +666,10 @@ class YouTubeCarousel {
                 modestbranding: '1',
                 iv_load_policy: '3'
             });
-            
+
             this.modalVideo.src = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
         }
-        
+
         this.updateThumbnails();
         this.updateModalNavigation();
         this.trackVideoView(video);
@@ -685,8 +685,8 @@ class YouTubeCarousel {
 
         const activeThumb = thumbnails[this.currentVideo];
         if (activeThumb) {
-            activeThumb.scrollIntoView({ 
-                behavior: 'smooth', 
+            activeThumb.scrollIntoView({
+                behavior: 'smooth',
                 block: 'nearest',
                 inline: 'center'
             });
@@ -698,7 +698,7 @@ class YouTubeCarousel {
             this.modalPrev.disabled = this.currentVideo <= 0;
             $(this.modalPrev).css('opacity', this.currentVideo <= 0 ? '0.3' : '1');
         }
-        
+
         if (this.modalNext) {
             this.modalNext.disabled = this.currentVideo >= this.videos.length - 1;
             $(this.modalNext).css('opacity', this.currentVideo >= this.videos.length - 1 ? '0.3' : '1');
@@ -714,7 +714,7 @@ class YouTubeCarousel {
                 video_provider: 'youtube'
             });
         }
-        
+
         if (typeof ga !== 'undefined') {
             ga('send', 'event', 'Video', 'Play', video.title);
         }
@@ -727,7 +727,7 @@ class YouTubeCarousel {
             timestamp: new Date().toISOString()
             });
         }
-        
+
         // console.log('Video played:', video.title, video.youtube_id);
     }
 
@@ -771,7 +771,7 @@ class YouTubeCarousel {
 
         $(document).off('keydown');
         $(window).off('resize');
-        
+
         this.isInitialized = false;
         // console.log('YouTube Carousel destroyed');
     }
@@ -784,16 +784,16 @@ $(document).ready(function() {
     // console.log('🚀 YouTube Carousel module gtag');
     // console.log('📊 jQuery version:', $.fn.jquery);
     // console.log('🎠 Slick available:', typeof $.fn.slick);
-    
+
     const carouselElement = document.getElementById('youtubeCarousel');
-    
+
     if (carouselElement) {
         // console.log('🎯 Carousel element found:', carouselElement);
-        
+
         // Check if modal exists
         const modalElement = document.getElementById('youtubeModal');
         // console.log('🔍 Modal element found:', !!modalElement);
-        
+
         try {
             window.youtubeCarousel = new YouTubeCarousel({
                 carouselId: 'youtubeCarousel',
@@ -802,7 +802,7 @@ $(document).ready(function() {
                 showRelated: false,
                 keyboardNavigation: true
             });
-            
+
             // console.log('🎉 YouTube Carousel initialized successfully');
             // console.log('📋 Instance available at: window.youtubeCarousel');
         } catch (error) {
@@ -840,10 +840,10 @@ window.YouTubeCarousel = YouTubeCarousel;
 export default YouTubeCarousel;
 
 $(document).ready(function(){
-    
+
     // Najpierw załaduj wszystkie obrazki przed inicjalizacją slidera
     loadAllImages();
-    
+
     $('.homepage-section__baners').slick({
         // Podstawowe ustawienia
         dots: false,
@@ -854,14 +854,14 @@ $(document).ready(function(){
         autoplay: true,
         autoplaySpeed: 4000,
         arrows: true,
-        
+
         // Animacja fade
         fade: true,
         cssEase: 'linear',
-        
+
         // Wyłącz lazy loading - wszystko ładujemy od razu
         lazyLoad: 'ondemand', // Można pozostawić ale nie będzie używane
-        
+
         // Responsywne ustawienia
         responsive: [
             {
@@ -894,12 +894,12 @@ $(document).ready(function(){
                 }
             }
         ],
-        
+
         // Callback functions
         beforeChange: function(event, slick, currentSlide, nextSlide) {
             console.log('Changing from slide ' + currentSlide + ' to slide ' + nextSlide);
         },
-        
+
         afterChange: function(event, slick, currentSlide) {
             console.log('Changed to slide ' + currentSlide);
         }
@@ -909,16 +909,16 @@ $(document).ready(function(){
 // Funkcja do załadowania wszystkich obrazków od razu
 function loadAllImages() {
     console.log('Loading all images...');
-    
+
     $('.homepage-section__baners img[data-src]').each(function() {
         var $img = $(this);
         var dataSrc = $img.data('src');
-        
+
         if (dataSrc && !$img.attr('src')) {
             console.log('Loading image:', dataSrc);
             $img.attr('src', dataSrc);
             $img.removeClass('lazyload');
-            
+
             // Opcjonalnie: dodaj klasę loaded po załadowaniu
             $img.on('load', function() {
                 $(this).addClass('loaded');

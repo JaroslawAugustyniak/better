@@ -2,11 +2,9 @@
 
 <?php 
     $mainpage_item = $args; 
-    $page = get_post_by_slug_and_type('strona-glowna', 'page');
+    $current_page = get_queried_object_id();
 
     
-    // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
-    // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
     $args_list = array(
         'post_type' => 'faqs',
         'post_status' => 'publish',
@@ -15,12 +13,12 @@
             'relation' => 'OR',
             array(
                 'key' => 'strona',
-                'value' => $page->ID,
+                'value' => $current_page,
                 'compare' => '='
             ),
             array(
                 'key' => 'strona',
-                'value' => '"' . $page->ID . '"',
+                'value' => '"' . $current_page . '"',
                 'compare' => 'LIKE'
             )
         )
@@ -36,18 +34,17 @@
 
 
 ?>
-<?php if ($faq->have_posts()) : ?>
 
-<section class="homepage-section faq-section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
+<section class="homepage-section faq-section faq_page <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 offset-lg-3">
                 <div class="section-header" data-waypoint-animate="true">
                     <h2 class="section-title"><?= $mainpage_item->post_title ?></h2>
-                    <?= $description ?>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 offset-lg-3">
+                <?php if ($faq->have_posts()) : ?>
           
                 <div class="faq-container" data-waypoint-animate="true">
                     <?php
@@ -69,8 +66,7 @@
                     endwhile;
                 ?>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>
-
-<?php endif; ?>

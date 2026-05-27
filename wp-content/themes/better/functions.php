@@ -39,6 +39,36 @@ add_action( 'admin_menu', function() {
  * as indicating support for post thumbnails.
  */
 
+add_shortcode('o-nas', function() {
+    ob_start();
+    // Pobranie ID strony
+    $current_page = get_queried_object_id();
+    
+	$mainpage_item = get_post_by_slug_and_type('klinika-stomatologiczna', 'mainpage');
+    get_template_part( 'template-parts/template', 'news', $mainpage_item);
+    
+    return ob_get_clean();
+});
+
+add_shortcode('our-team', function() {
+    ob_start();
+    // Pobranie ID strony
+    $current_page = get_queried_object_id();
+    
+	$mainpage_item = get_post_by_slug_and_type('zespol', 'mainpage');
+	echo '</div>'; //end col-
+	echo '</div>'; //end row
+	echo '</div>'; //end container
+
+    get_template_part( 'template-parts/template', 'team', $mainpage_item);
+    
+	echo '<div class="container">';
+	echo '<div class="row">';
+	echo '<div class="col-xl-8 col-lg-10 col-12 offset-xl-2 offset-lg-1 offset-0">';
+
+    return ob_get_clean();
+});
+
 
 function displayAcfSvg($name, $postId = false){
 	

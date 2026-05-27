@@ -31,9 +31,8 @@
             </div>
         </div>
 
-        <div class="homepage-section__baners">
+        <div id="news"  data-waypoint-animate="true" class="slickSlider display_dots slick_nav nav_inside" slick_per_page="1_1_1_1" slick_show_dots="0" slick_hide_arrows="0" fade="1">   
 
-            
 
             <?php $index = 0; while ($news->have_posts()) : 
                 $news->the_post(); 

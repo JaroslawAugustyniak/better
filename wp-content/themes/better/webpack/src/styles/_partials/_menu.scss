@@ -1,0 +1,170 @@
+.menu-module__content.section{
+    padding:1.875rem 0 6.25rem;
+    z-index: 101;
+    position: relative;
+    width: 75%;
+    margin-left:15%;
+    align-items: flex-start;
+}
+
+.page-header{
+    min-height: 6.5rem;
+}
+
+.menu-module__header{
+    justify-content: flex-start;
+    padding-left: 1.75rem;
+    min-height: 6.5rem;
+}
+
+
+// Główny kontener menu (centrowanie w poziomie)
+#top-header-menu {
+  display: flex;
+
+  @media(max-width: 768px){
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 1.75rem;
+  }
+
+  justify-content: center;
+  
+   // Białe tło całego paska menu
+  font-family: sans-serif;
+
+.menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 30px; // Eleganckie odstępy między głównymi kategoriami
+
+  // Wspólne, bazowe style dla wszystkich linków
+  a {
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+    padding: 0;
+    transition: color 0.2s ease, background-color 0.2s ease;
+
+    &:hover {
+      color: #000;
+    //   background-color: #f9f9f9; // Delikatne tło na hover zamiast ramek
+    }
+  }
+
+  // ==========================================================================
+  // POZIOM 1 (Menu Główne)
+  // ==========================================================================
+  > .menu-item {
+    position: relative;
+    padding: 12px 16px;
+    // Strzałka w dół dla rodzica pierwszego poziomu (np. "Usługi")
+    &.menu-item-has-children{
+        position: relative;
+        &:after {
+        content: '';
+        background: url(../gfx/menu-arrow-btm.svg) no-repeat center center; 
+        width:1.25rem;
+        height:1.25rem;
+        position: absolute;
+        top: 50%;
+        right: -0.9375rem;
+        transform: translateY(-50%);
+      }
+    }
+
+      // Najechanie na Poziom 1 rozwija cały panel drop-down
+    //   &:hover {
+    //     > .sub-menu {
+    //       opacity: 1;
+    //       visibility: visible;
+    //       pointer-events: auto;
+    //     }
+    //   }
+    
+  .sub-menu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 240px;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+    z-index: 100;
+  }
+
+  // ==========================================================================
+  // POZIOM 2 (Główny drop-down - otwarty na stałe w pionie)
+  // ==========================================================================
+  & > .sub-menu {
+      margin-top:3.75rem;
+      // Cień nadaje nowoczesny wygląd zamiast ostrych ramek
+      // box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); 
+      
+      // Ukrywanie/pokazywanie głównego drop-downa
+      
+      // ==========================================================================
+      // POZIOM 3 (Rozwijany w bok po prawej stronie rodzica z Poziomu 2)
+      // ==========================================================================
+      
+      & > .menu-item > .sub-menu{
+          padding: 0;
+          left: 100%;
+          padding-left: 6.25rem; 
+          top: 0;
+          min-width: 400px;
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+    
+
+          transition: opacity 0.25s ease, visibility 0.25s ease;
+          & > .menu-item {
+            padding: 12px 16px;
+          }
+      }
+
+    & > .menu-item {
+        padding: 12px 16px;
+      position: relative;
+      display: block;
+      width: 100%;
+
+      a {
+        padding: 0;
+      }
+    
+
+    // Rodzic na 2. poziomie (np. "Profilaktyka", "Stomatologia estetyczna")
+    &.menu-item-has-children {
+        position: relative;
+      // Strzałka w prawo dla podmenu trzeciego poziomu
+      &:after {
+        content: '';
+        background: url(../gfx/menu-arrow-right.svg) no-repeat center center; 
+        width:1.25rem;
+        height:1.25rem;
+        position: absolute;
+        top: 50%;
+        right: -0.9375rem;
+        transform: translateY(-50%);
+      }
+
+      // Nadpisujemy zachowanie: drugi poziom NIE ukrywa swoich dzieci (Poziomu 3) wewnątrz struktury,
+      // ale Poziom 3 jako kontener pokaże się dopiero po najechaniu myszką.
+      &:hover {
+        > .sub-menu {
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+        }
+      }
+    }
+}
+}
+
+  }
+}
+}

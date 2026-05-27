@@ -9,33 +9,61 @@
  * @package Inwenta
  */
 
+
+    $static_kontakt = get_post_by_slug_and_type('umow-wizyte', 'static');
+    $content = get_field('tresc', $static_kontakt->ID);
+    $static_info = get_post_by_slug_and_type('dane-adresowe-w-menu', 'static');
+    $info = get_field('tresc', $static_info->ID);
+    $static_socials = get_post_by_slug_and_type('sociale', 'static');
+    $socials = get_field('tresc', $static_socials->ID);
 ?>
-	<section id="kontakt" class="contact-section section colorset--color-3" data-waypoint-header="page-header--color-3">
+	<section id="kontakt" class="contact-section">
+        <div class="header">
+			    <button class="menu-button">
+                    
+                </button>
+		</div>
 		<div class="container">
 
 			<div class="row">
-            <div class="col-3">
-                <div class="contact-section__header animate" data-waypoint-animate="true">
-                    Kontakt
+                <div class="col-12">
+                    <div class="contact-section__header" >
+                        <h2 class="contact-section__header-title"><?=$static_kontakt->post_title?></h2>
+                    </div>
                 </div>
             </div>
-            <div class="col-xl-6 col-lg-9 col-12">
-                <div class="contact-section__title animate" data-waypoint-animate="true">
-                    <p class="head-class">W czym możemy pomóc?<br>
-                        <span class="head-class d-none d-sm-block">Napisz lub zadzwoń: <a href="tel:+48 502 646 811">+48 502 646 811</a></span>
-                    </p>
+            <div class="row">
+                <div class="col-xl-4 col-lg-5 col-12">
+                    <div class="contact-section__header-description"><?=$content?></div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="contact-section__info">
+                                <?=$info?>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="contact-section__info">
+                                <?=$socials?>
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
-                <div class="contact-section__dsc animate" data-waypoint-animate="true"><p>Profilaktyka, leczenie, przywrócenie zdrowego uśmiechu? Prosimy o krótki opis problemu, który możemy rozwiązać. Skontaktujemy się i umówimy Państwa na wizytę.</p></div>
-                <div class="contact-section__form animate" data-waypoint-animate="true">
-                    
-                        <?php echo do_shortcode('[contact-form-7 id="2d6077d" title="Formularz kontaktowy"]'); ?>
-                    
+                <div class="offset-lg-1 offset-xl-2 scol-xl-6 col-lg-6 col-12">
+                    <div class="contact-section__form " id="znany_lekarz">
+                            <p><?=__('Wybierz lekarza i zarezerwuj termin konsultacji przez Znany Lekarz.', 'better')?></p>                            
+                            <?php echo do_shortcode('[contact-form-7 id="2d6077d" title="Znany lekarz"]'); ?>
+                        </div>
+                        <div class="contact-section__form active" id="phone_call">
+                            <?php echo do_shortcode('[contact-form-7 id="2d6077d" title="Formularz kontaktowy"]'); ?>
+                        </div>
+                        <div class="contact-section__form" id="message">
+                            <p><?=__('Zostaw swój numer, a skontaktujemy się z Tobą w pierwszy dzień roboczy.', 'better')?></p>                            
+                            <?php echo do_shortcode('[contact-form-7 id="2d6077d" title="Zostaw wiadomość"]'); ?>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-		</div>
 	</section>
 
 
@@ -43,9 +71,9 @@
 	<footer class="page-footer colorset--color-4">
     <div class="container">
         <div class="row">
-            <div class="col-6">
+            <div class="col-7">
                 <div class="row">
-                    <div class="col-sm-4 col-12">
+                    <div class="col logo">
                         <div class="page-footer__logo">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="42" height="55" viewBox="0 0 42 55">
                             <defs>
@@ -62,62 +90,39 @@
                         </svg>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-10">
-                        <div class="row">
-                            <div class="col-xl-4">
-                                <?php wp_nav_menu( array(
-								'theme_location' => 'footer-1',
-								'container'      => 'div',
-								'container_id'   => 'footer-menu',
-								'container_class'   => 'page-footer__menu',
-							    ) );?>
-                            </div>
-                            <div class="col-xl-8">
-                                <?php wp_nav_menu( array(
-								'theme_location' => 'footer-2',
-								'container'      => 'div',
-								'container_id'   => 'footer-menu-2',
-								'container_class'   => 'page-footer__menu',
-							    ) );?>
-                            </div>
-                            </div>
-                        
+                    <div class="col">
+                        <?php wp_nav_menu( array(
+                        'theme_location' => 'footer-1',
+                        'container'      => 'div',
+                        'container_id'   => 'footer-menu',
+                        'container_class'   => 'page-footer__menu',
+                        ) );?>
                     </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="row">
-                    <div class="col-sm-8 col-12">
-                        <div class="row">
-                            <div class="col-xl-6 col-12">
-                                <div class="block block-type-0">
-                                    <p class="head-block"><?=__('Adres', 'better')?>:</p>
-                                </div>
-                                <div class="block block-type-1">
-                                    <p>
-                                        Better<br>
-                                        ul. Kopernika 8/18<br>
-                                        00-367 Warszawa
-                                    </p>
-                                </div>
-
-
-                            </div>
-                            <div class="col-xl-6 col-12">
-                                <div class="block block-type-0">
-                                    <p class="head-block"><?=__('Kontakt', 'better')?>:</p>
-                                </div>
-                                <div class="block block-type-1">
-                                    <p>
-                                        <a href="tel:+48502646811">+48 502 646 811</a><br>
-                                        <a href="mailto:kontakt@better.clinic">kontakt@better.clinic</a><br>
-                                        Otwarte: 9.00-20.00
-                                    </p>
-                                </div>
-                            </div>
+                    <div class="col">
+                        <div class="block block-type-0">
+                            <p class="head-block"><?=__('Adres', 'better')?>:</p>
                         </div>
+                        <div class="block block-type-1">
+                            <p>
+                                Better<br>
+                                ul. Kopernika 8/18<br>
+                                00-367 Warszawa
+                            </p>
+                        </div>
+
+                        <div class="block block-type-0">
+                            <p class="head-block"><?=__('Kontakt', 'better')?>:</p>
+                        </div>
+                        <div class="block block-type-1">
+                            <p>
+                                <a href="tel:+48502646811">+48 502 646 811</a><br>
+                                <a href="mailto:kontakt@better.clinic">kontakt@better.clinic</a><br>
+                                Otwarte: 9.00-20.00
+                            </p>
+                        </div>
+
                     </div>
-                    <div class="col-sm-4 col-12">
+                    <div class="col">
                         <div class="block block-type-0">
                             <p class="head-block"><?=__('Social', 'better')?>:</p>
                         </div>
@@ -128,36 +133,39 @@
                             </p>
                         </div>
                     </div>
+                </div>        
+                    
+            </div>
+            <div class="col-5">
+                <div class="block block-type-0">
+                   <p class="head-block"><?=__('Newsletter', 'better')?>:</p>
                 </div>
+                <div class="newsletter_holder">
+                    <?php echo do_shortcode('[contact-form-7 id="cd81910" title="Newsletter"]');?>
+                </div>  
             </div>
         </div>
     </div>
 </footer>
 </div><!-- #page -->
-<script  type="text/javascript">
-    var lang_email_rq = 'Proszę podać adres e-mail';
-    var lang_message_rq = 'Proszę wpisać treść wiadomości';
-    var lang_agreement_rq = 'Zgoda na przetwarzanie danych jest wymagana';
-    var lang_post_code_err = 'Niepoprawny kod pocztowy';
-    var lang_email_err = 'Wpisz poprawny adres email.';
-</script>
+
     <!-- Facebook Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '379673289748472');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=379673289748472&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Facebook Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '379673289748472');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=379673289748472&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Facebook Pixel Code -->
 
 <?php wp_footer(); ?>
 
@@ -166,9 +174,7 @@ src="https://www.facebook.com/tr?id=379673289748472&ev=PageView&noscript=1"
 		<div class="container">
 			<div class="row">
 				<div class="col-md-10">
-					Nasza strona internetowa działa zgodnie z przepisami prawa dotyczącymi ochrony danych osobowych. 
-					Wchodząc na stronę bez zmiany ustawień przegladarki, wyrażają Państwo zgodę na zapisanie plików 
-					cookies w pamięci swojego urządzenia i dostęp do informacji zapisanych w tych plikach
+					Funkcjonowanie naszej strony internetowej jest zgodne z obowiązującymi przepisami prawa w zakresie ochrony danych osobowych. Aby dowiedzieć się więcej na temat stosowanych przez nas zasad w zakresie ochrony danych osobowych i stosowania plików cookies, kliknij – <a href="/polityka-prywatnosci">Polityka Prywatności</a>.
 				</div>
 				<div class="col-md-2 valign-center align-center">	
 					<button id="cookieAcceptBarConfirm" class="btn btn-success">Akceptuję</button>

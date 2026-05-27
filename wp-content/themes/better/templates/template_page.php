@@ -38,6 +38,8 @@ $kolor_tla_ = get_field('kolor_tla_', $current_page->ID);
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-6 col-lg-8 col-md-9 col-sm-10 col-xs-11 col-12">
+                        <?php if (function_exists("rank_math_the_breadcrumbs")) rank_math_the_breadcrumbs(); ?>
+
                         <div class="content-header__title" data-waypoint-animate="true">
 
                                 <h1 class="head-class"><?= $current_page->post_title ?></h1>
@@ -68,6 +70,21 @@ $kolor_tla_ = get_field('kolor_tla_', $current_page->ID);
         </article>
 
     </section>
+
+    <?php 
+        $mainpage_item = get_post_by_slug_and_type('opinie', 'mainpage');
+        get_template_part( 'template-parts/template', 'opinionsmix', $mainpage_item);
+    ?>
+
+    <?php 
+        $mainpage_item = get_post_by_slug_and_type('faq', 'mainpage');
+        get_template_part( 'template-parts/template', 'faq2', $mainpage_item);
+    ?>
+    
+    <?php 
+        $mainpage_item = get_post_by_slug_and_type('kontakt', 'mainpage');
+        get_template_part( 'template-parts/template', 'contact', $mainpage_item);
+    ?>
 
 
 <?php

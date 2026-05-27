@@ -64,7 +64,8 @@
         </div>
             
             <div class="comments-carousel-container" data-waypoint-animate="true">
-                <div class="comments-carousel" id="commentsCarousel">
+                
+                    <div id="commentsCarousel"  data-waypoint-animate="true" class="comments-carousel slickSlider display_dots slick_nav nav_inside" slick_per_page="3_3_2_1" slick_show_dots="0" slick_hide_arrows="0" fade="0"> 
                     <?php $index = 0; while ($comments->have_posts()) : 
                             $comments->the_post(); 
                             $comment = $post; 
@@ -88,21 +89,18 @@
                         ?>
                         <div class="comment-slide" data-index="<?=$index?>" data-comment-id="<?=$comment->ID?>" data-author="<?= $comment->post_title ?>">
                             <div class="comment-card">
-                                
+
                                 <div class="comment-avatar">
                                     <?php
                                         displayImageACF($zdjecie, $comment->post_title);
                                     ?>
                                 </div>
+
                                 <div class="rateholder">
                                     <div class="stars" data-rate="4">
-                                        <div class="star"></div>
-                                        <div class="star"></div>
-                                        <div class="star"></div>
-                                        <div class="star"></div>
-                                        <div class="star"></div>
+
                                     </div>
-                                    <div class="rate">4/5 Google</div>
+                                    <div class="rate">5/5 Google</div>
                                 </div>                                    
                                 
                                 <div class="comment-content">
@@ -110,19 +108,15 @@
                                         <?php if ($needs_expansion): ?>
                                             <div class="comment-preview"><?=$content_preview?></div>
                                             <div class="comment-full" style="display: none;"><?=$content_safe?></div>
-                                            <button class="comment-toggle" data-action="expand">
-                                                <span class="expand-text"><?=__('czytaj więcej', 'better') ?></span>
-                                                <span class="collapse-text" style="display: none;"><?=__('zwiń', 'better') ?></span>
-                                            </button>
+                                            <a class="comment-toggle link" data-comment-id="<?=$comment->ID?>" href="javascript:void(0);"><?=__('czytaj więcej', 'better') ?></a>
                                         <?php else: ?>
                                             <?=$content_safe?>
                                         <?php endif; ?>
                                     </div>
-                                </div>
-                                <div class="comment-meta">
+                                    <div class="comment-meta">
                                         <h3 class="comment-author"><?= $comment->post_title ?></h3>
-                                        
                                     </div>
+                                </div>
                                 
                             </div>
                         </div>
@@ -140,5 +134,22 @@
             </div>
         </div>
     </section>
+
+    <!-- Comment Modal -->
+    <div class="comment-modal" id="commentModal">
+        <div class="comment-modal-overlay"></div>
+        <div class="comment-modal-content">
+            <button class="comment-modal-close"></button>
+
+            <div class="comment-modal-rates">
+                <div class="comment-modal-stars"></div>
+                <div class="comment-modal-rate"></div>
+            </div>
+
+            <div class="comment-modal-text"></div>
+
+            <div class="comment-modal-author"></div>
+        </div>
+    </div>
 
 <?php endif; ?>

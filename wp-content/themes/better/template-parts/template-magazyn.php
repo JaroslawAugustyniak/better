@@ -1,4 +1,5 @@
 <?php 
+    $mainpage_item = $args; 
     // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
     $args_list = array(
         'post_type'      => 'magazyn',
@@ -15,27 +16,39 @@
 
     $magazyn = new WP_Query( $args_list );
 
-    $mainpage_item = $args; 
-    $opis = get_field('opis', $mainpage_item->ID);
+    $page = get_post_by_slug_and_type('uslugi', 'page');
+
+    $bg = get_field('kolor_tla', $mainpage_item->ID);
+    $description = get_field('opis', $mainpage_item->ID);
 ?>
 <?php if ($magazyn->have_posts()) : ?>
 
-    <section class="homepage-section news-section colorset--color-1" data-waypoint-header="page-header--color-1">
+    <section id="magazyn" class="homepage-section news-section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
         <div class="container">
-            <div class="section-header text-center" data-waypoint-animate="true">
-                <h2 class="section-title"><?= $mainpage_item->post_title ?></h2>
-                <p class="section-subtitle"><?= $opis ?></p>
-            </div>
+                <div class="homepage-section__top">
+                    <div class="row">
+                        <div class="col-lg-4 col-12">
+                            <div data-waypoint-animate="true">
+                                <h2 class="homepage-section__header">
+                                    <?=$mainpage_item->post_title?>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="homepage-section__description" data-waypoint-animate="true"><?=$description?></div>
+                        </div>
+                    </div>
+                </div>
             
             <div class="news-carousel-container" data-waypoint-animate="true">
-                <div class="news-carousel" id="newsCarousel">
+                
+                <div id="newsCarousel" class="news-carousel slickSlider display_dots slick_nav nav_inside" slick_per_page="2_2_1_1" slick_show_dots="0" slick_hide_arrows="0" fade="0">    
                     <?php $index = 0; while ($magazyn->have_posts()) : 
                         $magazyn->the_post(); 
                         $item = $post; 
                         $krotki_opis = get_field('krotki_opis');
                         $naglowek = get_field('naglowek');
 
-                        $tresc_preview = substr(strip_tags($krotki_opis), 0, 150) . '...';
                     ?>
                         <div class="news-slide" 
                              data-index="<?= $index ?>" 
@@ -46,21 +59,13 @@
                             <a href="<?=get_permalink($item->ID)?>" class="news-card">
                                 <div class="news-image-container">
                                     <?php displayImage($item->ID); ?>
-                                    
-
-                                    <div class="news-date-badge">
-                                        <span class="date-day"><?= get_the_date('d') ?> </span>
-                                        <span class="date-month"><?= get_the_date('m') ?></span>
-                                    </div>
-                                    
                                 </div>
                                 
                                 <div class="news-content">
                                     <h3 class="news-title"><?=$naglowek ? $naglowek : $item->post_title?></h3>
-                                    <p class="news-excerpt"><?=$tresc_preview?></p>
+                                    <div class="news-excerpt"><?=$krotki_opis?></div>
                                     
-                                    <div class="news-meta">
-                                        
+                                    <div class="news-meta">                                        
                                         <span class="button">
                                             <?=__('Czytaj więcej', 'better')?>                                            
                                         </span>

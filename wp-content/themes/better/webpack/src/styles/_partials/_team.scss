@@ -1,0 +1,83 @@
+#our_team{
+    background: $color-bg-sedeine;
+    padding:5rem 0;
+    margin-top:5rem;
+}
+
+.team_section{
+  position: relative;
+  z-index: 1;
+  padding: 80px 0;
+
+  .homepage-section__top{
+        margin-bottom: 5rem;
+    .homepage-section__header{
+      color: $main-color;
+      @include h2();
+    }
+    .homepage-section__description{
+      color: $main-color;
+    }
+  }
+
+  .carousel-counter{
+    display:none;
+  }
+
+  #team_slider{
+    .slick-list{
+      margin-left: -0.875rem;
+      margin-right: -0.875rem;
+    }
+    .slick-track{
+      display: flex !important;
+    }
+
+    &.slick-slider{
+      .slick-next{
+        right:.5rem !important;
+        top:-2.25rem;
+      }
+      .slick-prev{
+        left:calc(100% - 5.5rem) !important;
+        top:-2.25rem;
+      }
+    }
+
+    .slick-slide{
+      padding:0 0.875rem;
+      height: inherit !important;
+      display: flex !important;
+      flex-direction: column;
+      overflow: hidden;
+
+      & > div{
+        height: 100%;
+        .team-item{
+          height: 100%;
+          padding: 0;
+
+         
+        h3.head-class{
+            margin-top:1.875rem;
+            font-size:1.375rem;
+            color: $main_color;
+            margin-bottom:0.5rem;
+        }
+
+        .button{
+            border-color: $main_color;
+            color: $main_color;
+
+            &:hover{
+                background-color: $main_color;
+                color: $color-bg-sedeine;
+            }
+        }
+            
+          
+        }
+      }
+    }
+  }
+}

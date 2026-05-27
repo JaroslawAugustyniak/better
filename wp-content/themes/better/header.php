@@ -108,10 +108,10 @@
 							wp_nav_menu( array(
 								'theme_location' => 'menu-1',
 								'container'      => 'div',
-								'container_id'   => 'header-menu',
+								'container_id'   => 'top-header-menu',
 								'container_class'=> 'row justify-content-center',
-								'walker'         => new Custom_Bootstrap_Menu_Walker(),
-								'items_wrap'     => '%3$s', // 🔥 usuwa domyślne <ul> i <li>
+								//'walker'         => new Custom_Bootstrap_Menu_Walker(),
+								///'items_wrap'     => '%3$s', // 🔥 usuwa domyślne <ul> i <li>
 							) );
 
 						?>

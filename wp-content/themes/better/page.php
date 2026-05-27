@@ -24,6 +24,7 @@ get_header();
 		<?php
 		while ( have_posts() ) :
 			the_post();
+			echo "OK"; die;
 			// do_shortcode('[ajax_load_more post_type="post" posts_per_page="3"]');
 			get_template_part( 'template-parts/content', 'page' );
 

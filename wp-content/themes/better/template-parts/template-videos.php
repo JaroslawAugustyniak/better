@@ -1,4 +1,7 @@
+
 <?php 
+    $mainpage_item = $args; 
+    // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
     // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
     $args_list = array(
         'post_type' => 'video',  // Typ wpisu 'project'
@@ -8,28 +11,27 @@
 
     $videos = new WP_Query($args_list);
 
-    $mainpage_item = $args; 
-    $opis = get_field('opis', $mainpage_item->ID);
+    $bg = get_field('kolor_tla', $mainpage_item->ID);
+    $description = get_field('opis', $mainpage_item->ID);
+
 ?>
 <?php if ($videos->have_posts()) : ?>
-<section class="homepage-section youtube-section colorset--color-2" data-waypoint-header="page-header--color-2">
-        <div class="container">
-            <div class="section-header text-center" data-waypoint-animate="true">
-                <h2 class="section-title"><?= $mainpage_item->post_title ?></h2>
-                <p class="section-subtitle"><?= $opis ?></p>
-            </div>
-            
-            <div class="youtube-carousel-container" data-waypoint-animate="true">
-                <div class="youtube-carousel" id="youtubeCarousel">
-                    <?php $index = 0; while ($videos->have_posts()) : 
-                            $videos->the_post(); 
-                            $video = $post; 
+<section class="homepage-section videos section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
+    <div class="container-full">
+        
+
+        <div id="videos" class="slickSlider display_dots slick_nav nav_inside" auto_play="1" speed="15000"  slick_per_page="1_1_1_1" slick_show_dots="1" slick_hide_arrows="0" fade="0">   
+                
+                    <?php $index = 0; while ($videos->have_posts()) :
+                            $videos->the_post();
+                            $video = $post;
 
                             $zdjecie = get_field('obrazek_filmu', $video->ID);
-                            $opinia = get_field('opinia', $video->ID);
+                            $opinia = get_field('opis_filmu', $video->ID);
                             $video_id = get_field('identyfikator_filmy_z_youtube', $video->ID);
+                            $short_video = get_field('short_video', $video->ID);
                             ?>
-                        <div class="youtube-slide" data-index="<?=$index?>" data-video-id="<?=$video_id?>" data-title="<?= $video->post_title ?>">
+                        <div class="youtube-slide" data-index="<?=$index?>" data-video-id="<?=$video_id?>" data-title="<?= $video->post_title ?>" <?php if ($short_video) : ?>data-short-video="<?= esc_attr($short_video) ?>"<?php endif; ?>>
                             <?php $transcrypt = get_field('transcrypt', $video->ID); if ($transcrypt) : ?>
                             <script type="application/ld+json">
                             {
@@ -43,22 +45,34 @@
                             </script>
                             <?php else: ?><div class="no-transcript"></div><?php endif; ?>
                             <div class="slide-image-container">
-                                <img src="<?=$zdjecie?$zdjecie['url']:''?>" 
-                                     alt="<?= $video->post_title ?>" 
+                                <?php if ($short_video) : ?>
+                                    <video class="slide-video"
+                                           playsinline
+                                           autoplay
+                                           muted
+                                           loop
+                                           loading="lazy"
+                                           poster="<?=$zdjecie?$zdjecie['url']:'https://img.youtube.com/vi/'.$video_id.'/hqdefault.jpg'?>">
+                                        <source src="<?= esc_attr($short_video) ?>" type="video/mp4">
+                                    </video>
+                                <?php endif; ?>
+                                <img src="<?=$zdjecie?$zdjecie['url']:''?>"
+                                     alt="<?= $video->post_title ?>"
                                      loading="lazy"
+                                     <?php if ($short_video) : ?>style="display:none;"<?php endif; ?>
                                      onerror="this.src='https://img.youtube.com/vi/<?=$video_id?>/hqdefault.jpg'; this.onerror=null;">
-                                    <div class="slide-overlay">
-                                        <div class="play-button">
-                                            <i class="fas fa-play"></i>
-                                        </div>
-                                    </div>
+
                             </div>
                             <div class="slide-content">
                                 <h3 class="slide-title"><?= $video->post_title ?></h3>
+                                <p><?=$opinia?></p>
+                                <a class="button play-button">
+                                    Obejrzyj film
+                                </a>
                             </div>
                         </div>
                     <?php $index++; endwhile; ?>
-                </div>
+                
             </div>
         </div>
     </section>
@@ -93,7 +107,7 @@
                             $video = $post; 
 
                             $zdjecie = get_field('obrazek_filmu', $video->ID);
-                            $opinia = get_field('opinia', $video->ID);
+                            $opinia = get_field('opis_filmu', $video->ID);
                             $video_id = get_field('identyfikator_filmy_z_youtube', $video->ID);
                             ?>
                         <div class="thumbnail-item" 
@@ -116,4 +130,4 @@
             </div>
         </div>
     </div>
-<?php endif; ?>
+<?php endif; ?> 

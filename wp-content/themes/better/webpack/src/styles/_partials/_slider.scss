@@ -7,20 +7,38 @@
         .slider-section {
             position: relative;
             height: 100vh;
+            max-height: 53vw;
             min-height: 37.5rem;
-            
+            overflow: hidden;
             .main-slider{
-            @media(max-width:767.99px){
+                width:100%;
+                
+                .slick-list{
+                    .slick-slide{
+                     max-width: calc(100vw);
+                    }
+                }
+            @media(max-width:768px){
                 max-height: inherit;
                 height:43.75rem;
-
+                .slick-arrow{
+                    display: none;
+                }
                 .slick-list{
                     height: 100%;
-                    
+                    position: relative;
                     .slick-slide{
+                        position: absolute !important;
+                        
+                        left: 0;
+                        max-width: inherit;
+                        width:100vw;
                         height: 100%;
                         padding-bottom: 0;
+                        padding-left: 0;
+                        padding-right: 0;
                         .slider-slide{
+                            width:100vw;
                             height: 100%;
                             max-height: 100%;
                             padding-bottom: 0;    
@@ -47,11 +65,13 @@
 
                 @media (min-width: 1024px) {    
                     height: 100vh;
+                    max-height: 55vw;
                 }
 
                 #parallax-inner {
                     @media (min-width: 1024px) {    
                         height: 100vh;
+                        max-height: 55vw;
                     }
                         width: 100vw;
                         position: fixed;
@@ -293,6 +313,7 @@
 
         .main-slider .slick-list {
             height: 100vh;
+            max-height: 55vw;
             min-height: 600px;
         }
 
@@ -302,7 +323,9 @@
 
         .main-slider .slick-slide {
             height: 100vh;
+            max-height: 55vw;
             min-height: 600px;
+            
         }
 
         .main-slider .slick-slide > div {
@@ -317,3 +340,35 @@
         .main-slider:not(.slick-initialized) .slider-slide:not(:first-child) {
             display: none;
         }
+
+        /* Video Slider Styles - #videos */
+        .videos-slider-wrapper {
+            position: relative;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+
+        .progress-dots-container {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            right: auto;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+
+            .progress-bar-item {
+                width: 2rem;
+                height: 0.3rem;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 0.25rem;
+                overflow: hidden;
+                position: relative;
+            }
+        }
+
+        

@@ -1,0 +1,27 @@
+.instagram-section{
+    position: relative;
+    z-index: 1;
+    padding: 80px 0;
+
+    .section-header{
+        h2.section-title{
+            color: inherit;
+        }
+
+        h3{
+            color: inherit;
+        }
+    }
+
+    .wp-block-gallery{
+        display: flex;
+        gap: 1.75rem;
+        margin: 0;
+
+        &.columns-4{
+            .wp-block-image{
+                width: calc(25% - 1.3125rem);
+            }
+        }
+    }
+}

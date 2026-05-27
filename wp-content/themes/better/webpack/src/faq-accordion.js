@@ -2,51 +2,50 @@
  * FAQ Accordion Enhancement
  * Enhances Bootstrap Collapse accordion with custom functionality
  */
+import $ from 'jquery';
+// Make jQuery available globally if needed
+window.$ = window.jQuery = $;
 
-document.addEventListener('DOMContentLoaded', function() {
-  const faqAccordion = document.getElementById('faqAccordion');
+$(document).ready(function() {
+    // Initialize FAQ Accordion
+    initFaqAccordion();
+});
+var isOpen;
+function initFaqAccordion() {
+  
+    const $accordion = $('.wp-block-rank-math-faq-block');
 
-  if (!faqAccordion) {
-    return;
-  }
+  
 
-  // Get all accordion buttons
-  const buttons = faqAccordion.querySelectorAll('.accordion-button');
-
-  buttons.forEach(button => {
-    button.addEventListener('click', function() {
-      // Optional: Add custom tracking or behavior
-      const targetId = this.getAttribute('data-bs-target');
-      const isExpanded = !this.classList.contains('collapsed');
-
-      // Log for debugging (optional)
-      console.log('FAQ item toggled:', {
-        id: targetId,
-        isExpanded: isExpanded
-      });
-
-      // Optional: Add custom class for styling
-      this.closest('.accordion-item').classList.toggle('active', isExpanded);
-    });
-
-    // Set initial state for active items
-    if (!button.classList.contains('collapsed')) {
-      button.closest('.accordion-item').classList.add('active');
+    if ($accordion.length === 0) {
+        console.warn('FAQ Accordion element not found!');
+        return;
     }
-  });
 
-  // Optional: Close all items on Escape key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      buttons.forEach(button => {
-        if (!button.classList.contains('collapsed')) {
-          const bsCollapse = new bootstrap.Collapse(
-            button.closest('.accordion-item').querySelector('.accordion-collapse'),
-            { toggle: false }
-          );
-          bsCollapse.hide();
+    $accordion.find('.rank-math-faq-item').each(function() {
+      
+      const $item = $(this);
+      const $header = $item.find('.rank-math-question');
+      const $body = $item.find('.rank-math-answer');
+
+      $header.on('click', function() {
+        isOpen = $item.hasClass('show');
+        if (isOpen) {
+          $item.removeClass('show');
+          $body.slideUp(300);
+        } else {
+
+          $accordion.find('.rank-math-faq-item').each(function() {
+            const $otherItem = $(this);
+            if ($otherItem.hasClass('show')) {
+              $otherItem.removeClass('show');
+              $otherItem.find('.rank-math-answer').slideUp(300);
+            }
+          });
+
+          $item.addClass('show');
+          $body.slideDown(300);
         }
       });
-    }
-  });
-});
+    });
+  }
