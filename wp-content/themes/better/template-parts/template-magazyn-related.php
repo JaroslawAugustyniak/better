@@ -1,24 +1,39 @@
-<?php 
-    $mainpage_item = $args; 
-    // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
+<?php
+    // Pobierz tagi bieżącego wpisu
+    
+    $current_post_id = get_the_ID();
+    $current_tags = get_the_tags();
+    
+    // Jeśli wpis ma tagi, pobierz ich ID
+    $tag_ids = array();
+    if ($current_tags && !is_wp_error($current_tags)) {
+        $tag_ids = wp_list_pluck($current_tags, 'term_id');
+    }
+
+
+    // Zapytanie pobierające wpisy z tymi samymi tagami
     $args_list = array(
         'post_type'      => 'magazyn',
         'post_status'    => 'publish',
         'posts_per_page' => -1,
-        'meta_query'     => array(
-            array(
-                'key'     => 'promuj_na_stronie_glownej',
-                'value'   => 1,         // Wartość zaznaczonego checkboxa ACF
-                'compare' => '=',       // Porównanie równe
-            ),
-        ),
+        'post__not_in'   => array($current_post_id), // Wyłącz bieżący wpis
     );
+
+    // Jeśli wpis ma tagi, dodaj tax_query
+    if (!empty($tag_ids)) {
+        $args_list['tax_query'] = array(
+            array(
+                'taxonomy' => 'post_tag',
+                'field'    => 'term_id',
+                'terms'    => $tag_ids,
+                'operator' => 'IN', // Pobierz wpisy które mają KTÓRYKOLWIEK z tych tagów
+            ),
+        );
+    }
 
     $magazyn = new WP_Query( $args_list );
 
-    $bg = get_field('kolor_tla', $mainpage_item->ID);
-    $description = get_field('opis', $mainpage_item->ID);
-    
+    $bg = 'colorset--color-3';
 ?>
 <?php if ($magazyn->have_posts()) : ?>
 
@@ -28,13 +43,13 @@
                     <div class="row">
                         <div class="col-lg-4 col-12">
                             <div data-waypoint-animate="true">
-                                <h2 class="homepage-section__header">
-                                    <?=$mainpage_item->post_title?>
-                                </h2>
+                                <p class="homepage-section__header">
+                                    <?= __('Czytaj dalej', 'better')?>
+                                </p>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="homepage-section__description" data-waypoint-animate="true"><?=$description?></div>
+                            
                         </div>
                     </div>
                 </div>

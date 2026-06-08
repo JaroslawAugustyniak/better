@@ -38,7 +38,7 @@
         
         // End loop.
         endwhile;
-
+        wp_reset_postdata();
     // No value.
     else :
         // Do something...

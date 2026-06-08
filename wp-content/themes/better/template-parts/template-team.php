@@ -74,9 +74,10 @@
                             </div>
 
                             <?php
-                            $index++; 
-                        endwhile; 
-                    
+                            $index++;
+                        endwhile;
+                        wp_reset_postdata();
+
 
                 ?>
 

@@ -18,7 +18,7 @@ get_header();
 
 			
 			the_post();
-			echo get_post_type(); die;
+			// echo get_post_type(); die;
 			get_template_part( 'template-parts/content', get_post_type() );
 
 			// the_post_navigation(

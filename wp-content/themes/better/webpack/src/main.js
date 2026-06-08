@@ -10,6 +10,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 // main.js
+import './gallery.js';
 import YouTubeSlider from './youtube-slider.js';
 import SliderCarousel from './slider-carousel.js';
 import Comments from './comments.js';
@@ -34,6 +35,7 @@ import 'select2/dist/css/select2.min.css';
 jQuery(document).ready(function($){
   cookiesPolicyBar();
 
+
   initSliders($('body'));
 
   initContact();
@@ -42,10 +44,27 @@ jQuery(document).ready(function($){
   new Comments();
 });
 
+
+
 function initContact(){
   $('#kontakt .menu-button').on('click', function(){
     $('#kontakt').removeClass('active');
   });
+
+        var doctorSelect = jQuery('#doctorSelect');
+        var doctorButton = document.getElementById('doctorButton');
+        
+        if (doctorSelect.length && doctorButton) {
+            // Update button URL on Select2 change
+            doctorSelect.on('change', function() {
+                var selectedUrl = $(this).val();
+                
+                if (selectedUrl) {
+                    doctorButton.setAttribute('href', selectedUrl);
+                }
+            });
+        }
+
 }
 
 function cookiesPolicyBar(){
@@ -65,151 +84,6 @@ function cookiesPolicyBar(){
 
 
 
-function trackEvents() {
-      // Sprawdź czy funkcja już była uruchomiona
-  if (window.trackEventsInitialized) {
-    console.warn('trackEvents już zainicjalizowana');
-    return window.existingTracker;
-  }
-
-  const buttons = [
-    {
-      id: 'wideo_konsultacja',
-      eventName: 'video_consultation_click',
-      metaEvent: 'Lead'
-    },
-    {
-      id: 'umow_wizyte_promo',
-      eventName: 'promo_applied',
-      metaEvent: 'Lead'
-    },
-    {
-      id: 'umow_wizyte',
-      eventName: 'booking_click',
-      metaEvent: 'Lead'
-    },
-    {
-      id: 'footer_phone',
-      eventName: 'phone_click_footer',
-      metaEvent: 'Lead'
-    },
-    {
-      id: 'footer_email',
-      eventName: 'email_click_footer',
-      metaEvent: 'Lead'
-    },
-    {
-      id: 'contact_form_button',
-      eventName: 'lead_submit',
-      metaEvent: 'Lead'
-    },
-    {
-      id: 'header_phone',
-      eventName: 'phone_click',
-      metaEvent: 'Lead'
-    },
-    {
-      id: 'header_email',
-      eventName: 'email_click',
-      metaEvent: 'Lead'
-    }
-  ];
-
-  // Funkcja do wysyłania eventów
-  function sendEvent(eventData) {
-
-    const standardEvents = [
-    'ViewContent', 'Search', 'AddToCart', 'AddToWishlist', 
-    'InitiateCheckout', 'AddPaymentInfo', 'Purchase', 'Lead',  // ← Lead JEST na liście
-    'CompleteRegistration', 'Contact', 'CustomizeProduct', 
-    'Donate', 'FindLocation', 'StartTrial', 'SubmitApplication', 'Subscribe'
-  ];
-
-    // Debug log
-    console.log('Event triggered:', {
-      event: eventData.metaEvent,
-      ga4Event: eventData.eventName,
-      data: {
-        content_category: 'CTA',
-        content_name: eventData.eventName,
-        element_id: eventData.id
-      }
-    });
-
-    // Wysyłanie do GA4
-    if (typeof gtag !== 'undefined') {
-      gtag('event', eventData.eventName, {
-        event_category: 'CTA',
-        event_label: '#' + eventData.id
-      });
-    }else{
-        console.log('gtag is not defined, skipping GA4 event tracking');
-    }
-    
-    // Wysyłanie do Meta Pixel
-    if (typeof fbq !== 'undefined') {
-        console.log('Checking event:', eventData.metaEvent, 'Is standard:', standardEvents.includes(eventData.metaEvent));
-    
-        if (standardEvents.includes(eventData.metaEvent)) {
-            // ✅ Standardowy event - użyj track
-            fbq('track', eventData.metaEvent, {
-                content_category: 'CTA',
-                content_name: eventData.eventName,
-                element_id: eventData.id
-            });
-            console.log('Sent as standard event:', eventData.metaEvent);
-        } else {
-            // ✅ Niestandardowy event - użyj trackCustom
-            fbq('trackCustom', eventData.metaEvent, {
-                content_category: 'CTA',
-                content_name: eventData.eventName,
-                element_id: eventData.id
-            });
-            console.log('Sent as custom event:', eventData.metaEvent);
-        }
-
-    }else{
-        console.log('fbq is not defined, skipping Meta Pixel event tracking');
-    }
-    
-    
-  }
-
-  // Automatyczne trackowanie po załadowaniu DOM
-  document.addEventListener('DOMContentLoaded', function () {
-    buttons.forEach(function (btn) {
-      const element = document.getElementById(btn.id);
-      if (element) {
-        element.addEventListener('click', function () {
-          sendEvent(btn);
-        });
-      }
-    });
-  });
-
-  // Funkcja do ręcznego wywołania po ID elementu
-  function trackById(elementId) {
-    const btn = buttons.find(b => b.id === elementId);
-    if (btn) {
-      sendEvent(btn);
-    } else {
-      console.warn('Event configuration not found for ID:', elementId);
-    }
-  }
-
-  // Funkcja do ręcznego wywołania z custom danymi
-  function trackCustom(eventData) {
-    sendEvent(eventData);
-  }
-
-  // Zwracamy funkcje publiczne
-  return {
-    trackById: trackById,
-    trackCustom: trackCustom,
-    buttons: buttons // Na wypadek gdybyś chciał sprawdzić dostępne eventy
-  };
-}
-
 
 
 function initSliders(parent){
@@ -223,11 +97,11 @@ function initSliders(parent){
       var infinite = $(this).attr('infinite') && $(this).attr('infinite')=='0' ? false : true;
       var speed = $(this).attr('speed') ? $(this).attr('speed') : 5000;
       var autoplay = $(this).attr('auto_play') && $(this).attr('auto_play') == '1' ? true : false;
-      var pause = $(this).attr('pause_on_hover') && $(this).attr('pause_on_hover') == '1' ? true : false;
+      var pause = $(this).attr('pause_on_hover') && $(this).attr('pause_on_hover') == '0' ? false : true;
       var fade = $(this).attr('fade') && $(this).attr('fade')=='1' ? true : false;
 
       
-
+ 
       var resp_1 = circumference(resp[0] ? resp[0] : 4); 
       var resp_2 = circumference(resp[1] ? resp[1] : 3);
       var resp_3 = circumference(resp[2] ? resp[2] : 1);
@@ -282,7 +156,8 @@ function initSliders(parent){
               slidesToShow: resp_4,
               slidesToScroll: resp_4,
               // centerMode: center_mode, 
-              variableWidth: true
+              variableWidth: true,
+              fade: false,
             }
           }
   

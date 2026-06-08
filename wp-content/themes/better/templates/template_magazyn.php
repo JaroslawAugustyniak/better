@@ -26,16 +26,16 @@ get_header();
     $current_page = $post;
 
 ?>
-<section class="" data-waypoint-header="page-header--color-6">
-    <div class="content-header colorset--color-7">
+<section class="colorset--color-7" data-waypoint-header="page-header--color-6">
+    <div class="content-header ">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-6 col-lg-8 col-md-9 col-sm-10 col-xs-11 col-12">
-                    <div class="content-header__title" data-waypoint-animate="true">
+            <div class="row">
+                <div class="col-md-5 col-12">
+                    <div class="content-header__title text-left" data-waypoint-animate="true">
                         <h1 class="head-class"><?=$current_page->post_title?></h1>
                     </div>
-                    <div class="content-header__dsc" data-waypoint-animate="true">
-                     <?php 
+                    <div class="content-header__dsc text-left" data-waypoint-animate="true">
+                        <?php 
                             $content = $current_page->post_content;
                             $content = apply_filters( 'the_content', $content );
                             $content = str_replace( ']]>', ']]&gt;', $content );
@@ -44,54 +44,55 @@ get_header();
                     </div>
                     
                 </div>
+                <div class="col-md-5 offset-md-2 col-12 text-left">
+                        <?php 
+                            $static = get_post_by_slug_and_type('newsletter', 'static');
+                        ?>
+                        <div class="block block-type-0" data-waypoint-animate="true">
+                        <p class="head-class"><?= $static->post_title ?>:</p>
+                        </div>
+                        <div class="newsletter_holder" data-waypoint-animate="true">
+                            <?php echo apply_filters( 'the_content', $static->post_content ); ?>
+                        </div>  
+                </div>
             </div>
         </div>
     </div>
 
 <?php if ($magazynY->have_posts()) : ?>
-    <div class="content-news-list colorset--color-4">
+    <div class="content-news-list colorset--color-4" data-waypoint-header="<?=get_header_color('colorset--color-4')?>">
         <div class="container">
 
-            <div class="grid row">
+            <div class="row">
 
                             
-                <?php $index = 0; while ($magazynY->have_posts()) : 
-                    $magazynY->the_post(); 
-                    $magazyn = $post; 
-                    $magazyn_title = get_field('naglowek');
-                    if(!$magazyn_title) $magazyn_title = $magazyn->post_title;
-                    $magazyn_content = get_field('krotki_opis');
-                ?>
+                <div class="col-lg-6 col-12">                            
+                    <?php $index = 0; while ($magazynY->have_posts()) : 
+                        $magazynY->the_post(); 
+                        $item = $post; 
+                        $item->index = $index;  // Dodaj index
+                        $item->showTags = true;  // Dodaj index
+
+                        if($index%2 == 0):
+                    ?>
                 
-                        <div class="col-lg-4 col-12 grid-item">
-                            <div class="news-element" 
-                             data-index="<?= $index ?>" 
-                             data-news-id="<?=$magazyn->ID?>" 
-                             data-title="<?=$magazyn->post_title?>"
-                             data-url="<?=get_permalink($magazyn->ID)?>"  data-waypoint-animate="true">
+                            <?php get_template_part( 'template-parts/content', 'blog-item', $item);?>
                             
-                            <a href="<?=get_permalink($magazyn->ID)?>" class="news-card">
-                                <div class="news-image-container">
-                                    <?php displayImage($magazyn->ID); ?>
-                                    
-
-                                    <div class="news-date-badge">
-                                        <span class="date-day"><?= get_the_date('d') ?> </span>
-                                        <span class="date-month"><?= get_the_date('m') ?></span>
-                                    </div>
-                                    
-                                </div>
-                                
-                                <div class="news-content">
-                                    <h3 class="news-title"><?=$magazyn_title?></h3>
-                                    <p class="news-excerpt"><?=$magazyn_content?></p>
-                                    
-                                </div>
-                            </a>
-                        </div>
-                        </div>
-                    
-                <?php $index++; endwhile; ?>
+                    <?php endif; $index++; endwhile; ?>
+                </div>
+                <div class="col-lg-6 col-12">                            
+                    <?php $index = 0; while ($magazynY->have_posts()) : 
+                        $magazynY->the_post(); 
+                        $item = $post; 
+                        $item->index = $index;  // Dodaj index
+                        $item->showTags = true;  // Dodaj index
+                        if($index%2 == 1):
+                    ?>
+                
+                            <?php get_template_part( 'template-parts/content', 'blog-item', $item);?>
+                            
+                    <?php endif; $index++; endwhile; ?>
+                </div>
 
             </div>
         </div>
@@ -100,7 +101,10 @@ get_header();
     <?php endif; ?>
 
 </section>
-
+<?php 
+        $mainpage_item = get_post_by_slug_and_type('kontakt', 'mainpage');
+        get_template_part( 'template-parts/template', 'contact', $mainpage_item);
+    ?>
 
 <?php
 get_footer();

@@ -1,28 +1,130 @@
 .homepage-section{
+
+    &:not(.news){
     
-    .homepage-section__top{
-        margin-bottom: 5rem;
+        .homepage-section__top{        
+                margin-bottom: 5rem;
+
+            @media(max-width:767.99px){
+                h2.homepage-section__header{
+                    margin-bottom:1.75rem;
+                }
+            }
+        }
+
+    }
+
+    &.news{
+        .homepage-section__top{
+            margin-right:6.25rem;
+            h2.homepage-section__header{
+                    padding-right:0;
+            }
+        }
+        @media(max-width:767.99px){
+           .homepage-section__top{
+                margin-bottom: inherit;
+            
+                h2.homepage-section__header{
+                    margin-bottom:1.75rem;
+                }
+            }
+        }
+    }
+
+    #news.slick-slider{
+        @media(max-width:767.99px){
+            .slick-slide{
+                padding-bottom:0rem;
+            }
+        }
     }
 
     .homepage-sercions__bottom{
         margin-top:.5rem;
     }
+
+
+    @media(max-width:767.99px){
+        .homepage-section__baners-item {
+            margin-bottom:2.5rem;
+
+        }
+        .homepage-section__title{
+            margin-bottom:1.25rem;
+        }
+        .homepage-section__dsc{
+            margin-bottom:0rem;
+            font-size: 0.875rem;
+        }
+
+        .homepage-section__buttons{
+            padding-top:1.25rem;
+        }
+    }
+
+}
+.related-container{
+    div[class*="col-"]{
+        padding-bottom:1.75rem;
+    }
+    .related_item{
+        border: 1px solid $light-brown-color;
+        border-radius: 1rem;
+        padding: 1.25rem;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        figure{
+            width:7.5rem;
+            height: 7.5rem;
+        }
+
+        .content{
+            padding-left:1rem;
+            h3{
+                font-size:1.375rem;
+                line-height: 1.2;
+            }
+
+            a.link{
+                &:after{
+                    border-bottom: 1px solid $light-brown-color;
+                }
+            }
+        }
+    }
 }
 
 #metamorfoses{
     .slick-list{
-        margin-left:-1.25rem;
-        margin-right:-1.25rem;
+        margin-right:-2.5rem;
+        @media(min-width: 768px){
+            margin-left:-1.25rem;
+            margin-right:-1.25rem;
+        }
+
+        @media(max-width:767.99px){
+            .slick-slide{
+                margin-right:1.75rem;
+                max-width: calc(100vw - 5rem);
+            }
+        }
     }
     .meta-item{
         border-radius: 1rem;
-        padding: 1.25rem;
+        @media(min-width: 768px){
+            padding: 1.25rem;
+        }
         text-align: left;
         transition: all $transition-smooth;
 
-        &:hover{
-            background: $light-hover;
-            border-color: $light-hover;
+        @media(min-width: 768px){
+            &:hover{
+                background: $light-hover;
+                border-color: $light-hover;
+            }
         }
 
         a{
@@ -56,6 +158,27 @@
 
 #services{
 
+    margin-right:-2.5rem;
+        @media(min-width: 768px){
+            margin-left:-0.875rem;
+            margin-right:-0.875rem;
+        }
+
+        @media(max-width:767.99px){
+            .slick-slide{
+                margin-right:1.75rem;
+                max-width: calc(100vw - 5rem);
+            }
+
+            .slick-next{
+                right:2.5rem !important;
+               
+            }
+            .slick-prev{
+                left:calc(100% - 6.5rem) !important;                
+            }
+        }
+
     .container{
         padding-bottom:5rem;
         .row{
@@ -78,7 +201,8 @@
 
     .service-item{
         @media(min-width: 768px){
-            margin-right: 1.75rem;
+            margin-right: 0.875rem;
+            margin-left: 0.875rem;
         }
         border: 1px solid $light-brown-color;
         border-radius: 1rem;
@@ -127,7 +251,7 @@
            align-items: center;
            
            a{
-            margin-right:1.375rem;
+            margin-right:0.875rem;
             font-size: 0.875rem;
            }
         }

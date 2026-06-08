@@ -94,3 +94,11 @@ $kolor_tla_ = 'colorset--color-6';
         </article>
 
     </section>
+
+    <?php 
+        get_template_part( 'template-parts/template', 'magazyn-related');
+    ?>
+	<?php 
+        $mainpage_item = get_post_by_slug_and_type('kontakt', 'mainpage');
+        get_template_part( 'template-parts/template', 'contact', $mainpage_item);
+    ?>

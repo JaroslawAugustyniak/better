@@ -38,7 +38,7 @@ get_header();
         $element_type = get_field('element', $mainpage_item->ID);
         // echo $element_type;     
         // && ($element_type=='metamorf' || $element_type=='opinions' || $element_type=='videos' || $element_type=='services')
-        if($element_type) get_template_part( 'template-parts/template', $element_type, $mainpage_item);
+        if($element_type && $element_type=='faq') get_template_part( 'template-parts/template', $element_type, $mainpage_item);
 
         endwhile;
     endif;

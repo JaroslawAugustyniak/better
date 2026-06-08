@@ -492,6 +492,8 @@ class InitializationManager {
         
         this.waypointsInitialized = true;
         // console.log(`InitManager: Created ${this.waypointInstances.length} waypoint instances`);
+
+
     }
     
     initializeHeaderWaypoints() {

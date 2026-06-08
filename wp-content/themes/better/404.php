@@ -8,21 +8,28 @@
  */
 
 get_header();
+
+$kolor_tla_naglowka = 'colorset--color-1';
 ?>
 <div class="header-size"></div>
 	<main id="primary" class="site-main pt-5">
 
-		<section class="error-404 not-found mt-5 p-5">
+		<section class="error-404 not-found mt-5 p-5 <?=$kolor_tla_naglowka?>" data-waypoint-header="<?=get_header_color($kolor_tla_naglowka)?>">
 			<div class="container">
 				<div class="row">
 					<div class="offset-md-3 col-md-6">
-						<img src="<?=get_template_directory_uri().'/images/404.svg'?>" class="img-fluid" />
+						<h1 class="page-title">404</h1>
+						<p><?php esc_html_e( 'Strona, której szukasz nie istnieje lub została usunięta.', 'better' ); ?></p>
 					</div>
-				</row>
+				</div>
 				<div class="row">
 					<div class="offset-md-3 col-md-6">
-						<h1 class="page-title"><?php esc_html_e( 'The page you are looking for does not exist', 'inwenta' ); ?></h1>
-						<p><?php esc_html_e( 'Check if we have what you are looking for or contact us and we will answer your question', 'inwenta' ); ?></p>
+						<img src="<?=get_template_directory_uri().'/images/graphic.png'?>" class="img-fluid" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="offset-md-3 col-md-6">
+						<a href="/" class="link"><?php esc_html_e( 'Wróć do strony głównej', 'better' ); ?></a>
 					</div>
 				</div>
 			</div>

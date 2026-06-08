@@ -2,7 +2,7 @@
 
 <?php 
     $mainpage_item = $args; 
-    $current_page = get_queried_object_id();
+    $current_page = isset($args->current_page) ? $args->current_page : get_queried_object_id();
 
     
     $args_list = array(
@@ -64,6 +64,7 @@
                 <?php
                     $faq_index++;
                     endwhile;
+                    wp_reset_postdata();
                 ?>
             </div>
             <?php endif; ?>

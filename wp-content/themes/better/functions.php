@@ -45,8 +45,16 @@ add_shortcode('o-nas', function() {
     $current_page = get_queried_object_id();
     
 	$mainpage_item = get_post_by_slug_and_type('klinika-stomatologiczna', 'mainpage');
+	$mainpage_item->kolor_tla = 'colorset--color-3';
+	$mainpage_item->margin = 'margin';
+		echo '</div>'; //end col-
+		echo '</div>'; //end row
+		echo '</div>'; //end container
     get_template_part( 'template-parts/template', 'news', $mainpage_item);
-    
+    	echo '<div class="container">';
+		echo '<div class="row">';
+		echo '<div class="col-xl-8 col-lg-10 col-12 offset-xl-2 offset-lg-1 offset-0">';
+
     return ob_get_clean();
 });
 
@@ -69,6 +77,40 @@ add_shortcode('our-team', function() {
     return ob_get_clean();
 });
 
+
+
+
+add_filter('rank_math/frontend/breadcrumb/items', function($items) {
+                                $post_type = get_post_type();
+                                if ($post_type === 'metamorphoses') {
+									$page = get_post_by_slug_and_type('metamorfozy', 'page');
+									
+									if($page):
+                                        array_splice($items, 1, 0, [[
+											$page->post_title,
+                                            get_permalink($page->ID),
+											 
+											]]);
+										endif;
+										// pr($items); die;
+                                    
+                                }
+
+								if ($post_type === 'service') {
+									$page = get_post_by_slug_and_type('uslugi', 'page');
+									
+									if($page):
+                                        array_splice($items, 1, 0, [[
+											$page->post_title,
+                                            get_permalink($page->ID),
+											 
+											]]);
+										endif;
+										// pr($items); die;
+                                    
+                                }
+                                return $items;
+                            });
 
 function displayAcfSvg($name, $postId = false){
 	
@@ -151,16 +193,6 @@ function get_child_posts_of_current( $post = null, $post_type = 'any' ) {
         return array();
     }
 
-    $args = array(
-        'post_type'      => $post_type,
-        'post_parent'    => $post->ID,
-        'posts_per_page' => -1,
-        'orderby'        => 'menu_order',
-        'order'          => 'ASC',
-        'post_status'    => 'publish'
-    );
-
-    return get_posts( $args );
 }
 
 
@@ -387,6 +419,7 @@ function better_scripts() {
 	// wp_enqueue_style('better-app-style', get_template_directory_uri() . '/assets2/css/app.min.css', array(), _S_VERSION);
 
 	if($_SERVER['HTTP_HOST'] == 'better.localhost'){
+		
 		wp_enqueue_script('better-main-js', 'http://better.localhost:8080/js/main.min.js', array(), _S_VERSION, true);
 	}else{
 		wp_enqueue_style('better-main-style', get_template_directory_uri() . '/assets/styles/main.min.css', array(), _S_VERSION);

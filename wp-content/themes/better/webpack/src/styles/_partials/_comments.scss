@@ -26,11 +26,11 @@
       max-height: 36rem;
       & > div{
         .comment-slide{
-          width: calc($container_width/3) !important;
+          width: calc($container_width/3 - 1.875rem) !important;
           max-height: 35rem;
 
           &.youtube-slide {
-          width: calc(2*$container_width/3) !important;
+          width: calc(2*$container_width/3 - 1.875rem) !important;
           position: relative;
 
           .slide-content{
@@ -89,22 +89,33 @@
   }
 
   #commentsCarousel, #opinionsmixCarousel{
-    .slick-list{
-      margin-left: -0.875rem;
-      margin-right: -0.875rem;
+    margin-left:0;
+    margin-right: -2.5rem;
+    @media(min-width:768px){
+      .slick-list{
+        margin-left: -0.875rem;
+        margin-right: -0.875rem;
+      }
     }
     .slick-track{
       display: flex !important;
       gap: 1.75rem;
+      
     }
 
     &.slick-slider{
       .slick-next{
-        right:.5rem !important;
+        right:2.5rem !important;
+        @media(min-width:768px){
+          right:.5rem !important;
+        }
         top:-2.25rem;
       }
       .slick-prev{
-        left:calc(100% - 5.5rem) !important;
+        left:calc(100% - 6.5rem) !important;
+        @media(min-width:768px){
+          left:calc(100% - 5.5rem) !important;
+        }
         top:-2.25rem;
       }
     }
@@ -114,6 +125,9 @@
       display: flex !important;
       flex-direction: column;
       overflow: hidden;
+      @media(max-width:767.99px){
+        width:calc(100vw - 5rem);
+      }
 
       & > div{
         height: 100%;

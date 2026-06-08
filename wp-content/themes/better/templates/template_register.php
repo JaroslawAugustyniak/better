@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template Name: Strona
+ * Template Name: Register online
  * 
  * 
  *
@@ -61,8 +61,7 @@ $kolor_tla_ = get_field('kolor_tla_', $current_page->ID);
                 <div class="row">
                     <div class="col-xl-8 col-lg-10 col-12 offset-xl-2 offset-lg-1 offset-0" data-waypoint-animate="true">			
 							
-
-									<?=$page_content['after']?>
+                        <?=$page_content['after']?>
 									
                     </div>
 			    </div>
@@ -70,16 +69,6 @@ $kolor_tla_ = get_field('kolor_tla_', $current_page->ID);
         </article>
 
     </section>
-
-    <?php 
-        $mainpage_item = get_post_by_slug_and_type('opinie', 'mainpage');
-        get_template_part( 'template-parts/template', 'opinionsmix', $mainpage_item);
-    ?>
-
-    <?php 
-        $mainpage_item = get_post_by_slug_and_type('faq', 'mainpage');
-        get_template_part( 'template-parts/template', 'faq2', $mainpage_item);
-    ?>
     
     <?php 
         $mainpage_item = get_post_by_slug_and_type('kontakt', 'mainpage');

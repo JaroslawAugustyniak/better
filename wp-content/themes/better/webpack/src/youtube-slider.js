@@ -266,31 +266,61 @@ class YouTubeCarousel {
      * Bindowanie event handlerów
      */
     bindEvents() {
+        console.log('VIDEO');
         this.slides.forEach((slide, index) => {
             const playButton = slide.querySelector('.play-button');
-            if (playButton) {
-                $(playButton).on('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.openModal(index);
+            let lastTouchTime = 0;
 
-                    var hash = '#'+movieHandler.createSlug(slide.dataset.title);
-                    window.history.replaceState(null, null, hash);
+            const openModalHandler = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.openModal(index);
+                var hash = '#'+movieHandler.createSlug(slide.dataset.title);
+                window.history.replaceState(null, null, hash);
+            };
+
+            if (playButton) {
+                // Handle touch events - using vanilla addEventListener
+                playButton.addEventListener('touchend', (e) => {
+                    lastTouchTime = Date.now();
+                    openModalHandler(e);
+                });
+
+                // Handle click events (ignore emulated ones from touch)
+                playButton.addEventListener('click', (e) => {
+                    // Ignore emulated click if touchend fired recently
+                    if (Date.now() - lastTouchTime < 300) {
+                        return;
+                    }
+                    openModalHandler(e);
                 });
             }
 
-            $(slide).on('click', (e) => {
-                if (!$(e.target).closest('.play-button').length) {
+            // Handle touch events
+            slide.addEventListener('touchend', (e) => {
+                lastTouchTime = Date.now();
+                if (!e.target.closest('.play-button')) {
                     e.preventDefault();
                     this.openModal(index);
+                    var hash = '#'+movieHandler.createSlug(slide.dataset.title);
+                    window.history.replaceState(null, null, hash);
+                }
+            });
 
+            // Handle click events
+            slide.addEventListener('click', (e) => {
+                // Ignore emulated click if touchend fired recently
+                if (Date.now() - lastTouchTime < 300) return;
+                if (!e.target.closest('.play-button')) {
+                    e.preventDefault();
+                    this.openModal(index);
                     var hash = '#'+movieHandler.createSlug(slide.dataset.title);
                     window.history.replaceState(null, null, hash);
                 }
             });
 
             // Keyboard events dla slajdów
-            $(slide).on('keydown', (e) => {
+            slide.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     this.openModal(index);
@@ -637,6 +667,7 @@ class YouTubeCarousel {
  */
 function initializeOpinionsMixPlayButtons(carousel, modal) {
     const playButtons = carousel.querySelectorAll('.play-button');
+
     const modalVideo = document.getElementById('modalVideo');
     const modalTitle = document.getElementById('modalTitle');
     const modalClose = document.getElementById('modalClose');
@@ -662,11 +693,32 @@ function initializeOpinionsMixPlayButtons(carousel, modal) {
 
     // Bind play button clicks
     playButtons.forEach((button) => {
-        $(button).on('click', (e) => {
+        let lastTouchTime = 0;
+
+        // Handle touch events - using vanilla addEventListener
+        button.addEventListener('touchend', function(e) {
+            lastTouchTime = Date.now();
             e.preventDefault();
             e.stopPropagation();
 
-            // Find the parent slide and get its index
+            const slide = button.closest('.youtube-slide');
+            if (slide) {
+                const index = videoSlides.indexOf(slide);
+                if (index !== -1) {
+                    openOpinionVideoModal(index);
+                }
+            }
+        });
+
+        // Handle click events - using vanilla addEventListener (ignore emulated ones from touch)
+        button.addEventListener('click', function(e) {
+            // Ignore emulated click if touchend fired recently
+            if (Date.now() - lastTouchTime < 300) {
+                return;
+            }
+            e.preventDefault();
+            e.stopPropagation();
+
             const slide = button.closest('.youtube-slide');
             if (slide) {
                 const index = videoSlides.indexOf(slide);

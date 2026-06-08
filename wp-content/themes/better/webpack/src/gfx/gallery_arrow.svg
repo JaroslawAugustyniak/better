@@ -1,0 +1,13 @@
+<svg width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon Container">
+<path id="Stroke 1" d="M15.5469 0.353516L30.5069 15.3125L15.9459 29.8745" stroke="#13333A"/>
+<g id="Icon Nested Container">
+<mask id="mask0_557_4717" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="14" width="31" height="2">
+<path id="Clip 4" fill-rule="evenodd" clip-rule="evenodd" d="M0 14.813H30.5078V15.813H0V14.813Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_557_4717)">
+<path id="Stroke 3" d="M30.508 15.313H0" stroke="#13333A"/>
+</g>
+</g>
+</g>
+</svg>

@@ -20,7 +20,7 @@
     <div class="container-full">
         
 
-        <div id="videos" class="slickSlider display_dots slick_nav nav_inside" auto_play="1" speed="15000"  slick_per_page="1_1_1_1" slick_show_dots="1" slick_hide_arrows="0" fade="0">   
+        <div id="videos" class="slickSlider display_dots slick_nav nav_inside" auto_play="1" speed="15000" pause_on_hover="0" slick_per_page="1_1_1_1" slick_show_dots="1" slick_hide_arrows="0" fade="0">   
                 
                     <?php $index = 0; while ($videos->have_posts()) :
                             $videos->the_post();
@@ -130,4 +130,6 @@
             </div>
         </div>
     </div>
-<?php endif; ?> 
+<?php endif; 
+wp_reset_postdata();
+?> 

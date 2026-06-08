@@ -19,7 +19,9 @@
     display: flex;
     flex-direction: column;
     gap: 1.75rem;
-    margin-right:12rem;
+    @media(min-width:768px){
+      margin-right:12rem;
+    }
 
     h2.section-title{
       @include h2();
@@ -44,7 +46,11 @@
     margin: 0 auto;
     border-top: 1px solid $main-color;
 
-    .rank-math-faq-item{
+    
+  }
+}
+
+.rank-math-faq-item{
       border-bottom: 1px solid $main-color;
       padding: 1.25rem 0;
       .rank-math-question{
@@ -80,5 +86,3 @@
         }
       }
     }
-  }
-}

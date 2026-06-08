@@ -8,7 +8,7 @@
         'post_parent'    => 0            // tylko wpisy bez parenta
     );
 
-    $services = new WP_Query($args_list);
+    $metas = new WP_Query($args_list);
 
     $page = get_post_by_slug_and_type('metamorfozy', 'page');
 
@@ -16,7 +16,7 @@
     $description = get_field('opis', $mainpage_item->ID);
 
 ?>
-<?php if ($services->have_posts()) : ?>
+<?php if ($metas->have_posts()) : ?>
 <section class="homepage-section services section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
     <div class="container">
         <div class="homepage-section__top">
@@ -37,19 +37,24 @@
         <div id="metamorfoses"  data-waypoint-animate="true" class="slickSlider display_dots slick_nav nav_inside" slick_per_page="3_3_2_1" slick_show_dots="0" slick_hide_arrows="0" fade="0">   
                 
 
-                     <?php $index = 0; while ($services->have_posts()) : 
-                        $services->the_post(); 
-                        $service = $post; 
+                     <?php $index = 0; while ($metas->have_posts()) : 
+                        $metas->the_post(); 
+                        $meta = $post; 
                         $service_content = get_field('doctor');
+                        $services = get_field('dotyczy_uslugi');
+                        $services_list = '';
+                        foreach($services as $service){
+                            $services_list .= (strlen($services_list)>0?', ':'').$service->post_title;
+                        }
                     ?>
 
                             
                             <div class="slide">
                                 <div class="meta-item">
                                     <figure class="fill-box">
-                                        <a href="<?=get_permalink($service->ID)?>">
+                                        <a href="<?=get_permalink($meta->ID)?>">
                                         <?php
-                                            displayImage($service->ID);
+                                            displayImage($meta->ID);
                                         ?>
                                         </a>
                                     </figure>
@@ -57,14 +62,14 @@
                                     <div>
                                         
                                     <h3 class="head-class">
-                                        <a href="<?=get_permalink($service->ID)?>"><?=$service->post_title?></a>
+                                        <a href="<?=get_permalink($meta->ID)?>"><?=$services_list?></a>
                                     </h3>
                                         
                                     </div>
-                                    <div class="homepage-section__dsc"><?=$service_content?></div>
-                                    <div class="homepage-section__buttons">
-                                        <a href="<?=get_permalink($service->ID)?>" class="link"><?=__('Dowiedz sie więcej', 'better')?></a>
-                                    </div>
+                                    <div class="homepage-section__dsc"><?=($service_content?$service_content->post_title:'')?></div>
+                                    <!-- <div class="homepage-section__buttons">
+                                        <a href="<?=get_permalink($meta->ID)?>" class="link"><?=__('Dowiedz sie więcej', 'better')?></a>
+                                    </div> -->
                             
                                     
 
@@ -77,7 +82,7 @@
                             <?php
                             $index++; 
                         endwhile; 
-                    
+                    wp_reset_postdata();
 
                 ?>
 

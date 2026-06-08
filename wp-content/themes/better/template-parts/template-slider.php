@@ -57,7 +57,9 @@
                         </div>
                     </div>
                 </div>
-            <?php $index++; endwhile; ?>
+            <?php $index++; endwhile; 
+            wp_reset_postdata();
+            ?>
             <?php endif; ?>
         </div>
         

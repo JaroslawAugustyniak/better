@@ -1,3 +1,14 @@
+@keyframes fillProgressBar {
+    from {
+        width: 0%;
+        opacity: 1;
+    }
+    to {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
 .homepage-section.videos{
     padding:0;
 }
@@ -10,19 +21,15 @@
             margin-bottom: 0;
             margin-left: calc(-50vw + 50%);
 
-            @media(max-width: 767.99px) {
-                height: 25rem;
-            }
 
-            @media(max-width: 480px) {
-                height: 18.75rem;
-            }
+
+
 
 
             .slick-dots {
                 top:2.5rem !important;
 
-                left: calc(( 100vw - 1280px - 2*1.875rem)/2);
+                left: calc((( 100vw - $container_width)/2) + 1.875rem);
                 width:80rem;
 
                 bottom: inherit;
@@ -42,25 +49,31 @@
                         position: relative;
                         &:before{
                             width: 0%;
-                            opacity: 0;
+                            opacity: 1;
                             height: 100%;
                             border-radius: 0;
                             background: $white-color;
-                            transition: width 15s linear;
                         }
                     }
 
                     &.slick-active{
                         button{
                             &:before{
-                              opacity: 1;
-                                width: 100%;
+                              animation: fillProgressBar 15s linear forwards;
                             }
                         }
                     }
                 }
 
-                
+                @media(max-width: 767.99px){
+                  left:2.5rem;
+                  width:calc(100vw - 5rem);
+
+                  & > li{
+                    width:calc((100% - 5rem) / 7);
+
+                  }
+                }
 
             }
 
@@ -92,6 +105,38 @@
                     }
                 }
               }
+            }
+
+            @media(max-width: 767.99px) {
+                max-height: 43.75rem;
+                .slick-list {
+                  .slick-track {
+                    .slick-slide{
+                      max-width: 100vw;
+
+                      .youtube-slide{
+                        .slide-content{
+                          max-width: 100vw;
+                          left:0;
+                          top:inherit;
+                          bottom:0;
+                          padding:2.5rem;
+                          display: flex;
+                          flex-direction: column;
+                          gap:1.875rem;
+
+                          h3.slide-title{
+                            font-size:1.75rem;
+                            margin:0;
+                          }
+                          .button{margin:0;}
+                        }
+                      }
+                    }
+
+                  }
+                  
+                }
             }
 
             .youtube-slide {
@@ -139,7 +184,7 @@
                     gap: 1rem;
                     width: auto;
                     top: 5rem;
-                    left:  calc((100vw - 1280px - 2*1.875rem)/2);
+                    left: calc((( 100vw - $container_width)/2) + 1.875rem);
                     max-width: 40.625rem;
                     position: absolute;
                     
@@ -158,6 +203,10 @@
                       display: inline-flex;
                       width: auto;
                       margin-top:0.875rem;
+                      &:hover{
+                        color: $main-color;
+                        background-color: $white-color;
+                      }
                   }
                 }
 

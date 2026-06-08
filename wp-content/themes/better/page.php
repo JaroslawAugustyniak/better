@@ -15,16 +15,12 @@
 get_header();
 
 ?>
-<div class="header-size"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-		<div class="entry-content">
+	<div class="header-size"></div>
+	<main id="primary" class="site-main">
 
 		<?php
 		while ( have_posts() ) :
 			the_post();
-			echo "OK"; die;
 			// do_shortcode('[ajax_load_more post_type="post" posts_per_page="3"]');
 			get_template_part( 'template-parts/content', 'page' );
 
@@ -36,10 +32,17 @@ get_header();
 		endwhile; // End of the loop.
 		?>
 
-	</div><!-- #main -->
-	</div>
-	</div>
-	</div>
+	</main><!-- #main -->
+
+	<?php 
+			$mainpage_item = get_post_by_slug_and_type('o-nas', 'mainpage');
+			get_template_part( 'template-parts/template', 'news', $mainpage_item);
+		?>
+
+		<?php 
+			$mainpage_item = get_post_by_slug_and_type('kontakt', 'mainpage');
+			get_template_part( 'template-parts/template', 'contact', $mainpage_item);
+		?>
 <?php
 // get_sidebar();
 get_footer();

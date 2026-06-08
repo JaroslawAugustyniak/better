@@ -12,7 +12,9 @@ $post_id = get_the_ID();
 
 
 $kolor_tla_naglowka = 'colorset--color-1';
-$kolor_tla_ = 'colorset--color-6';
+$kolor_tla_ = 'colorset--color-1';
+
+$page_content = split_post_content_by_more($post);
 ?>
 
 
@@ -25,15 +27,9 @@ $kolor_tla_ = 'colorset--color-6';
                     <div class="col-xl-6 col-lg-8 col-md-9 col-sm-10 col-xs-11 col-12">
                         <div class="content-header__category" data-waypoint-animate="true">
                             <?php
-                                $post_tags = get_the_tags();
-                                if ( $post_tags ) {
-                                    echo '<div class="tags">';
-                                    foreach ( $post_tags as $tag ) {
-                                        echo '<a href="' . get_tag_link( $tag->term_id ) . '" class="tag-item">' . esc_html( $tag->name ) . '</a>, ';
-                                    }
-                                    echo '</div>';
-                                }
-                                ?>
+                            
+                            if (function_exists("rank_math_the_breadcrumbs")) rank_math_the_breadcrumbs();
+                            ?>
                         </div>
                         <div class="content-header__title" data-waypoint-animate="true">
 
@@ -42,7 +38,7 @@ $kolor_tla_ = 'colorset--color-6';
                         </div>
 
                         <div class="content-header__dsc" data-waypoint-animate="true">
-                            <?= date('m/d/Y', strtotime($current_page->post_date))?>
+                            <?= $page_content['before']?>
                         </div>
                     </div>
                 </div>
@@ -53,21 +49,19 @@ $kolor_tla_ = 'colorset--color-6';
 
         <article class="content-article <?=$kolor_tla_?>"  data-waypoint-header="<?=get_header_color($kolor_tla_)?>">
             <div class="container">
-				<div class="block block-type-2" data-waypoint-animate="true">
+				<div class="row justify-content-center">
+                    <div class="col-xl-8 col-12">
+                        
+						<div class="block-photo">
 
-
-					<!--<div class="row justify-content-center">
-						<div class="col-xl-8 col-lg-10 col-12">
-							<div class="block-photo">
-								<figure>
 									<?php
-										displayImage($post_id, 'img-flui');
-									?>
-								</figure>
-							</div>
-						</div>
-					</div>-->
-                    
+                                        $current_page->gallery_type = 'maxi';
+							            get_template_part( 'template-parts/template', 'gallery', $current_page);		
+                                    ?>
+                        </div>
+                    </div>
+                        
+
                     <!--/row-->
 
 
@@ -76,12 +70,7 @@ $kolor_tla_ = 'colorset--color-6';
 					<div class="row justify-content-center">
 						<div class="col-xl-8 col-lg-10 col-12">
 							
-							<?php
-
-									$content = $current_page->post_content;
-									$content = apply_filters( 'the_content', $content );
-									$content = str_replace( ']]>', ']]&gt;', $content );
-									echo $content;
+							<?=$page_content['after']
 									?>
 
 						</div>
@@ -94,3 +83,9 @@ $kolor_tla_ = 'colorset--color-6';
         </article>
 
     </section>
+
+
+	<?php 
+        $mainpage_item = get_post_by_slug_and_type('kontakt', 'mainpage');
+        get_template_part( 'template-parts/template', 'contact', $mainpage_item);
+    ?>

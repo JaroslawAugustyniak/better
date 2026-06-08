@@ -128,6 +128,10 @@
             list-style: none;
             padding: 0;
         }
+
+        p{
+            margin-bottom:2.1875rem;
+        }
     }
     .contact-section__header-description{
 
@@ -196,10 +200,159 @@
             }
         }
     .contact-section__form{
+
+
+        .button{
+                margin-top:2.5rem;
+                @include button();
+                color: $light-hover !important;
+                padding:0.7813rem 1.75rem;
+                
+                border: solid 1px $main-color;
+                background: $main-color;
+                &:hover{
+                    color: $main-color;
+                }
+            }
+
         display: none;
 
         &.active{
             display: block;
         }
+
+
+        padding-top:3.75rem;
+
+        p{
+            @include p();
+            margin-bottom: 2.1875rem;
+        }
+
+        .form-control {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid $main-color-05;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #13333a;
+            padding: .6rem 0;
+            height: auto;
+
+            &::placeholder {
+                color: $main-color-05;
+                opacity: 1;
+            }
+
+
+        }
+
+        .select2-container {
+
+            .select2-selection--single {
+                border-bottom: 1px solid $main-color;
+                .select2-selection__arrow {
+                color: $main-color;
+                content: '';
+                display: inline-block;
+                width: 1.5rem;
+                height: 1.5rem;
+                background: url(../gfx/arrow-right.svg) no-repeat center center;
+                background-size: contain;
+                position: absolute;
+                right: 0rem;
+                top: 0.625rem;
+                transform-origin: center;
+                transform: rotate(90deg);
+                pointer-events: none;
+                    b {
+                        border: none;
+                    }
+                }
+            }
+
+            &.select2-container--open{
+                .select2-selection--single .select2-selection__arrow {
+                    transform: rotate(-90deg);
+                }
+            }
+
+            
+        }
     }
+}
+
+/* Kontener nadrzędny - ustawiamy elementy obok siebie */
+.wpcf7-form-control-wrap[data-name="when"] .wpcf7-radio {
+    display: flex;
+    gap: 16px; /* Odstęp między przyciskami */
+    width: 100%;
+}
+
+/* Stylizujemy element listy i label jako jeden duży przycisk */
+.wpcf7-form-control-wrap[data-name="when"] .wpcf7-list-item {
+    flex: 1; /* Obie opcje będą miały równą szerokość */
+    margin: 0;
+}
+
+.wpcf7-form-control-wrap[data-name="when"] label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px; /* Dopasuj wysokość do swoich potrzeb */
+    border: 1px solid #A0C2C380; /* Kolor ramki dla stanu domyślnego */
+    border-radius: 6px; /* Zaokrąglenie rogów */
+    background-color: #ffffff;
+    color: #1c3d3d; /* Kolor tekstu */
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+}
+
+/* Ukrywamy domyślną, okrągłą kropkę radio */
+.wpcf7-form-control-wrap[data-name="when"] input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+
+.wpcf7-form-control-wrap[data-name="when"] .wpcf7-list-item input[type="radio"]:checked + .wpcf7-list-item-label {
+    /* Ten selektor działa, jeśli tekst jest bezpośrednio po input. 
+       W CF7 input jest wewnątrz label, więc bezpieczniej ostylować cały label przy użyciu :has() */
+}
+
+.wpcf7-form-control-wrap[data-name="when"] label:has(input[type="radio"]:checked) {
+    background-color: #A0C2C380; /* Jasnozielone/szare wypełnienie z obrazka */
+    border-color: #dbe6e6;
+    color: #1c3d3d;
+}
+
+.wpcf7-form-control-wrap[data-name="when"] label:not(:has(input[type="radio"]:checked)):hover {
+    background-color: #f5f8f8;
+    border-color: #bdcfcf;
+}
+
+.wpcf7-form-control.wpcf7-submit{
+    @include button();
+    width: 100%;
+    padding:0.7813rem;
+    border: solid 1px $main-color;
+    background: $main-color;
+    &:hover{
+        color: $main-color;
+    }
+}
+
+
+
+.wpcf7-response-output{
+    position: absolute;
+    top:-2rem;
+    left:.5rem;
 }

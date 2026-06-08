@@ -8,6 +8,7 @@ $border-gray: #e9ecef;
 $medium-gray: #dee2e6;
 
 $main-color: #13333a;
+$main-color-05: rgb(19, 51, 58, 0.5);
 $white-color: #f2eeea;
 
 $brown-color: #c8a496;
@@ -116,31 +117,22 @@ $shadow-heavy: 0 25px 50px rgba(0, 0, 0, 0.3);
     border:none;
   }
 }
-$container_width: 1280px;
-@media (min-width: 1420px) {
-    $container_width: 1280px;
+
+:root {
+  --container-width: 100%;
+
+  @media (min-width: 576px)  { --container-width: 540px; }
+  @media (min-width: 768px)  { --container-width: 720px; }
+  @media (min-width: 992px)  { --container-width: 960px; }
+  @media (min-width: 1200px) { --container-width: 1140px; }
 }
 
-@media (min-width: 1260px) {
-    $container_width: 1140px;
-}
-@media (min-width: 1080px) {
-    $container_width: 960px;
-}
-@media (min-width: 860px) {
-    $container_width: 720px;
-}
-@media (min-width: 670px) {
-    $container_width: 540px;
-}
-@media (min-width: 340px) {
-    $container_width: 334px;
-}
-
+$container_width: var(--container-width);
 
 
 .container-full{
   max-width:100%;
+  width: 100%;
   padding:0;
 }
 
@@ -156,12 +148,17 @@ body{
 }
 
 html{
-    font-size: 3.75vw;
-      
-      @media(min-width:768px) and (max-width:1919px){
+      font-size: 3.45vw;
+
+      @media (min-width: 576px) {
+        font-size: 3.75vw;
+      }
+
+      @media (min-width: 768px) {
           font-size: 0.8vw;
       }
-      @media(min-width:1920px){
+
+      @media (min-width: 1200px) {
           font-size: 16px;
       }
   
@@ -171,14 +168,19 @@ html{
         @include p();
 
         .container{
-          padding-left:1.875rem;
-          padding-right:1.875rem;
+          padding-left:2.5rem;
+          padding-right:2.5rem;
+          @media(min-width:768px){
+            padding-left:1.875rem;
+            padding-right:1.875rem;
+          }
         }
       }
 }
 
 @mixin link {
   position: relative;
+  cursor: pointer;
   padding-bottom:3px;
   &:after{
     border-bottom: 1px solid $main-color;
@@ -229,6 +231,7 @@ html{
         color: $light-hover;
   }
 }
+
 
 .button {
     @include button();

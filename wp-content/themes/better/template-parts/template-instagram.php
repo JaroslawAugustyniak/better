@@ -67,6 +67,7 @@
                 <?php
                     $instagram_index++;
                     endwhile;
+                    wp_reset_postdata();
                 ?>
             
         

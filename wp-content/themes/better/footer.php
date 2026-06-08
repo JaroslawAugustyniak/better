@@ -11,11 +11,9 @@
 
 
     $static_kontakt = get_post_by_slug_and_type('umow-wizyte', 'static');
-    $content = get_field('tresc', $static_kontakt->ID);
     $static_info = get_post_by_slug_and_type('dane-adresowe-w-menu', 'static');
-    $info = get_field('tresc', $static_info->ID);
     $static_socials = get_post_by_slug_and_type('sociale', 'static');
-    $socials = get_field('tresc', $static_socials->ID);
+    
 ?>
 	<section id="kontakt" class="contact-section">
         <div class="header">
@@ -34,16 +32,16 @@
             </div>
             <div class="row">
                 <div class="col-xl-4 col-lg-5 col-12">
-                    <div class="contact-section__header-description"><?=$content?></div>
+                    <div class="contact-section__header-description"><?php echo apply_filters( 'the_content', $static_kontakt->post_content ); ?></div>
                     <div class="row">
                         <div class="col-6">
                             <div class="contact-section__info">
-                                <?=$info?>
+                                <?php echo apply_filters( 'the_content', $static_info->post_content ); ?>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="contact-section__info">
-                                <?=$socials?>
+                                <?php echo apply_filters( 'the_content', $static_socials->post_content ); ?>
                             </div>
                         </div>
                         
@@ -52,13 +50,41 @@
                 <div class="offset-lg-1 offset-xl-2 scol-xl-6 col-lg-6 col-12">
                     <div class="contact-section__form " id="znany_lekarz">
                             <p><?=__('Wybierz lekarza i zarezerwuj termin konsultacji przez Znany Lekarz.', 'better')?></p>                            
-                            <?php echo do_shortcode('[contact-form-7 id="2d6077d" title="Znany lekarz"]'); ?>
+                            
+                            <?php 
+                                // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
+                                $args_list = array(
+                                    'post_type' => 'team',  // Typ wpisu 'project'
+                                    'post_status' => 'publish', // Tylko opublikowane wpisy
+                                    'posts_per_page' => -1      // Pobierz wszystkie wpisy
+                                );
+
+                                $team = new WP_Query($args_list);
+                            ?>
+
+                            <select class="custom-select" id="doctorSelect">
+                                <?php $index = 0; $firstUrl = ''; while ($team->have_posts()) : 
+                                    $team->the_post(); 
+                                    $teamitem = $post; 
+
+                                    $specjalisation = get_field('specjalizacja', $teamitem->ID);
+                                    $url = get_field('znany_lekarz_url', $teamitem->ID);
+
+                                    if($index == 0) $firstUrl = $url;
+                                ?>
+                                <option value="<?=$url?>"><?=$teamitem->post_title?></option>
+                            
+                                <?php $index++; endwhile; ?>
+
+                            </select>
+
+                            <a href="<?=$firstUrl?>" class="button" id="doctorButton"><?=__('Sprawdź terminy', 'button')?></a>
                         </div>
                         <div class="contact-section__form active" id="phone_call">
-                            <?php echo do_shortcode('[contact-form-7 id="2d6077d" title="Formularz kontaktowy"]'); ?>
+                            <p><?=__('Zostaw swój numer, a skontaktujemy się z Tobą w pierwszy dzień roboczy.', 'better')?></p>
+                            <?php echo do_shortcode('[contact-form-7 id="62397d6" title="Formularz kontaktowy - telefon"]'); ?>
                         </div>
-                        <div class="contact-section__form" id="message">
-                            <p><?=__('Zostaw swój numer, a skontaktujemy się z Tobą w pierwszy dzień roboczy.', 'better')?></p>                            
+                        <div class="contact-section__form" id="message">                         
                             <?php echo do_shortcode('[contact-form-7 id="2d6077d" title="Zostaw wiadomość"]'); ?>
                     </div>
                 </div>
@@ -99,49 +125,50 @@
                         ) );?>
                     </div>
                     <div class="col">
+                        <?php 
+                            $static = get_post_by_slug_and_type('adres', 'static');
+                        ?>
                         <div class="block block-type-0">
-                            <p class="head-block"><?=__('Adres', 'better')?>:</p>
+                            <p class="head-block"><?= $static->post_title ?>:</p>
                         </div>
                         <div class="block block-type-1">
-                            <p>
-                                Better<br>
-                                ul. Kopernika 8/18<br>
-                                00-367 Warszawa
-                            </p>
+                            <?php echo apply_filters( 'the_content', $static->post_content ); ?>
                         </div>
 
+                        <?php 
+                            $static = get_post_by_slug_and_type('kontakt', 'static');
+                        ?>
                         <div class="block block-type-0">
-                            <p class="head-block"><?=__('Kontakt', 'better')?>:</p>
+                            <p class="head-block"><?= $static->post_title ?>:</p>
                         </div>
                         <div class="block block-type-1">
-                            <p>
-                                <a href="tel:+48502646811">+48 502 646 811</a><br>
-                                <a href="mailto:kontakt@better.clinic">kontakt@better.clinic</a><br>
-                                Otwarte: 9.00-20.00
-                            </p>
+                            <?php echo apply_filters( 'the_content', $static->post_content ); ?>
                         </div>
 
                     </div>
                     <div class="col">
+                        <?php 
+                            $static = get_post_by_slug_and_type('sociale', 'static');
+                        ?>
                         <div class="block block-type-0">
-                            <p class="head-block"><?=__('Social', 'better')?>:</p>
+                            <p class="head-block"><?= $static->post_title ?>:</p>
                         </div>
                         <div class="block block-type-1">
-                            <p>
-                                <a target="_blank" href="https://www.instagram.com/better.clinic/">Instagram</a><br>
-                                <a target="_blank" href="https://www.facebook.com/betterclinicwarsaw">Facebook</a><br>
-                            </p>
+                            <?php echo apply_filters( 'the_content', $static->post_content ); ?>
                         </div>
                     </div>
                 </div>        
                     
             </div>
             <div class="col-5">
+                <?php 
+                            $static = get_post_by_slug_and_type('newsletter', 'static');
+                        ?>
                 <div class="block block-type-0">
-                   <p class="head-block"><?=__('Newsletter', 'better')?>:</p>
+                   <p class="head-block"><?= $static->post_title ?>:</p>
                 </div>
                 <div class="newsletter_holder">
-                    <?php echo do_shortcode('[contact-form-7 id="cd81910" title="Newsletter"]');?>
+                    <?php echo apply_filters( 'the_content', $static->post_content ); ?>
                 </div>  
             </div>
         </div>
@@ -166,6 +193,8 @@
     src="https://www.facebook.com/tr?id=379673289748472&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
+
+  
 
 <?php wp_footer(); ?>
 

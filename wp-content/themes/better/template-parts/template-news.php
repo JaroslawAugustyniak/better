@@ -1,5 +1,5 @@
 <?php 
-    // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
+    // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project' 
     $args_list = array(
         'post_type' => 'news',  // Typ wpisu 'project'
         'post_status' => 'publish', // Tylko opublikowane wpisy
@@ -11,10 +11,15 @@
     
     $page = get_post_by_slug_and_type('klinika-stomatologiczna-warszawa', 'page');
     $mainpage_item = $args; 
+
+    
+
+    $margin = isset($mainpage_item->margin) ? 'margin' : '';
+    $bg = isset($mainpage_item->kolor_tla) ? $mainpage_item->kolor_tla : get_field('kolor_tla', $mainpage_item->ID);
 ?>
 
  <?php if ($news->have_posts()) : ?>
-<section class="homepage-section section colorset--color-1" data-waypoint-header="page-header--color-1">
+<section class="homepage-section <?=$margin?> news section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
     <div class="container">
         <div class="homepage-section__top">
             <div class="row">
@@ -43,7 +48,7 @@
 
                     <div>
                         <div class="row flex-lg-row-reverse align-items-lg-end justify-content-lg-between">
-                            <div class="col-lg-7 col-12">
+                            <div class="col-sm-7 col-12">
                                 <div class="homepage-section__baners-item" data-waypoint-animate="true">
                                     <figure class="fit-box">
                                     
@@ -55,7 +60,7 @@
                                     
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-lg-5 col-md-9 col-12">
+                            <div class="col-sm-5 col-12">
                                 <div class="homepage-section__title" data-waypoint-animate="true">
                                     <h3 class="head-class">
                                         <?=$new->post_title?>
@@ -76,7 +81,7 @@
                             </div>
                         </div>
                     </div>
-            <?php $index++; endwhile; ?>
+            <?php $index++; endwhile; wp_reset_postdata();?>
         </div>
     </div>
 </section>

@@ -70,4 +70,4 @@
     </div>
 </section>
 
-<?php endif; ?>
+<?php wp_reset_postdata(); endif; ?>
