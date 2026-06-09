@@ -157,7 +157,7 @@ function initSliders(parent){
               slidesToScroll: resp_4,
               // centerMode: center_mode, 
               variableWidth: true,
-              fade: false,
+              // fade: false,
             }
           }
   

@@ -65,7 +65,7 @@
             
             <div class="comments-carousel-container" data-waypoint-animate="true">
                 
-                    <div id="commentsCarousel" auto_play="1" speed="6000" data-waypoint-animate="true"  class="comments-carousel slickSlider display_dots slick_nav nav_inside" slick_per_page="3_3_2_1" slick_show_dots="0" slick_hide_arrows="0" fade="0"> 
+                    <div id="commentsCarousel" auto_play="1" speed="6000" data-waypoint-animate="true"  class="comments-carousel slickSlider display_dots slick_nav nav_inside" slick_per_page="3_3_3_1" slick_show_dots="0" slick_hide_arrows="0" fade="0"> 
                     <?php $index = 0; while ($comments->have_posts()) : 
                             $comments->the_post(); 
                             $comment = $post; 

@@ -41,7 +41,7 @@
             
             <div class="news-carousel-container" data-waypoint-animate="true">
                 
-                <div id="newsCarousel" auto_play="1" speed="6000" class="news-carousel slickSlider display_dots slick_nav nav_inside" slick_per_page="2_2_1_1" slick_show_dots="0" slick_hide_arrows="0" fade="0">    
+                <div id="newsCarousel" auto_play="1" speed="6000" class="news-carousel slickSlider display_dots slick_nav nav_inside" slick_per_page="2_2_2_1" slick_show_dots="0" slick_hide_arrows="0" fade="0">    
                     <?php $index = 0; while ($magazyn->have_posts()) : 
                         $magazyn->the_post(); 
                         $item = $post; 

@@ -415,8 +415,6 @@ function better_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 	
-	// wp_enqueue_style('better-style-style', get_template_directory_uri() . '/assets2/css/style.min.css', array(), _S_VERSION);
-	// wp_enqueue_style('better-app-style', get_template_directory_uri() . '/assets2/css/app.min.css', array(), _S_VERSION);
 
 	if($_SERVER['HTTP_HOST'] == 'better.localhost'){
 		

@@ -38,10 +38,19 @@
                 padding-bottom:0rem;
             }
         }
+
+        .slick-list{
+            margin-left: -0.875rem;
+            margin-right: -0.875rem;
+            }
+            .slick-track{
+            display: flex !important;
+            gap: 1.75rem;
+            }
     }
 
     .homepage-sercions__bottom{
-        margin-top:.5rem;
+        margin-top:2.5rem;
     }
 
 

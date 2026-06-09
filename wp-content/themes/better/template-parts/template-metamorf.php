@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div id="metamorfoses"  data-waypoint-animate="true" class="slickSlider display_dots slick_nav nav_inside" slick_per_page="3_3_2_1" slick_show_dots="0" slick_hide_arrows="0" fade="0">   
+        <div id="metamorfoses"  data-waypoint-animate="true" class="slickSlider display_dots slick_nav nav_inside" slick_per_page="3_3_3_1" slick_show_dots="0" slick_hide_arrows="0" fade="0">   
                 
 
                      <?php $index = 0; while ($metas->have_posts()) : 

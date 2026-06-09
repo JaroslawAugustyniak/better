@@ -141,9 +141,10 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            
 
             .slide-content {
-                bottom: 0rem;
+                bottom: 2rem;
                 position: absolute;
                 width: 100%;
             }
@@ -216,7 +217,6 @@
 
                     &::after {
                         background: #fff;
-                        
                     }
                 }
             }
@@ -246,13 +246,13 @@
 
 
         a.slide-button {
-            margin-top: 55px;
-            font-size: 18px;
-            margin-bottom: 55px;
+            margin-top: 3.4375rem;
+            font-size: 1.125rem;
+            margin-bottom: 3.4375rem;
             background: $white-color;
             border: 1px solid $white-color;
             padding: 0.875rem 2.25rem;
-            border-radius: 35px;
+            border-radius: 2.1875rem;
             color:  $main-color;
             text-shadow: none;
 
@@ -260,6 +260,9 @@
                 background: $main-color;            
                 border: 1px solid $main-color;   
                 color: $white-color;
+            }
+            &:visited {
+               color: $main-color;
             }
         }
 

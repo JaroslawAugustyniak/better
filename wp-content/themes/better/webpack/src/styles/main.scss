@@ -1,5 +1,6 @@
 @import 'style.min.css';
 @import 'app.min.css';
+@import '../../node_modules/bootstrap/dist/css/bootstrap-grid.css';
 @import '_partials/variables';
 @import '_partials/slider';
 @import '_partials/faq';
@@ -629,6 +630,7 @@ a:visited {
 .slick-slider, .slickSlider{
   .slick-slide{
     max-width: calc(100vw - 3.75rem);
+    padding-bottom:0;
   }
 }
 
@@ -702,7 +704,7 @@ a:visited {
 
     left:82% !important;
     @media(min-width: 768px){
-      left: -55px !important;
+      left: -3.4375rem !important;
     }
     &:before{
       transform: rotate(180deg);
@@ -712,7 +714,7 @@ a:visited {
     right:0 !important;
     transform: translateY(calc(-50%));
     @media(min-width: 768px){
-      right: -55px !important;
+      right: -3.4375rem !important;
     }
     &:before{
       transform: rotate(0deg);

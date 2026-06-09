@@ -13,8 +13,30 @@
           }
     }
   }
+  .section-footer{
+    display: block;
+    @media(min-width:768px){
+      display: none;
+    }
+    margin-top:2.5rem;
+    h3{
+      display: none;
+    }
+
+    a{
+      margin-top:1.25rem;
+    }
+
+
+  }
 
   .section-header{
+    .section-description{
+      p{display: none;}
+    }
+  }
+
+  .section-header, .section-footer{
     text-align: left;
     display: flex;
     flex-direction: column;

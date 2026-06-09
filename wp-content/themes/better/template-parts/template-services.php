@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div id="services"  data-waypoint-animate="true" class="slider-template-header slickSlider display_dots slick_nav nav_inside" slick_per_page="3_3_2_1" slick_show_dots="0" slick_hide_arrows="0" fade="0">   
+        <div id="services"  data-waypoint-animate="true" class="slider-template-header slickSlider display_dots slick_nav nav_inside" slick_per_page="3_3_3_1" slick_show_dots="0" slick_hide_arrows="0" fade="0">   
                 
 
                      <?php $index = 0; while ($services->have_posts()) : 

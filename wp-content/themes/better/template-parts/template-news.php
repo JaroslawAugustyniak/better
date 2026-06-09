@@ -35,8 +35,7 @@
                 </div>
             </div>
         </div>
-
-        <div id="news"  data-waypoint-animate="true" class="slickSlider display_dots slick_nav nav_inside" slick_per_page="1_1_1_1" slick_show_dots="0" slick_hide_arrows="0" fade="1">   
+        <div id="news" class="slickSlider display_dots slick_nav nav_inside" slick_per_page="1_1_1_1" slick_show_dots="0" slick_hide_arrows="0" fade="0" auto_play="1" >   
 
 
             <?php $index = 0; while ($news->have_posts()) : 
@@ -47,7 +46,7 @@
 
 
                     <div>
-                        <div class="row flex-lg-row-reverse align-items-lg-end justify-content-lg-between">
+                        <div class="row flex-lg-row-reverse">
                             <div class="col-sm-7 col-12">
                                 <div class="homepage-section__baners-item" data-waypoint-animate="true">
                                     <figure class="fit-box">

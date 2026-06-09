@@ -44,7 +44,7 @@
             <div class="col-lg-6">
                 <div class="section-header" data-waypoint-animate="true">
                     <h2 class="section-title"><?= $mainpage_item->post_title ?></h2>
-                    <div class="d-none d-md-block"><?= $description ?></div>
+                    <div class="section-description"><?= $description ?></div>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -69,6 +69,10 @@
                     endwhile;
                     wp_reset_postdata();
                 ?>
+                    <div class="section-footer" data-waypoint-animate="true">
+                        <div class="d-block d-md-none"><?= $description ?></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
