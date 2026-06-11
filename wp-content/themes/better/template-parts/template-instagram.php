@@ -11,13 +11,13 @@
         'post_type' => 'instagram',
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'meta_query' => array(
-            array(
-                'key' => 'strona',
-                'value' => $page->ID,
-                'compare' => '='
-            )
-        )
+        // 'meta_query' => array(
+        //     array(
+        //         'key' => 'strona',
+        //         'value' => $page->ID,
+        //         'compare' => '='
+        //     )
+        // )
     );
 
     $instagram = new WP_Query($args_list);

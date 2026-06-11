@@ -22,8 +22,10 @@
 
   #opinionsmixCarousel{
     .slick-slide{
-      width: auto !important;
-      max-height: 36rem;
+      @media(min-width:768px){
+        width: auto !important;
+        max-height: 36rem;
+      }
       & > div{
         .comment-slide{
           @media(min-width:768px){
@@ -98,13 +100,15 @@
   }
 
   #commentsCarousel, #opinionsmixCarousel{
-    margin-left:0;
-    margin-right: -2.5rem;
+    @media(max-width:767px){
+      margin-left:0;
+      margin-right: -2.5rem;
+    }
     @media(min-width:768px){
-      .slick-list{
-        margin-left: -0.875rem;
-        margin-right: -0.875rem;
-      }
+      // .slick-list{
+      //   margin-left: -0.875rem;
+      //   margin-right: -0.875rem;
+      // }
     }
     .slick-track{
       display: flex !important;
@@ -130,6 +134,7 @@
     }
 
     .slick-slide{
+      
       height: inherit !important;
       display: flex !important;
       flex-direction: column;

@@ -26,12 +26,18 @@
   }
 
   #team_slider{
-    .slick-list{
-      margin-left: -0.875rem;
-      margin-right: -0.875rem;
+    @media(max-width:767px){
+       margin-right:-2.5rem;
+    }
+    @media(min-width:768px){
+      .slick-list{
+        margin-left: -0.875rem;
+        margin-right: -0.875rem;
+      }
     }
     .slick-track{
       display: flex !important;
+      gap: 1.75rem;
     }
 
     &.slick-slider{
@@ -43,14 +49,27 @@
         left:calc(100% - 5.5rem) !important;
         top:-2.25rem;
       }
+
+      @media(max-width:767px){
+        .slick-next{
+          right:2.5rem !important;
+        }
+        .slick-prev{
+          left:calc(100% - 6.5rem) !important;
+        }
+      }
     }
 
     .slick-slide{
-      padding:0 0.875rem;
+      padding:0;
       height: inherit !important;
       display: flex !important;
       flex-direction: column;
       overflow: hidden;
+
+      @media(max-width:767px){
+           max-width: calc(100vw - 5rem);
+        }
 
       & > div{
         height: 100%;

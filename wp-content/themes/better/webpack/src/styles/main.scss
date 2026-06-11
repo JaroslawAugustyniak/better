@@ -546,7 +546,9 @@ h3.head-class{
         cursor: pointer;
         padding:0.4375rem 1.25rem;
 
-        
+        @media(max-width:767px){
+          margin-top:1.5rem;
+        }
 
         &:hover{
           background-color: $coffe-color;
