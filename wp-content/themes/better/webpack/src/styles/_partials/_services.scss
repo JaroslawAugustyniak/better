@@ -5,7 +5,7 @@
         .homepage-section__top{        
                 margin-bottom: 5rem;
 
-            @media(max-width:767.99px){
+            @media(max-width:767px){
                 h2.homepage-section__header{
                     margin-bottom:1.75rem;
                 }
@@ -21,7 +21,7 @@
                     padding-right:0;
             }
         }
-        @media(max-width:767.99px){
+        @media(max-width:767px){
            .homepage-section__top{
                 margin-bottom: inherit;
             
@@ -33,7 +33,7 @@
     }
 
     #news.slick-slider{
-        @media(max-width:767.99px){
+        @media(max-width:767px){
             .slick-slide{
                 padding-bottom:0rem;
             }
@@ -54,7 +54,7 @@
     }
 
 
-    @media(max-width:767.99px){
+    @media(max-width:767px){
         .homepage-section__baners-item {
             margin-bottom:2.5rem;
 
@@ -114,7 +114,7 @@
             margin-right:-1.25rem;
         }
 
-        @media(max-width:767.99px){
+        @media(max-width:767px){
             .slick-slide{
                 margin-right:1.75rem;
                 max-width: calc(100vw - 5rem);
@@ -164,7 +164,11 @@
 
     }
 }
-
+.page-template-template_services{
+    #services{
+        margin-right:0;
+    }
+}
 #services{
 
     margin-right:-2.5rem;
@@ -173,7 +177,7 @@
             margin-right:-0.875rem;
         }
 
-        @media(max-width:767.99px){
+        @media(max-width:767px){
             .slick-slide{
                 margin-right:1.75rem;
                 max-width: calc(100vw - 5rem);
@@ -193,7 +197,7 @@
         .row{
             margin:0;
             gap:1.5625rem;
-            .col-4{
+            .col-4, .col-md-4{
                 padding:0;
                 flex: 0 0 calc(33.33333% - 1.0938rem);
                 .service-item{

@@ -84,6 +84,7 @@
 
 #kontakt{
   position: fixed;
+  
   bottom: 0px;
   left:0;
   width:100%;
@@ -91,6 +92,11 @@
   background: #ffffff;
   transform: translateY(100%);
   transition: transform 0.3s ease;
+
+  .container{
+    max-height:100vh;
+    overflow: scroll;
+  }
 
   &.active{
     transform: translateY(0);
@@ -123,8 +129,13 @@
         
     }
     .contact-section__info{
+        display: none;
+        @media(min-width:768px){
+            display: block;
+        }
         margin-top:5rem;
         margin-bottom:5rem;
+        
 
         ul{
             list-style: none;
@@ -141,7 +152,9 @@
             ul{
                 list-style: none;
                 padding: 0;
-                margin-top: 3.4375rem;
+                @media(min-width:768px){
+                    margin-top: 3.4375rem;
+                }
                 margin-bottom:0;
                 border-top:1px solid  $main-color;
                 li{
@@ -151,7 +164,10 @@
                     justify-content: space-between;
                     border-bottom:1px solid  $main-color;
                     a{
-                        padding: 1.25rem 1rem;
+                        padding: 0.625rem 1rem;
+                        @media(min-width:768px){
+                            padding: 1.25rem 1rem;
+                        }
                         color: $main-color;
                         display: block;
                         position: relative;
@@ -205,7 +221,9 @@
 
 
         .button{
+            @media(min-width:768px){
                 margin-top:2.5rem;
+            }
                 @include button();
                 color: $light-hover !important;
                 padding:0.7813rem 1.75rem;
@@ -223,12 +241,27 @@
             display: block;
         }
 
+        margin-top:2.5rem;
+        border-top:1px solid $light-grey;
+        padding-top:2.5rem;
+        @media(min-width:768px){
+            padding-top:3.75rem;
+            margin-top:0;
+            border:none;
+        }
 
-        padding-top:3.75rem;
-
-        p{
+        & > p{
             @include p();
             margin-bottom: 2.1875rem;
+        }
+
+        .form-group p{
+            margin:0;
+        }
+
+        #doctorButton{
+            margin-top:2.1875rem;
+            margin-bottom:2.1875rem;
         }
 
         .form-control {
@@ -254,6 +287,7 @@
         .select2-container {
 
             .select2-selection--single {
+                border:0;
                 border-bottom: 1px solid $main-color;
                 .select2-selection__arrow {
                 color: $main-color;

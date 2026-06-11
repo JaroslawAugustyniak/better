@@ -59,7 +59,8 @@
                                     
                                 </div>
                             </div>
-                            <div class="col-sm-5 col-12">
+                            <div class="col-sm-5 col-12 align-items-end d-flex">
+                                <div class="d-flex flex-column ">
                                 <div class="homepage-section__title" data-waypoint-animate="true">
                                     <h3 class="head-class">
                                         <?=$new->post_title?>
@@ -77,6 +78,8 @@
                                                     </a>
                                     <?php endif; ?>
                                 </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

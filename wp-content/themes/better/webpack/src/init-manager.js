@@ -210,6 +210,7 @@ class InitializationManager {
 
         // Dodaj active do sekcji kontaktu
         contactSection.classList.add('active');
+        $('body').addClass('popup-active');
 
         // Usuń active ze wszystkich formularzy i linków
         const allForms = contactSection.querySelectorAll('.contact-section__form');

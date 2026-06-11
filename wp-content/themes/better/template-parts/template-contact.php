@@ -3,6 +3,8 @@
     
     $bg = get_field('kolor_tla', $mainpage_item->ID);
     $description = get_field('opis_wysiwyg', $mainpage_item->ID);
+
+    $static_kontakt = get_post_by_slug_and_type('umow-wizyte', 'static');
 ?>
 
 
@@ -18,7 +20,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="homepage-section__description" data-waypoint-animate="true"><?=$description?></div>
+                            <div class="homepage-section__description" data-waypoint-animate="true"><?php echo apply_filters( 'the_content', $static_kontakt->post_content ); ?></div>
                         </div>
                     </div>
                 </div>

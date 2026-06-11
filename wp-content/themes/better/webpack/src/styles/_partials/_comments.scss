@@ -26,11 +26,17 @@
       max-height: 36rem;
       & > div{
         .comment-slide{
-          width: calc($container_width/3 - 1.875rem) !important;
-          max-height: 35rem;
-
+          @media(min-width:768px){
+            width: calc($container_width/3 - 0.875rem) !important;
+            max-height: 35rem;
+          }
+          
           &.youtube-slide {
-          width: calc(2*$container_width/3 - 1.875rem) !important;
+          width:100%;
+          @media(min-width:768px){
+            width: calc(2*$container_width/3 - 0.875rem) !important;
+          }
+          
           position: relative;
 
           .slide-content{
@@ -75,11 +81,14 @@
             .slide-image-container{
               height: 100%;
               overflow: hidden;
+              border-radius: 0.3125rem;
               img{
-                max-width: 110%;
+                @media(minwidth:768px){
+                  max-width: 110%;
+                  margin-left:50%;
+                  transform: translateX(-50%);
+                }
                 min-height:100%;
-                margin-left:50%;
-                transform: translateX(-50%);
               }
             }
           }
@@ -125,7 +134,7 @@
       display: flex !important;
       flex-direction: column;
       overflow: hidden;
-      @media(max-width:767.99px){
+      @media(max-width:767px){
         width:calc(100vw - 5rem);
       }
 

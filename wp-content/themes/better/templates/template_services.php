@@ -61,7 +61,7 @@ get_header();
                                     
                                     
                                     ?>
-                                    <div class="col-4" data-waypoint-animate="true">
+                                    <div class="col-md-4" data-waypoint-animate="true">
                                         <?php get_template_part( 'template-parts/content', 'service-item', $service);?>
                                     </div>
                                 <?php $index++; endwhile; ?>

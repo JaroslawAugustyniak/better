@@ -72,7 +72,7 @@ get_header();
                 </div>
                 <div class="row">
                     <?php if ($metamorphoses->have_posts()) : ?>
-                        <div class="col-6" data-waypoint-animate="true">
+                        <div class="col-md-6 d-none d-md-block" data-waypoint-animate="true">
                         <?php $index = 0; while ($metamorphoses->have_posts()) : 
                                     $metamorphoses->the_post(); 
                                     $service = $post; 
@@ -82,7 +82,7 @@ get_header();
                                         <?php endif; $index++; endwhile; ?>
                                     </div>
 
-                                    <div class="col-6" data-waypoint-animate="true">
+                                    <div class="col-md-6 d-none d-md-block" data-waypoint-animate="true">
                         <?php $index = 0; while ($metamorphoses->have_posts()) : 
                                     $metamorphoses->the_post(); 
                                     $service = $post; 
@@ -90,6 +90,15 @@ get_header();
                                     ?>
                                         <?php get_template_part( 'template-parts/content', 'metamorphose-item', $service);?>
                                         <?php endif; $index++; endwhile; ?>
+                                    </div>
+
+                                    <div class="col d-block d-md-none" data-waypoint-animate="true">
+                        <?php $index = 0; while ($metamorphoses->have_posts()) : 
+                                    $metamorphoses->the_post(); 
+                                    $service = $post; 
+                                    ?>
+                                        <?php get_template_part( 'template-parts/content', 'metamorphose-item', $service);?>
+                                        <?php $index++; endwhile; ?>
                                     </div>
                             <?php endif; ?>
                     </div>

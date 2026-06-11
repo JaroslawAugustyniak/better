@@ -20,7 +20,7 @@
                      max-width: calc(100vw);
                     }
                 }
-            @media(max-width:767.99px){
+            @media(max-width:767px){
                 max-height: inherit;
                 min-height:50rem;
                 height: 100vh;
@@ -168,7 +168,7 @@
             width: 100%;
             object-fit: inherit;
 
-            @media(max-width:767.99px) {
+            @media(max-width:767px) {
                 height: 100%;
                 object-fit: cover;
             }
@@ -198,7 +198,7 @@
         .slide-text-content {
             color: white;
 
-            @media(max-width: 767.99px) {
+            @media(max-width: 767px) {
                 padding: 0;
             }
 
@@ -255,6 +255,7 @@
             border-radius: 2.1875rem;
             color:  $main-color;
             text-shadow: none;
+            display: inline-block;
 
             &:hover {
                 background: $main-color;            

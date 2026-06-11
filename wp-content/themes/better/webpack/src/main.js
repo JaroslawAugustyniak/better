@@ -35,6 +35,7 @@ import 'select2/dist/css/select2.min.css';
 jQuery(document).ready(function($){
   cookiesPolicyBar();
 
+  initMobileMenu();
 
   initSliders($('body'));
 
@@ -44,11 +45,31 @@ jQuery(document).ready(function($){
   new Comments();
 });
 
+function initMobileMenu(){
+  $('#menu-main-menu .menu-item-has-children').on('click', function(e){
+    if ($(e.target).is('a')) {
+      if ($(this).hasClass('active')) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).siblings('.menu-item-has-children').removeClass('active');
+        $(this).toggleClass('active');
+      }
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+
+    $(this).siblings('.menu-item-has-children').removeClass('active');
+    $(this).toggleClass('active');
+  });
+}
 
 
 function initContact(){
   $('#kontakt .menu-button').on('click', function(){
     $('#kontakt').removeClass('active');
+
+    $('body').removeClass('popup-active');
   });
 
         var doctorSelect = jQuery('#doctorSelect');

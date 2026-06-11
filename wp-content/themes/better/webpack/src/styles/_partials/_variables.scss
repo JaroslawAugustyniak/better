@@ -15,6 +15,8 @@ $brown-color: #c8a496;
 $light-brown-color: #E0CDC5;
 $light-hover: #F8F6F4;
 
+$light-grey: #F4F4F4;
+
 $coffe-color: #987873;
 
 $color-seledine: #DAF0F0;
@@ -125,6 +127,7 @@ $shadow-heavy: 0 25px 50px rgba(0, 0, 0, 0.3);
   @media (min-width: 768px)  { --container-width: 720px; }
   @media (min-width: 992px)  { --container-width: 960px; }
   @media (min-width: 1200px) { --container-width: 1140px; }
+  @media (min-width: 1400px) { --container-width: 1320px; }
 }
 
 $container_width: var(--container-width);
@@ -202,7 +205,7 @@ html{
 
 @mixin button {
     display: inline-block;
-    padding: 5px 0;
+    padding: 0.3125rem 0;
     font-weight: 400;
     font-size: .875rem;
     position: relative;
@@ -210,8 +213,8 @@ html{
     border: solid 1px $light-hover;
     cursor: pointer;
     color: $light-hover;
-    border-radius: 25px;
-    padding: 7px 20px;
+    border-radius: 1.5625rem;
+    padding: 0.4375rem 1.25rem;
     transition: All .5s ease;
     &:hover{
         background: $light-hover;
@@ -221,6 +224,8 @@ html{
         content:none;
     }
 }
+
+
 
 @mixin button_dark {
   @include button();
@@ -232,7 +237,19 @@ html{
   }
 }
 
+@mixin button_all_dark {
+  @include button();
+  border: solid 1px $main-color;
+  background: $main-color;
+  color: $white-color;
+  &:hover{
+        background: transparent;
+        color: $main-color;
+  }
+}
 
-.button {
+
+.button, a.button {
     @include button();
+    // display: block;
 }  

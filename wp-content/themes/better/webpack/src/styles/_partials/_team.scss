@@ -13,6 +13,7 @@
         margin-bottom: 5rem;
     .homepage-section__header{
       color: $main-color;
+      margin-left:0;
       @include h2();
     }
     .homepage-section__description{
@@ -63,6 +64,8 @@
             font-size:1.375rem;
             color: $main_color;
             margin-bottom:0.5rem;
+
+            margin-left:0;
         }
 
         .button{

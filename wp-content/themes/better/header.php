@@ -87,6 +87,8 @@
             </a>
         </div>
 
+
+
         <button class="menu-button">
             <div class="hamburger">
                 <span></span>
@@ -109,7 +111,7 @@
 								'theme_location' => 'menu-1',
 								'container'      => 'div',
 								'container_id'   => 'top-header-menu',
-								'container_class'=> 'row justify-content-center',
+								'container_class'=> 'justify-content-center',
 								//'walker'         => new Custom_Bootstrap_Menu_Walker(),
 								///'items_wrap'     => '%3$s', // 🔥 usuwa domyślne <ul> i <li>
 							) );
@@ -120,8 +122,18 @@
     </div>
 
     <div class="menu-module__footer d-lg-none d-block">
-        <div class="menu-module__lang">
-         
+        <div class="container">
+        <div class="page-header_button">
+			<a class="button" href="/#kontakt" target="_self" id="umow_wizyte"><span><?=__('Umów wizytę', 'better') ?></span></a>
+		</div>
+        <div class="menu-module__sociale">
+            <?php 
+                $static = get_post_by_slug_and_type('sociale', 'static');
+   
+                echo apply_filters( 'the_content', $static->post_content ); 
+            ?>
+                        
+        </div>
         </div>
     </div>
 

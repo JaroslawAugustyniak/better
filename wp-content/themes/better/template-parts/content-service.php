@@ -37,7 +37,7 @@ $koszt_uslugi = get_field('koszt_uslugi', $current_page->ID);
                             <?=$page_content['before']?>
                         </div>
 
-                        <div class="block-photo col-5" data-waypoint-animate="true">
+                        <div class="block-photo col-md-5" data-waypoint-animate="true">
 							<figure>
                                 <?php
                                     displayImage($current_page->ID);

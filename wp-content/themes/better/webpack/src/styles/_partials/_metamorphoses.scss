@@ -28,10 +28,41 @@
 
 section.metamorphoses{
     padding-bottom:5rem;
+
+    @media(max-width:767px){
+        padding-bottom:0;
+        .content-header{
+            padding-bottom:2.5rem;
+        }
+
+        .content-list{
+            &.colorset--color-1{
+                background-color: $light-grey;
+                padding-top:5rem;
+
+                .meta-item{
+                    h3.head-class{
+                        margin-top:2.5rem;
+                    }
+
+                    .homepage-section__info, .homepage-section__doctor{
+                        font-size: 0.875rem;
+                    }
+
+                    .homepage-section__dsc{
+                        margin-top:1.5rem;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .meta-item{
-    margin-bottom:2.5rem;
+    margin-bottom:5rem;
+    @media(min-width:768px){
+        margin-bottom:2.5rem;
+    }
 }
 
 .gallery-main {
