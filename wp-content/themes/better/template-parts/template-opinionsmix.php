@@ -53,12 +53,12 @@
 
     else:
 
-        $bg = 'colorset--color-6';
 
         global $post;
+        $mainpage_item = get_post_by_slug_and_type('opinie', 'mainpage');
+        $description = get_field('opis', $mainpage_item->ID);
+        $bg = get_field('kolor_tla', $mainpage_item->ID);
 
-        $mainpage_item = get_post_by_slug_and_type('opinie-naszych-pacjentow', 'mainpage');
-        $opis = get_field('opis', $mainpage_item->ID);
 
                 $args_list = array(
                     'post_type'      => 'comment',
@@ -192,8 +192,9 @@
                                 $zdjecie = get_field('obrazek_filmu', $post_item->ID);
                                 $opinia = get_field('opis_filmu', $post_item->ID);
                                 $video_id = get_field('identyfikator_filmy_z_youtube', $post_item->ID);
+                                $vimeo_id = get_field('identyfikator_filmy_z_vimeo', $post_item->ID);
                             ?>
-                        <div class="youtube-slide comment-slide" data-index="<?=$index?>" data-video-id="<?=$video_id?>" data-title="<?= $post_item->post_title ?>">
+                        <div class="youtube-slide comment-slide" data-index="<?=$index?>" data-video-id="<?=$video_id?>" data-vimeo-id="<?=$vimeo_id?>" data-title="<?= $post_item->post_title ?>">
                             
                             <div class="slide-image-container">
                                 
@@ -272,17 +273,19 @@
             <div class="modal-thumbnails">
                 <h4><?= __('Wszystkie filmy', 'better')?></h4>
                 <div class="thumbnails-container" id="thumbnailsContainer">
-                    <?php $index = 0; while ($videos->have_posts()) : 
-                            $videos->the_post(); 
-                            $video = $post; 
+                    <?php $index = 0; while ($videos->have_posts()) :
+                            $videos->the_post();
+                            $video = $post;
 
                             $zdjecie = get_field('obrazek_filmu', $video->ID);
                             $opinia = get_field('opis_filmu', $video->ID);
                             $video_id = get_field('identyfikator_filmy_z_youtube', $video->ID);
+                            $vimeo_id = get_field('identyfikator_filmy_z_vimeo', $video->ID);
                             ?>
-                        <div class="thumbnail-item" 
-                            data-index="<?=$index?>" 
-                            data-video-id="<?=$video_id?>" 
+                        <div class="thumbnail-item"
+                            data-index="<?=$index?>"
+                            data-video-id="<?=$video_id?>"
+                            data-vimeo-id="<?=$vimeo_id?>"
                             data-title="<?=$video->post_title?>"
                             data-thumbnail-source="<?=($zdjecie ? $zdjecie['url'] : '')?>">
                             <div class="thumbnail-image-wrapper">

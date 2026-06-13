@@ -2,7 +2,7 @@
 
 <?php 
     $mainpage_item = $args; 
-    $page = get_post_by_slug_and_type('strona-glowna', 'page');
+    $page_id = get_the_ID();
 
     
     // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
@@ -15,12 +15,12 @@
             'relation' => 'OR',
             array(
                 'key' => 'strona',
-                'value' => $page->ID,
+                'value' => $page_id,
                 'compare' => '='
             ),
             array(
                 'key' => 'strona',
-                'value' => '"' . $page->ID . '"',
+                'value' => '"' . $page_id . '"',
                 'compare' => 'LIKE'
             )
         )

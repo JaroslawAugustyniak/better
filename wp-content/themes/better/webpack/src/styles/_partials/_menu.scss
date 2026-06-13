@@ -284,8 +284,8 @@
         transform: translateY(-50%);
       }
       & > .sub-menu {
-           opacity: 0;
-           visibility: hidden;
+          //  opacity: 0;
+          //  visibility: hidden;
            pointer-events: auto;
          }
       &:hover {

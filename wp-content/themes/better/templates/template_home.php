@@ -31,10 +31,12 @@ get_header();
         )
     );
 
+    
     $mainpage = new WP_Query($mainpage_args_list);
     if ($mainpage->have_posts()) : 
         while ($mainpage->have_posts()) : $mainpage->the_post(); $mainpage_item = $post;
 
+        wp_reset_postdata();
         $element_type = get_field('element', $mainpage_item->ID);
         // echo $element_type;     
         // && ($element_type=='metamorf' || $element_type=='opinions' || $element_type=='videos' || $element_type=='services')

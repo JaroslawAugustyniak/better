@@ -1,8 +1,8 @@
 
 
 <?php 
+    $post_id = get_the_ID(); 
     $mainpage_item = $args; 
-    $current_page = isset($args->current_page) ? $args->current_page : get_queried_object_id();
 
     
     $args_list = array(
@@ -13,12 +13,12 @@
             'relation' => 'OR',
             array(
                 'key' => 'strona',
-                'value' => $current_page,
+                'value' => $post_id,
                 'compare' => '='
             ),
             array(
                 'key' => 'strona',
-                'value' => '"' . $current_page . '"',
+                'value' => '"' . $post_id . '"',
                 'compare' => 'LIKE'
             )
         )
@@ -35,6 +35,7 @@
 
 ?>
 
+<?php if ($faq->have_posts()) : ?>
 <section class="homepage-section faq-section faq_page <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
     <div class="container">
         <div class="row">
@@ -44,7 +45,6 @@
                 </div>
             </div>
             <div class="col-lg-6 offset-lg-3">
-                <?php if ($faq->have_posts()) : ?>
           
                 <div class="faq-container" data-waypoint-animate="true">
                     <?php
@@ -67,7 +67,7 @@
                     wp_reset_postdata();
                 ?>
             </div>
-            <?php endif; ?>
         </div>
     </div>
 </section>
+<?php endif; ?>

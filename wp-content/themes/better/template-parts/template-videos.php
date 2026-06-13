@@ -29,9 +29,10 @@
                             $zdjecie = get_field('obrazek_filmu', $video->ID);
                             $opinia = get_field('opis_filmu', $video->ID);
                             $video_id = get_field('identyfikator_filmy_z_youtube', $video->ID);
+                            $vimeo_id = get_field('identyfikator_filmy_z_vimeo', $video->ID);
                             $short_video = get_field('short_video', $video->ID);
                             ?>
-                        <div class="youtube-slide" data-index="<?=$index?>" data-video-id="<?=$video_id?>" data-title="<?= $video->post_title ?>" <?php if ($short_video) : ?>data-short-video="<?= esc_attr($short_video) ?>"<?php endif; ?>>
+                        <div class="youtube-slide" data-index="<?=$index?>" data-video-id="<?=$video_id?>" data-vimeo-id="<?=$vimeo_id?>" data-title="<?= $video->post_title ?>" <?php if ($short_video) : ?>data-short-video="<?= esc_attr($short_video) ?>"<?php endif; ?>>
                             <?php $transcrypt = get_field('transcrypt', $video->ID); if ($transcrypt) : ?>
                             <script type="application/ld+json">
                             {
@@ -102,17 +103,19 @@
             <div class="modal-thumbnails">
                 <h4><?= __('Wszystkie filmy', 'better')?></h4>
                 <div class="thumbnails-container" id="thumbnailsContainer">
-                    <?php $index = 0; while ($videos->have_posts()) : 
-                            $videos->the_post(); 
-                            $video = $post; 
+                    <?php $index = 0; while ($videos->have_posts()) :
+                            $videos->the_post();
+                            $video = $post;
 
                             $zdjecie = get_field('obrazek_filmu', $video->ID);
                             $opinia = get_field('opis_filmu', $video->ID);
                             $video_id = get_field('identyfikator_filmy_z_youtube', $video->ID);
+                            $vimeo_id = get_field('identyfikator_filmy_z_vimeo', $video->ID);
                             ?>
-                        <div class="thumbnail-item" 
-                            data-index="<?=$index?>" 
-                            data-video-id="<?=$video_id?>" 
+                        <div class="thumbnail-item"
+                            data-index="<?=$index?>"
+                            data-video-id="<?=$video_id?>"
+                            data-vimeo-id="<?=$vimeo_id?>"
                             data-title="<?=$video->post_title?>"
                             data-thumbnail-source="<?=($zdjecie ? $zdjecie['url'] : '')?>">
                             <div class="thumbnail-image-wrapper">

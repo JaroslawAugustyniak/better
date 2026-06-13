@@ -16,6 +16,7 @@
         
             <div id="mainSlider" auto_play="1" class="main-slider slickSlider display_dots slick_nav nav_inside" slick_per_page="1_1_1_1" slick_show_dots="0" slick_hide_arrows="0" fade="1">   
             <?php $index = 0; while ($slider->have_posts()) : $slider->the_post(); $slide = $post;
+            
             $button = get_field('button');
             
             ?>
@@ -33,6 +34,13 @@
                             <div class="row">
                                 <div class="col-lg-8 offset-lg-2">
                                     <div class="slide-text-content text-center">
+
+                                            <div class="rate-holder">
+                                                <div class="stars" data-rate="5">
+
+                                                </div>
+                                                <div class="rate">5/5 (Znany Lekarz) </div>
+                                            </div>
                                         
                                             <h1 class="slide-title"><?=$slide->post_title?></h1>
                                         

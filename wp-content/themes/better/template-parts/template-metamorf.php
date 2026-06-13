@@ -1,12 +1,30 @@
 <?php 
     $mainpage_item = $args;  
     // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
-    $args_list = array(
-        'post_type'      => 'metamorphoses',   // typ wpisu
-        'post_status'    => 'publish',   // tylko opublikowane
-        'posts_per_page' => -1,          // wszystkie
-        'post_parent'    => 0            // tylko wpisy bez parenta
-    );
+    $page_id = get_queried_object_id();
+
+    if(is_front_page()){
+        $args_list = array(
+            'post_type'      => 'metamorphoses',   // typ wpisu
+            'post_status'    => 'publish',   // tylko opublikowane
+            'posts_per_page' => -1,          // wszystkie    
+        );
+    }else{
+        $args_list = array(
+            'post_type'      => 'metamorphoses',   // typ wpisu
+            'post_status'    => 'publish',   // tylko opublikowane
+            'posts_per_page' => -1,          // wszystkie    
+            'meta_query'     => array(
+                        array(
+                            'key'     => 'dotyczy_uslugi',
+                            'value'   => '"' . $page_id . '"',  // szukaj ID w cudzysłowie
+                            'compare' => 'LIKE',
+                        )
+                )
+        );
+    }
+
+    // pr($args_list); die;
 
     $metas = new WP_Query($args_list);
 

@@ -64,7 +64,7 @@ get_header();
                                     <div class="col-md-4" data-waypoint-animate="true">
                                         <?php get_template_part( 'template-parts/content', 'service-item', $service);?>
                                     </div>
-                                <?php $index++; endwhile; ?>
+                                <?php $index++; endwhile; wp_reset_postdata();?>
                             <?php endif; ?>
                     </div>
                 </div>
@@ -73,7 +73,12 @@ get_header();
     </section>
 
     <?php 
-        get_template_part( 'template-parts/template', 'seo2');
+        $mainpage_item = get_post_by_slug_and_type('seo-section', 'mainpage');
+        get_template_part( 'template-parts/template', 'news', $mainpage_item);
+    ?>
+    <?php 
+        $mainpage_item = get_post_by_slug_and_type('faq', 'mainpage');
+        get_template_part( 'template-parts/template', 'faq', $mainpage_item);
     ?>
 
     <?php 

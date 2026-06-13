@@ -65,9 +65,9 @@ $koszt_uslugi = get_field('koszt_uslugi', $current_page->ID);
 
     </section>
 
-        <?php 
-        $mainpage_item = get_post_by_slug_and_type('opinie', 'mainpage');
-        get_template_part( 'template-parts/template', 'opinionsmix', $mainpage_item);
+    <?php 
+        
+        get_template_part( 'template-parts/template', 'opinionsmix');
     ?>
     <div class="margin"></div>
     <?php 
@@ -76,8 +76,6 @@ $koszt_uslugi = get_field('koszt_uslugi', $current_page->ID);
     ?>
     <?php 
         $mainpage_item = get_post_by_slug_and_type('faq', 'mainpage');
-        $page = get_post_by_slug_and_type('uslugi', 'page');
-        $mainpage_item->current_page = $page->ID;
         get_template_part( 'template-parts/template', 'faq2', $mainpage_item);
     ?>
 
@@ -86,6 +84,7 @@ $koszt_uslugi = get_field('koszt_uslugi', $current_page->ID);
     ?>
 
     <?php 
+    
         $mainpage_item = get_post_by_slug_and_type('magazyn', 'mainpage');
         get_template_part( 'template-parts/template', 'magazyn', $mainpage_item);
     ?>

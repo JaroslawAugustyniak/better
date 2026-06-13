@@ -135,13 +135,22 @@ class YouTubeCarousel {
      * Wyciąganie danych o filmach z DOM
      */
     extractVideoData() {
-        this.videos = this.slides.map((slide, index) => ({
-            id: slide.dataset.index || index,
-            title: slide.dataset.title || `Video ${index + 1}`,
-            youtube_id: slide.dataset.videoId,
-            thumbnail: `https://img.youtube.com/vi/${slide.dataset.videoId}/hqdefault.jpg`,
-            thumbnailHQ: `https://img.youtube.com/vi/${slide.dataset.videoId}/maxresdefault.jpg`
-        }));
+        this.videos = this.slides.map((slide, index) => {
+            const youtubeId = slide.dataset.videoId;
+            const vimeoId = slide.dataset.vimeoId;
+            const isVimeo = vimeoId && !youtubeId;
+            const isYoutube = youtubeId && !vimeoId;
+
+            return {
+                id: slide.dataset.index || index,
+                title: slide.dataset.title || `Video ${index + 1}`,
+                youtube_id: youtubeId,
+                vimeo_id: vimeoId,
+                type: isVimeo ? 'vimeo' : isYoutube ? 'youtube' : 'unknown',
+                thumbnail: youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : '',
+                thumbnailHQ: youtubeId ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` : ''
+            };
+        });
 
         if (this.videos.length === 0) {
             throw new Error('No video data found');
@@ -488,17 +497,19 @@ class YouTubeCarousel {
             this.modalTitle.textContent = video.title;
         }
 
-        const params = new URLSearchParams({
-            rel: '0',           // Tylko powiązane z tego kanału
-            modestbranding: '1', // Bez logo YouTube
-            showinfo: '0',      // Bez info (dla starszych wersji)
-            controls: '1',      // Z kontrolkami
-            fs: '1'            // Z opcją pełnego ekranu
-        });
-
-
-
-        const videoUrl = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
+        let videoUrl = '';
+        if (video.type === 'vimeo' && video.vimeo_id) {
+            videoUrl = `https://player.vimeo.com/video/${video.vimeo_id}`;
+        } else if (video.type === 'youtube' && video.youtube_id) {
+            const params = new URLSearchParams({
+                rel: '0',           // Tylko powiązane z tego kanału
+                modestbranding: '1', // Bez logo YouTube
+                showinfo: '0',      // Bez info (dla starszych wersji)
+                controls: '1',      // Z kontrolkami
+                fs: '1'            // Z opcją pełnego ekranu
+            });
+            videoUrl = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
+        }
         this.modalVideo.src = videoUrl;
         $(this.modal).addClass('active');
         $('body').css('overflow', 'hidden');
@@ -557,14 +568,19 @@ class YouTubeCarousel {
         }
 
         if (this.modalVideo) {
-            const params = new URLSearchParams({
-                autoplay: this.config.autoplay ? '1' : '0',
-                rel: this.config.showRelated ? '1' : '0',
-                modestbranding: '1',
-                iv_load_policy: '3'
-            });
-
-            this.modalVideo.src = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
+            let videoUrl = '';
+            if (video.type === 'vimeo' && video.vimeo_id) {
+                videoUrl = `https://player.vimeo.com/video/${video.vimeo_id}`;
+            } else if (video.type === 'youtube' && video.youtube_id) {
+                const params = new URLSearchParams({
+                    autoplay: this.config.autoplay ? '1' : '0',
+                    rel: this.config.showRelated ? '1' : '0',
+                    modestbranding: '1',
+                    iv_load_policy: '3'
+                });
+                videoUrl = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
+            }
+            this.modalVideo.src = videoUrl;
         }
 
         this.updateThumbnails();
@@ -604,11 +620,14 @@ class YouTubeCarousel {
 
     // Analytics
     trackVideoView(video) {
+        const provider = video.type === 'vimeo' ? 'vimeo' : 'youtube';
+        const videoId = video.type === 'vimeo' ? video.vimeo_id : video.youtube_id;
+
         if (typeof gtag !== 'undefined') {
             gtag('event', 'video_play', {
                 video_title: video.title,
-                video_id: video.youtube_id,
-                video_provider: 'youtube'
+                video_id: videoId,
+                video_provider: provider
             });
         }
 
@@ -617,9 +636,10 @@ class YouTubeCarousel {
         }
 
         if (typeof fbq !== 'undefined') {
+            const category = provider === 'vimeo' ? 'Vimeo_Video' : 'YouTube_Video';
             fbq('trackCustom', 'MovieView', {
-                content_category: 'YouTube_Video',
-                content_type: 'youtube_video',
+                content_category: category,
+                content_type: provider + '_video',
                 content_name: video.title,
                 timestamp: new Date().toISOString()
             });
@@ -681,13 +701,22 @@ function initializeOpinionsMixPlayButtons(carousel, modal) {
     if (videoSlides.length === 0) return;
 
     // Create videos array from slides
-    const videos = videoSlides.map((slide, index) => ({
-        id: slide.dataset.index || index,
-        title: slide.dataset.title || `Video ${index + 1}`,
-        youtube_id: slide.dataset.videoId,
-        thumbnail: `https://img.youtube.com/vi/${slide.dataset.videoId}/hqdefault.jpg`,
-        thumbnailHQ: `https://img.youtube.com/vi/${slide.dataset.videoId}/maxresdefault.jpg`
-    }));
+    const videos = videoSlides.map((slide, index) => {
+        const youtubeId = slide.dataset.videoId;
+        const vimeoId = slide.dataset.vimeoId;
+        const isVimeo = vimeoId && !youtubeId;
+        const isYoutube = youtubeId && !vimeoId;
+
+        return {
+            id: slide.dataset.index || index,
+            title: slide.dataset.title || `Video ${index + 1}`,
+            youtube_id: youtubeId,
+            vimeo_id: vimeoId,
+            type: isVimeo ? 'vimeo' : isYoutube ? 'youtube' : 'unknown',
+            thumbnail: youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : '',
+            thumbnailHQ: youtubeId ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` : ''
+        };
+    });
 
     let currentVideo = 0;
 
@@ -740,16 +769,22 @@ function initializeOpinionsMixPlayButtons(carousel, modal) {
             modalTitle.textContent = video.title;
         }
 
-        // Set video source with YouTube parameters
+        // Set video source with appropriate parameters
         if (modalVideo) {
-            const params = new URLSearchParams({
-                rel: '0',
-                modestbranding: '1',
-                showinfo: '0',
-                controls: '1',
-                fs: '1'
-            });
-            modalVideo.src = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
+            let videoUrl = '';
+            if (video.type === 'vimeo' && video.vimeo_id) {
+                videoUrl = `https://player.vimeo.com/video/${video.vimeo_id}`;
+            } else if (video.type === 'youtube' && video.youtube_id) {
+                const params = new URLSearchParams({
+                    rel: '0',
+                    modestbranding: '1',
+                    showinfo: '0',
+                    controls: '1',
+                    fs: '1'
+                });
+                videoUrl = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
+            }
+            modalVideo.src = videoUrl;
         }
 
         // Show modal
@@ -804,11 +839,14 @@ function initializeOpinionsMixPlayButtons(carousel, modal) {
     }
 
     function trackVideoView(video) {
+        const provider = video.type === 'vimeo' ? 'vimeo' : 'youtube';
+        const videoId = video.type === 'vimeo' ? video.vimeo_id : video.youtube_id;
+
         if (typeof gtag !== 'undefined') {
             gtag('event', 'video_play', {
                 video_title: video.title,
-                video_id: video.youtube_id,
-                video_provider: 'youtube'
+                video_id: videoId,
+                video_provider: provider
             });
         }
 
@@ -817,9 +855,10 @@ function initializeOpinionsMixPlayButtons(carousel, modal) {
         }
 
         if (typeof fbq !== 'undefined') {
+            const category = provider === 'vimeo' ? 'Vimeo_Video' : 'YouTube_Video';
             fbq('trackCustom', 'MovieView', {
-                content_category: 'YouTube_Video',
-                content_type: 'youtube_video',
+                content_category: category,
+                content_type: provider + '_video',
                 content_name: video.title,
                 timestamp: new Date().toISOString()
             });
@@ -879,14 +918,19 @@ function initializeOpinionsMixPlayButtons(carousel, modal) {
         }
 
         if (modalVideo) {
-            const params = new URLSearchParams({
-                autoplay: '1',
-                rel: '0',
-                modestbranding: '1',
-                iv_load_policy: '3'
-            });
-
-            modalVideo.src = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
+            let videoUrl = '';
+            if (video.type === 'vimeo' && video.vimeo_id) {
+                videoUrl = `https://player.vimeo.com/video/${video.vimeo_id}`;
+            } else if (video.type === 'youtube' && video.youtube_id) {
+                const params = new URLSearchParams({
+                    autoplay: '1',
+                    rel: '0',
+                    modestbranding: '1',
+                    iv_load_policy: '3'
+                });
+                videoUrl = `https://www.youtube.com/embed/${video.youtube_id}?${params.toString()}`;
+            }
+            modalVideo.src = videoUrl;
         }
 
         updateThumbnails();

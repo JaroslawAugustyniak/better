@@ -1,18 +1,29 @@
 <?php 
+    $page_id = get_the_ID(); 
     // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project' 
     $args_list = array(
         'post_type' => 'news',  // Typ wpisu 'project'
         'post_status' => 'publish', // Tylko opublikowane wpisy
-        'posts_per_page' => -1      // Pobierz wszystkie wpisy
+        'posts_per_page' => -1,       // Pobierz wszystkie wpisy
+        'meta_query' => array(
+            'relation' => 'OR',
+            array(
+                'key' => 'strona',
+                'value' => $page_id,
+                'compare' => '='
+            ),
+            array(
+                'key' => 'strona',
+                'value' => '"' . $page_id . '"',
+                'compare' => 'LIKE'
+            )
+        )
     );
 
     $news = new WP_Query($args_list);
-
     
-    $page = get_post_by_slug_and_type('klinika-stomatologiczna-warszawa', 'page');
     $mainpage_item = $args; 
-
-    
+    $header_link = get_field('header_link', $mainpage_item->ID);    
 
     $margin = isset($mainpage_item->margin) ? 'margin' : '';
     $bg = isset($mainpage_item->kolor_tla) ? $mainpage_item->kolor_tla : get_field('kolor_tla', $mainpage_item->ID);
@@ -26,7 +37,11 @@
                 <div class="col-lg-3 col-12">
                     <div data-waypoint-animate="true">
                         <h2 class="homepage-section__header">
-                            <a href="<?=get_permalink($page->ID)?>"><?=$mainpage_item->post_title?></a>
+                            <?php if($header_link): ?>
+                                <a href="<?=$header_link['url']?>" target="<?=$header_link['target']?>"><?=$header_link['title']?></a>
+                            <?php else: ?>
+                                <?=$mainpage_item->post_title?>
+                            <?php endif; ?>
                         </h2>
                     </div>
                 </div>

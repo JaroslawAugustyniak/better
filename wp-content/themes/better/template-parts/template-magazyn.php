@@ -1,20 +1,40 @@
 <?php 
     $mainpage_item = $args; 
     // Użyj WP_Query, aby pobrać opublikowane wpisy typu 'project'
-    $args_list = array(
+    
+    if(is_front_page()){
+        $args_list = array(
         'post_type'      => 'magazyn',
         'post_status'    => 'publish',
         'posts_per_page' => -1,
         'meta_query'     => array(
-            array(
-                'key'     => 'promuj_na_stronie_glownej',
-                'value'   => 1,         // Wartość zaznaczonego checkboxa ACF
-                'compare' => '=',       // Porównanie równe
-            ),
-        ),
-    );
+                array(
+                    'key'     => 'promuj_na_stronie_glownej',
+                    'value'   => 1,         // Wartość zaznaczonego checkboxa ACF
+                    'compare' => '=',       // Porównanie równe
+                )
+            )
+        );
+    }else{
+       $page_id = get_queried_object_id();
+
+
+             $args_list = array(
+                    'post_type'      => 'magazyn',
+                    'post_status'    => 'publish',
+                    'posts_per_page' => -1,
+                    'meta_query'     => array(
+                        array(
+                            'key'     => 'dotyczy_uslugi',
+                            'value'   => '"' . $page_id . '"',  // szukaj ID w cudzysłowie
+                            'compare' => 'LIKE',
+                        ),
+                    ),
+                );
+    }
 
     $magazyn = new WP_Query( $args_list );
+    // pr($args_list); die;
 
     $bg = get_field('kolor_tla', $mainpage_item->ID);
     $description = get_field('opis', $mainpage_item->ID);
