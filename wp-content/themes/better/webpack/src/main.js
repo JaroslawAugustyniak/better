@@ -48,11 +48,11 @@ jQuery(document).ready(function($){
 function initMobileMenu(){
   $('#menu-main-menu .menu-item-has-children').on('click', function(e){
     if ($(e.target).is('a')) {
-      if ($(this).hasClass('active')) {
+      if (!$(this).hasClass('active')) {
         e.preventDefault();
         e.stopPropagation();
         $(this).siblings('.menu-item-has-children').removeClass('active');
-        $(this).toggleClass('active');
+        $(this).addClass('active');
       }
       return;
     }

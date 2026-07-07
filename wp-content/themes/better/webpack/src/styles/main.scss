@@ -200,13 +200,18 @@ body.popup-active{
             color: $color-seledine-2;
             border-bottom: 1px solid $color-seledine-2;
             padding:0.625rem 0;
+
+            &::placeholder {
+                color: $color-seledine-2;
+                opacity: 1;
+            }
           }
         }
       }
 
       .marketing{
 
-        flex:0 0 60%;
+        flex:0 0 100%;
         @media(min-width:768px){
           flex:0 0 70%;
         }
@@ -250,7 +255,7 @@ body.popup-active{
       }
 
       & > p{
-        flex:0 0 40%;
+        flex:0 0 100%;
         @media(min-width:768px){
           flex:0 0 30%;
         }
@@ -304,6 +309,8 @@ section.homepage-section{
   @media(min-width:768px){
     padding-top:5rem;
     padding-bottom:5rem;
+
+    min-height: 100vh;
   }
 
   &.margin{
@@ -410,6 +417,15 @@ h3.head-class{
     margin-top:2.5rem;
     margin-bottom:2.1875rem;
     @include h3();
+  }
+
+
+  p.button{
+    padding:0;
+  }
+  a.button, p.button a{
+    
+    @include button_all_dark();
   }
 
   h2, h3, h4, h5, h6, p, .wp-block-buttons, .wp-block-list, .wp-block-rank-math-faq-block, .wp-block-table{

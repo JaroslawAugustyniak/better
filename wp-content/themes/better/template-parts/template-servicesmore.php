@@ -9,7 +9,7 @@
 ?>
 <?php if ($related) : ?>
 
-<section id="instagram" class="homepage-section instagram-section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
+<section id="related" class="homepage-section instagram-section <?=$bg?>" data-waypoint-header="<?=get_header_color($bg)?>">
     <div class="container">
         
                 <div class="homepage-section__top">
@@ -34,10 +34,12 @@
                         $index = 0;
                         foreach ($related as $related_item) :
                             
+                            $title = get_field('service_title', $related_item->ID);
                         ?>
 
                         <div class="col-lg-4 col-md-6">
                         <div class="related_item">
+                            <a href="<?=get_permalink($related_item->ID)?>">
 
                             <figure>
                                 <?php
@@ -46,10 +48,10 @@
 							</figure>
 
                             <div class="content">
-                                <h3><?=$related_item->post_title?></h3>
+                                <h3><?=$title?></h3>
                                 <a href="<?=get_permalink($related_item->ID)?>" class="link"><?=__('Czytaj więcej', 'better')?></a>
                             </div>
-
+                            </a>
                         </div>
                         </div>
 

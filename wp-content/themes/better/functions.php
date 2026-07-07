@@ -109,6 +109,20 @@ add_filter('rank_math/frontend/breadcrumb/items', function($items) {
 										// pr($items); die;
                                     
                                 }
+
+									// Zastąp tytuł w ostatnim elemencie okruszków polem ACF service_title jeśli istnieje
+									if (!empty($items)) {
+										$last_item_index = count($items) - 1;
+										$current_post_id = get_queried_object_id();
+
+										if ($current_post_id) {
+											$service_title = get_field('service_title', $current_post_id);
+											if ($service_title) {
+												$items[$last_item_index][0] = $service_title;
+											}
+										}
+									}
+
                                 return $items;
                             });
 
@@ -417,7 +431,6 @@ function better_scripts() {
 	
 
 	if($_SERVER['HTTP_HOST'] == 'better.localhost'){
-		
 		wp_enqueue_script('better-main-js', 'http://better.localhost:8080/js/main.min.js', array(), _S_VERSION, true);
 	}else{
 		wp_enqueue_style('better-main-style', get_template_directory_uri() . '/assets/styles/main.min.css', array(), _S_VERSION);
