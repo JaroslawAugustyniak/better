@@ -27,7 +27,15 @@ body{
         }
       }
     }
-  }
+
+      .news-slide{
+        .news-image-container{
+          @media(min-width:768px){
+            height:inherit;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -121,9 +129,14 @@ body{
               height:21.875rem;
             }
             overflow:hidden;
+            display: flex;
+            align-items: center;
           }
           
           a{
+
+            
+
             &:after{
                 content: none;
             }
@@ -135,6 +148,7 @@ body{
 
 
             a{
+              color: $color-seledine-2;
               &:hover{
                 color: inherit;
               }

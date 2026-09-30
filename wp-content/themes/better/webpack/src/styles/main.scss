@@ -301,6 +301,11 @@ body.popup-active{
   margin-top:5rem;
 }
 
+section#google_rates{
+  padding-top:3.125rem;
+  padding-bottom:3.125rem;
+}
+
 section.homepage-section{
   min-height: inherit;
 
@@ -389,6 +394,13 @@ h3.head-class{
     
     h1.head-class{
       color: #8bacad;
+    }
+
+    a{
+      color: $color-seledine;
+      &:after{
+        background: $color-seledine;
+      }
     }
 }
 
@@ -791,6 +803,13 @@ a:visited {
 .colorset--color-2 .slickSlider .slick-next:before
 {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24.784' height='24' viewBox='0 0 31.215 30.228'%3E%3Cdefs%3E%3CclipPath id='arrow-right-clip-path'%3E%3Cpath d='M0,0H30.508V1H0Z' transform='translate(0 0.586)' fill='none'%3E%3C/path%3E%3C/clipPath%3E%3C/defs%3E%3Cpath class='arrow-path' d='M0,0,14.96,14.959.4,29.521' transform='translate(15.548 0.353)' fill='none' stroke='%23c8a496' stroke-miterlimit='10' stroke-width='1'%3E%3C/path%3E%3Cg transform='translate(0 14.227)'%3E%3Cpath d='M0,0H30.508V1H0Z' transform='translate(0 0.586)' fill='none'%3E%3C/path%3E%3Cg clip-path='url(%23arrow-right-clip-path)'%3E%3Cpath class='arrow-path' d='M30.508.5H0' transform='translate(0 0.586)' fill='none' stroke='%23c8a496' stroke-miterlimit='10' stroke-width='1'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+
+.colorset--color-4 .slick-slider .slick-prev:before,
+.colorset--color-4 .slick-slider .slick-next:before
+{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24.784' height='24' viewBox='0 0 31.215 30.228'%3E%3Cdefs%3E%3CclipPath id='arrow-right-clip-path'%3E%3Cpath d='M0,0H30.508V1H0Z' transform='translate(0 0.586)' fill='none'%3E%3C/path%3E%3C/clipPath%3E%3C/defs%3E%3Cpath class='arrow-path' d='M0,0,14.96,14.959.4,29.521' transform='translate(15.548 0.353)' fill='none' stroke='%238bacad' stroke-miterlimit='10' stroke-width='1'%3E%3C/path%3E%3Cg transform='translate(0 14.227)'%3E%3Cpath d='M0,0H30.508V1H0Z' transform='translate(0 0.586)' fill='none'%3E%3C/path%3E%3Cg clip-path='url(%23arrow-right-clip-path)'%3E%3Cpath class='arrow-path' d='M30.508.5H0' transform='translate(0 0.586)' fill='none' stroke='%23c8a496' stroke-miterlimit='10' stroke-width='1'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .colorset--color-2 .slick-slider .slick-dots li {

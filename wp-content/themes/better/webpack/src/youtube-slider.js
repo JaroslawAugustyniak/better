@@ -54,6 +54,8 @@ movieHandler.bindEvents();
 
 class YouTubeCarousel {
     constructor(options = {}) {
+        console.log('🎬 YouTubeCarousel CONSTRUCTOR - carouselId:', options.carouselId || 'youtubeCarousel');
+
         // Konfiguracja
         this.config = {
             carouselId: 'youtubeCarousel',
@@ -77,9 +79,10 @@ class YouTubeCarousel {
         // Flagi
         this.isInitialized = false;
         this.slickInitialized = false;
-
+        this.videoAutoAdvanceTimer = null;
 
         setTimeout(() => {
+            console.log('🎬 setTimeout callback - inicjalizuję YouTubeCarousel...');
             this.init();
         },500);
     }
@@ -89,18 +92,26 @@ class YouTubeCarousel {
      */
     async init() {
         try {
+            console.log('🎬 YouTubeCarousel.init() START');
             this.getElements();
+            console.log('🎬 getElements() OK - slides:', this.slides.length);
             this.extractVideoData();
+            console.log('🎬 extractVideoData() OK - videos:', this.videos.length);
             this.setupAccessibility();
+            console.log('🎬 setupAccessibility() OK');
             await this.initSlickCarousel();
+            console.log('🎬 initSlickCarousel() OK');
             this.isInitialized = true;
 
             window.dispatchEvent(new CustomEvent('sliderInitialized', {
                 detail: { type: 'youtube', instance: this }
             }));
 
-             this.bindEvents();
+            console.log('🎬 Wywołuję bindEvents()...');
+            this.bindEvents();
+            console.log('🎬 bindEvents() OK');
         } catch (error) {
+            console.error('🎬 BŁĄD w init():', error);
             throw error;
         }
     }
@@ -109,13 +120,17 @@ class YouTubeCarousel {
      * Pobieranie elementów DOM
      */
     getElements() {
+        console.log('🎬 getElements() - szukam carousel:', this.config.carouselId);
         this.carousel = document.getElementById(this.config.carouselId);
         if (!this.carousel) {
+            console.error('🎬 BŁĄD: Carousel nie znaleziony!', this.config.carouselId);
             throw new Error(`Carousel element with ID "${this.config.carouselId}" not found`);
         }
 
+        console.log('🎬 Carousel znaleziony:', this.carousel);
         this.$carousel = $(this.carousel);
         this.slides = Array.from(this.carousel.querySelectorAll('.youtube-slide'));
+        console.log('🎬 Slides znalezione:', this.slides.length);
 
         // Modal elements
         this.modal = document.getElementById(this.config.modalId);
@@ -138,15 +153,18 @@ class YouTubeCarousel {
         this.videos = this.slides.map((slide, index) => {
             const youtubeId = slide.dataset.videoId;
             const vimeoId = slide.dataset.vimeoId;
+            const shortVideo = slide.dataset.shortVideo;
             const isVimeo = vimeoId && !youtubeId;
             const isYoutube = youtubeId && !vimeoId;
+            const isHtml5 = shortVideo && !youtubeId && !vimeoId;
 
             return {
                 id: slide.dataset.index || index,
                 title: slide.dataset.title || `Video ${index + 1}`,
                 youtube_id: youtubeId,
                 vimeo_id: vimeoId,
-                type: isVimeo ? 'vimeo' : isYoutube ? 'youtube' : 'unknown',
+                short_video: shortVideo,
+                type: isHtml5 ? 'html5' : isVimeo ? 'vimeo' : isYoutube ? 'youtube' : 'unknown',
                 thumbnail: youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : '',
                 thumbnailHQ: youtubeId ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` : ''
             };
@@ -161,11 +179,24 @@ class YouTubeCarousel {
      * Inicjalizacja Slick Carousel
      */
     async initSlickCarousel() {
+        console.log('🎬 initSlickCarousel() START');
         return new Promise((resolve, reject) => {
             try {
                 if (!$.fn.slick) {
                     throw new Error('Slick Carousel not found. Make sure it\'s imported.');
                 }
+                console.log('🎬 $.fn.slick dostępny');
+
+                // Sprawdź czy Slick już jest zainicjalizowany
+                if (this.$carousel.hasClass('slick-initialized')) {
+                    console.log('🎬 Slick już zainicjalizowany - pomijam reinicjalizację');
+                    this.slickInitialized = true;
+                    this.onSlickInit();
+                    resolve();
+                    return;
+                }
+
+                console.log('🎬 Inicjalizuję Slick...');
                 const slickConfig = {
                     slidesToShow: 2, // Desktop: 2 pełne + kawałek trzeciego
                     slidesToScroll: 1,
@@ -225,13 +256,17 @@ class YouTubeCarousel {
                     ]
                 };
 
+                console.log('🎬 Wywołuję $carousel.slick()...');
                 this.$carousel.slick(slickConfig);
+                console.log('🎬 Slick zainicjalizowany');
                 this.slickInitialized = true;
 
                 this.onSlickInit();
+                console.log('🎬 onSlickInit() OK');
                 resolve();
 
             } catch (error) {
+                console.error('🎬 BŁĄD w initSlickCarousel:', error);
                 reject(error);
             }
         });
@@ -243,6 +278,12 @@ class YouTubeCarousel {
     onSlickInit() {
         this.$carousel.addClass('slick-initialized-custom');
         this.setupLazyLoading();
+
+        // Słuchaj zmiany slajdu
+        this.$carousel.on('afterChange', (event, slick, currentSlide) => {
+            console.log('🎬 afterChange - slajd:', currentSlide);
+            this.setupAutoPlayForCurrentSlide(currentSlide);
+        });
     }
 
     /**
@@ -272,10 +313,124 @@ class YouTubeCarousel {
 
 
     /**
+     * Ustaw timer dla aktualnego slajdu
+     */
+    setupAutoPlayForCurrentSlide(slideIndex) {
+        console.log('🎬 setupAutoPlayForCurrentSlide() - slajd:', slideIndex);
+
+        // Wyczyść poprzedni timer
+        if (this.videoAutoAdvanceTimer) {
+            clearTimeout(this.videoAutoAdvanceTimer);
+            this.videoAutoAdvanceTimer = null;
+        }
+
+        const slide = this.slides[slideIndex];
+        if (!slide) {
+            console.log('🎬 Slajd nie znaleziony');
+            return;
+        }
+
+        const video = slide.querySelector('.slide-video');
+        console.log('🎬 Video w slajdzie:', video ? '✓' : '✗');
+
+        if (!video) return;
+
+        // Jeśli video już ma czas załadowany
+        if (video.duration && !isNaN(video.duration) && isFinite(video.duration)) {
+            console.log('🎬 Duration już dostępny:', video.duration);
+            const duration = Math.ceil(video.duration) * 1000 + 500;
+            this.setAutoAdvanceTimer(duration, slideIndex);
+        } else {
+            // Czekaj na loadedmetadata
+            const onLoadedMetadata = () => {
+                console.log('🎬 loadedmetadata - duration:', video.duration);
+                if (video.duration && !isNaN(video.duration) && isFinite(video.duration)) {
+                    const duration = Math.ceil(video.duration) * 1000 + 500;
+                    this.setAutoAdvanceTimer(duration, slideIndex);
+                }
+                video.removeEventListener('loadedmetadata', onLoadedMetadata);
+            };
+            video.addEventListener('loadedmetadata', onLoadedMetadata);
+        }
+    }
+
+    /**
+     * Ustaw timer dla auto-advance
+     */
+    setAutoAdvanceTimer(duration, slideIndex) {
+        console.log('🎬 setAutoAdvanceTimer() - duration:', duration, 'slideIndex:', slideIndex);
+
+        this.videoAutoAdvanceTimer = setTimeout(() => {
+            console.log('🎬 Timer przejścia do następnego slajdu');
+            if (this.slickInitialized) {
+                this.$carousel.slick('slickNext');
+            }
+        }, duration);
+    }
+
+    /**
+     * Setup auto-advance dla wideo w slajdach
+     */
+    setupVideoAutoAdvance() {
+        console.log('🎬 setupVideoAutoAdvance: Szukam video elementów...');
+        this.slides.forEach((slide, index) => {
+            const video = slide.querySelector('.slide-video');
+            console.log(`🎬 Slajd ${index}:`, video ? '✓ Video znalezione' : '✗ Brak video');
+
+            if (video) {
+                console.log(`🎬 Slajd ${index}: Dodaję event listenery do video`);
+
+                // Event listener dla końca wideo
+                video.addEventListener('ended', () => {
+                    console.log(`🎬 Slajd ${index}: Event ENDED wystrzelony`);
+                    if (this.slickInitialized) {
+                        this.$carousel.slick('slickNext');
+                    }
+                });
+
+                // Timer fallback - dla pewności że slajd się zmieni
+                video.addEventListener('loadedmetadata', () => {
+                    console.log(`🎬 Slajd ${index}: Event LOADEDMETADATA - duration=${video.duration}`);
+                    // Gdy metadane wideo są załadowane, ustaw timer na jego długość + margines
+                    if (video.duration && !isNaN(video.duration) && isFinite(video.duration)) {
+                        const duration = Math.ceil(video.duration) * 1000 + 500;
+                        console.log(`🎬 Slajd ${index}: Timer ustawiony na ${duration}ms (${Math.ceil(video.duration)}s)`);
+
+                        // Wyczyść poprzedni timer jeśli istnieje
+                        if (this.videoAutoAdvanceTimer) {
+                            clearTimeout(this.videoAutoAdvanceTimer);
+                        }
+
+                        // Ustaw nowy timer
+                        this.videoAutoAdvanceTimer = setTimeout(() => {
+                            console.log(`🎬 Slajd ${index}: Timer przejścia do następnego slajdu`);
+                            if (this.slickInitialized) {
+                                this.$carousel.slick('slickNext');
+                            }
+                        }, duration);
+                    } else {
+                        console.log(`🎬 Slajd ${index}: Warunek duration NIESPEŁNIONY - duration=${video.duration}`);
+                    }
+                });
+
+                // Wyczyść timer gdy wideo się pauzuje
+                video.addEventListener('pause', () => {
+                    console.log(`🎬 Slajd ${index}: Event PAUSE - czyszczę timer`);
+                    if (this.videoAutoAdvanceTimer) {
+                        clearTimeout(this.videoAutoAdvanceTimer);
+                        this.videoAutoAdvanceTimer = null;
+                    }
+                });
+            }
+        });
+    }
+
+    /**
      * Bindowanie event handlerów
      */
     bindEvents() {
         console.log('VIDEO');
+        this.setupVideoAutoAdvance();
         this.slides.forEach((slide, index) => {
             const playButton = slide.querySelector('.play-button');
             let lastTouchTime = 0;
@@ -953,11 +1108,14 @@ function initializeOpinionsMixPlayButtons(carousel, modal) {
  * Auto-initialize when DOM is ready
  */
 $(document).ready(function() {
+    console.log('🎬 document.ready - szukam carousel...');
     let carouselId = null;
     let carouselElement = document.getElementById('youtubeCarousel');
+    console.log('🎬 youtubeCarousel:', carouselElement ? '✓ Znaleziony' : '✗ Nie znaleziony');
 
     if (!carouselElement) {
         carouselElement = document.getElementById('videos');
+        console.log('🎬 videos:', carouselElement ? '✓ Znaleziony' : '✗ Nie znaleziony');
         if (carouselElement) {
             carouselId = 'videos';
         }
@@ -966,6 +1124,7 @@ $(document).ready(function() {
     }
 
     if (carouselElement) {
+        console.log('🎬 Inicjalizuję YouTubeCarousel z carouselId:', carouselId);
         const modalElement = document.getElementById('youtubeModal');
 
         try {
@@ -976,9 +1135,12 @@ $(document).ready(function() {
                 showRelated: false,
                 keyboardNavigation: true
             });
+            console.log('🎬 YouTubeCarousel inicjalizowany');
         } catch (error) {
-            console.error('Failed to initialize YouTube Carousel:', error);
+            console.error('🎬 BŁĄD YouTube Carousel:', error);
         }
+    } else {
+        console.log('🎬 Brak carousel elementu');
     }
 
     // Initialize opinions carousel with play button handlers

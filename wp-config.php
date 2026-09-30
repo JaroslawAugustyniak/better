@@ -1,4 +1,6 @@
 <?php
+define( 'WP_CACHE', true );
+
 
 
 
@@ -23,16 +25,16 @@
 
 // ** Ustawienia MySQL-a - możesz uzyskać je od administratora Twojego serwera ** //
 /** Nazwa bazy danych, której używać ma WordPress */
-define('DB_NAME', 'better');
+define( 'DB_NAME', 'better' );
 
-/** Nazwa użytkownika bazy danych MySQL */
-define('DB_USER', 'wp');
+/** Database username */
+define( 'DB_USER', 'wp' );
 
-/** Hasło użytkownika bazy danych MySQL */
-define('DB_PASSWORD', 'wp');
+/** Database password */
+define( 'DB_PASSWORD', 'wp' );
 
-/** Nazwa hosta serwera MySQL */
-define('DB_HOST', 'mysql:3309');
+/** Database hostname */
+define( 'DB_HOST', 'mysql:3309' );
 
 /** Kodowanie bazy danych używane do stworzenia tabel w bazie danych. */
 define('DB_CHARSET', 'utf8');
@@ -78,7 +80,9 @@ $table_prefix  = 'wp_';
  * Wielce zalecane jest, aby twórcy wtyczek oraz motywów używali
  * WP_DEBUG w miejscach pracy nad nimi.
  */
-define('WP_DEBUG', false);
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
 
 /* To wszystko, zakończ edycję w tym miejscu! Miłego blogowania! */
 

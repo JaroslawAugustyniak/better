@@ -571,3 +571,59 @@ class Custom_Bootstrap_Menu_Walker extends Walker_Nav_Menu {
         }
     }
 }
+
+// Obsługa uploadów video
+add_filter( 'upload_mimes', function( $mimes ) {
+    $mimes['mp4'] = 'video/mp4';
+    $mimes['mov'] = 'video/quicktime';
+    $mimes['avi'] = 'video/avi';
+    $mimes['webm'] = 'video/webm';
+    $mimes['mkv'] = 'video/x-matroska';
+    return $mimes;
+} );
+
+// Pomiń video w procesie konwersji WebP
+add_filter( 'webpc_supported_source_file', function( $is_supported, $filename, $filepath ) {
+    $video_extensions = [ 'mp4', 'mov', 'avi', 'webm', 'mkv', 'flv', 'm4v', 'wmv' ];
+    $file_extension = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+
+    if ( in_array( $file_extension, $video_extensions ) ) {
+        return false;
+    }
+
+    return $is_supported;
+}, 10, 3 );
+
+// Wyłącz przetwarzanie video w WordPress
+add_filter( 'wp_generate_attachment_metadata', function( $metadata, $attachment_id, $context ) {
+    $file = get_attached_file( $attachment_id );
+    $video_extensions = [ 'mp4', 'mov', 'avi', 'webm', 'mkv', 'flv', 'm4v', 'wmv' ];
+    $file_extension = strtolower( pathinfo( $file, PATHINFO_EXTENSION ) );
+
+    if ( in_array( $file_extension, $video_extensions ) ) {
+        // Zwróć minimalne metadata dla video
+        return array(
+            'width' => 0,
+            'height' => 0,
+            'duration' => 0
+        );
+    }
+
+    return $metadata;
+}, 10, 3 );
+
+// Pomiń generowanie intermediate images dla video
+add_filter( 'image_make_intermediate_size', function( $file ) {
+    if ( ! $file ) {
+        return $file;
+    }
+
+    $video_extensions = [ 'mp4', 'mov', 'avi', 'webm', 'mkv', 'flv', 'm4v', 'wmv' ];
+    $file_extension = strtolower( pathinfo( $file, PATHINFO_EXTENSION ) );
+
+    if ( in_array( $file_extension, $video_extensions ) ) {
+        return false;
+    }
+
+    return $file;
+} );

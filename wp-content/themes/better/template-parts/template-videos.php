@@ -20,7 +20,7 @@
     <div class="container-full">
         
 
-        <div id="videos" class="slickSlider display_dots slick_nav nav_inside" auto_play="1" speed="15000" pause_on_hover="0" slick_per_page="1_1_1_1" slick_show_dots="1" slick_hide_arrows="0" fade="0">   
+        <div id="videos" class="slickSlider display_dots slick_nav nav_inside" auto_play="0" speed="15000" pause_on_hover="0" slick_per_page="1_1_1_1" slick_show_dots="1" slick_hide_arrows="0" fade="0">   
                 
                     <?php $index = 0; while ($videos->have_posts()) :
                             $videos->the_post();
@@ -33,7 +33,7 @@
                             $short_video = get_field('short_video', $video->ID);
                             ?>
                         <div class="youtube-slide" data-index="<?=$index?>" data-video-id="<?=$video_id?>" data-vimeo-id="<?=$vimeo_id?>" data-title="<?= $video->post_title ?>" <?php if ($short_video) : ?>data-short-video="<?= esc_attr($short_video) ?>"<?php endif; ?>>
-                            <?php $transcrypt = get_field('transcrypt', $video->ID); if ($transcrypt) : ?>
+                            <?php /*$transcrypt = get_field('transcrypt', $video->ID); if ($transcrypt) : ?>
                             <script type="application/ld+json">
                             {
                                 "@context": "https://schema.org",
@@ -44,7 +44,7 @@
                                 "transcript": <?= json_encode($transcrypt) ?>
                             }
                             </script>
-                            <?php else: ?><div class="no-transcript"></div><?php endif; ?>
+                            <?php else: ?><div class="no-transcript"></div><?php endif; */?>
                             <div class="slide-image-container">
                                 <?php if ($short_video) : ?>
                                     <video class="slide-video"
@@ -54,7 +54,7 @@
                                            loop
                                            loading="lazy"
                                            poster="<?=$zdjecie?$zdjecie['url']:'https://img.youtube.com/vi/'.$video_id.'/hqdefault.jpg'?>">
-                                        <source src="<?= esc_attr($short_video) ?>" type="video/mp4">
+                                        <source src="<?= esc_attr($short_video['url']) ?>" type="video/mp4">
                                     </video>
                                 <?php endif; ?>
                                 <img src="<?=$zdjecie?$zdjecie['url']:''?>"

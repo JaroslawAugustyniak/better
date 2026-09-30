@@ -10,10 +10,16 @@
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'meta_query' => array(
+            'relation' => 'OR',
             array(
                 'key' => 'strona',
                 'value' => $current_page,
                 'compare' => '='
+            ),
+            array(
+                'key' => 'strona',
+                'value' => '"' . $current_page . '"',
+                'compare' => 'LIKE'
             )
         )
     );

@@ -18,13 +18,27 @@
             <?php $index = 0; while ($slider->have_posts()) : $slider->the_post(); $slide = $post;
             
             $button = get_field('button');
+            $mobile_image = get_field('obrazek_mobilny');
             
             ?>
                 <div class="slider-slide" data-index="<?=$index?>">
                     <div class="slide-background">
+                        <?php if($mobile_image): ?>
+                        <div class="desktop">
                             <?php
                                 displayImage($slide->ID);
                             ?>
+                        </div>
+                        <div class="mobile">
+                            <?php
+                                displayImageACF($mobile_image, $slide->post_title);
+                            ?>
+                        </div>
+                        <?php else: ?>
+                            <?php
+                                displayImage($slide->ID);
+                            ?>
+                        <?php endif; ?>
                         
                         <div class="slide-overlay"></div>
                     </div>

@@ -86,6 +86,14 @@ $kolor_tla_ = get_field('kolor_tla_', $current_page->ID);
         get_template_part( 'template-parts/template', 'contact', $mainpage_item);
     ?>
 
+    <section id="google_rates">
+    <div class="container">
+    <?php 
+        echo do_shortcode('[trustindex no-registration=google]');
+    ?>
+    </div>
+    </section>
+
 
 <?php
 get_footer();
