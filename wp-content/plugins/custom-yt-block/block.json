@@ -1,0 +1,17 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "create-block/custom-yt-block",
+    "version": "0.1.0",
+    "title": "YouTube Custom Cover",
+    "category": "embed",
+    "icon": "video-alt3",
+    "description": "Blok YouTube z własną okładką.",
+    "attributes": {
+        "videoUrl": { "type": "string", "default": "" },
+        "coverImageUrl": { "type": "string", "default": "" }
+    },
+    "editorScript": "file:./build/index.js",
+    "editorStyle": "file:./build/index.css",
+    "style": "file:./build/style-index.css"
+}

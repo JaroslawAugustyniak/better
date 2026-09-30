@@ -1,0 +1,18 @@
+{
+  "name": "custom-yt-block",
+  "version": "0.1.0",
+  "description": "YouTube custom cover block for WordPress",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^29.0.0"
+  },
+  "dependencies": {
+    "@wordpress/blocks": "^13.0.0",
+    "@wordpress/components": "^27.0.0",
+    "@wordpress/block-editor": "^14.0.0",
+    "@wordpress/element": "^6.0.0"
+  }
+}

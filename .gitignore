@@ -29,7 +29,10 @@ wp-content/plugins/*
 !wp-content/plugins/.keep
 !wp-content/plugins/plugins-list.txt
 !wp-content/plugins/my_shortcodes/
-!wp-content/plugins/site-map-generator/
+!wp-content/plugins/sitemap-all/
+!wp-content/plugins/better-rankmath-home/
+!wp-content/plugins/custom-yt-block/
+!wp-content/plugins/custom_tabs_block/
 
 # --- PHP ---
 vendor/
