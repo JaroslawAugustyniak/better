@@ -84,9 +84,12 @@
               height: 100%;
               overflow: hidden;
               border-radius: 0.3125rem;
+             
               img{
+                max-height: 31.25rem;
                 @media(min-width:768px){
                   max-width: 110%;
+                  max-height: inherit;
                   margin-left:50%;
                   transform: translateX(-50%);
                 }
@@ -103,6 +106,7 @@
     @media(max-width:767px){
       margin-left:0;
       margin-right: -2.5rem;
+      margin-bottom:2rem;
     }
     @media(min-width:768px){
       .slick-list{

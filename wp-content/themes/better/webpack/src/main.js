@@ -47,20 +47,31 @@ jQuery(document).ready(function($){
 
 function initMobileMenu(){
   $('#menu-main-menu .menu-item-has-children').on('click', function(e){
-    if ($(e.target).is('a')) {
-      if (!$(this).hasClass('active')) {
-        e.preventDefault();
-        e.stopPropagation();
-        $(this).siblings('.menu-item-has-children').removeClass('active');
-        $(this).addClass('active');
-      }
+    var $target = $(e.target);
+    var $link = $target.closest('a');
+
+    // Link należący do zagnieżdżonego elementu – zwykła nawigacja
+    if ($link.length && !$link.parent().is(this)) {
       return;
     }
-    e.preventDefault();
+    // Kliknięcie wewnątrz zagnieżdżonego podmenu – obsłuży je własny handler
+    if (!$link.length && $target.closest('.menu-item-has-children')[0] !== this) {
+      return;
+    }
+
     e.stopPropagation();
 
+    if ($link.length && $(this).hasClass('active')) {
+      return; // drugi klik w link rodzica – przejdź do strony
+    }
+
+    e.preventDefault();
     $(this).siblings('.menu-item-has-children').removeClass('active');
-    $(this).toggleClass('active');
+    if ($link.length) {
+      $(this).addClass('active');
+    } else {
+      $(this).toggleClass('active');
+    }
   });
 }
 
